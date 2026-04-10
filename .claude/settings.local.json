@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/btp-site/_bmad-output/frontend/**)",
+      "Bash(npx prettier:*)",
+      "Bash(npm run:*)",
+      "Read(//c/Users/NPJ_CP450/Downloads/site_foga_tech/**)",
+      "Read(//c/tmp/**)",
+      "Bash(unzip -o \"C:/Users/NPJ_CP450/Downloads/site_foga_tech/stitch_fogatech_home_page.zip\" -d stitch_fogatech)"
+    ]
+  }
+}

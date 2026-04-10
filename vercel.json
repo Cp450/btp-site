@@ -1,5 +1,4 @@
 {
-  "framework": "vite",
   "buildCommand": "cd _bmad-output/frontend && npm install && npm run build",
   "outputDirectory": "_bmad-output/frontend/dist",
   "installCommand": "echo skip",

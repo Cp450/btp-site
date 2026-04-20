@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import Footer from '../components/Footer'
+
 
 const standards = [
   {
@@ -200,7 +200,6 @@ export default function LevagePisciculture() {
         </div>
       </section>
 
-      <Footer />
     </main>
   )
 }

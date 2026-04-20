@@ -1,5 +1,5 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import Footer from '../components/Footer'
+
 
 const PROJETS = {
   beta: {
@@ -223,7 +223,6 @@ export default function ProjetDetail() {
           <PageContent projet={projet} onCta={whatsapp} />
         </div>
       </main>
-      <Footer />
     </>
   )
 }

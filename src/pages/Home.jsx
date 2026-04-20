@@ -5,7 +5,7 @@ import EnginsStock from '../components/EnginsStock'
 import ChefsSection from '../components/ChefCard'
 import CalculateurBudget from '../components/CalculateurBudget'
 import Reviews from '../components/Reviews'
-import Footer from '../components/Footer'
+
 
 export default function Home() {
   return (
@@ -17,7 +17,6 @@ export default function Home() {
       <Configurateur />
       <EnginsStock />
       <Reviews />
-      <Footer />
     </main>
   )
 }

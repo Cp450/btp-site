@@ -3,7 +3,52 @@
 @tailwind utilities;
 
 @layer base {
-  html { scroll-behavior: smooth; }
-  body { @apply bg-foga-bg text-white; font-family: 'Inter', system-ui, sans-serif; margin: 0; }
-  #root { width: 100%; text-align: left; }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-foga-bg text-white;
+    font-family: "Inter", system-ui, sans-serif;
+    margin: 0;
+  }
+  #root {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* ── Keyframes ─────────────────────────────────────── */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes navMobileIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-slide-up {
+  animation: fadeSlideUp 0.4s ease-out both;
+}
+.animate-nav-mobile-in {
+  animation: navMobileIn 0.25s ease-out both;
+}
+
+/* ── Reduced motion ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-slide-up,
+  .animate-nav-mobile-in {
+    animation: none;
+  }
 }

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { cn } from "../lib/cn";
+import { IMG_HERO_DEVIS } from "../lib/images";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
@@ -34,8 +36,21 @@ const PROJECT_CATS = [
   "Infrastructure",
 ];
 
+const BUDGET_OPTIONS = [
+  { value: "", label: "Sélectionner un budget…" },
+  { value: "< 5M CFA", label: "Moins de 5 millions CFA" },
+  { value: "5-20M CFA", label: "5 à 20 millions CFA" },
+  { value: "20-100M CFA", label: "20 à 100 millions CFA" },
+  { value: "> 100M CFA", label: "Plus de 100 millions CFA" },
+];
+
+// Shared input class base — apply focus ring via cn()
+const INPUT_BASE =
+  "bg-surface-container-high border-b-2 border-transparent focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary px-4 py-4 text-sm transition-all font-body rounded-sm w-full";
+
 export default function DemandeDevis() {
   const [step, setStep] = useState(0);
+  const [fieldErrors, setFieldErrors] = useState({});
   const [form, setForm] = useState({
     profile: "",
     nom: "",
@@ -54,6 +69,35 @@ export default function DemandeDevis() {
 
   function set(k, v) {
     setForm((f) => ({ ...f, [k]: v }));
+    if (fieldErrors[k]) {
+      setFieldErrors((e) => ({ ...e, [k]: false }));
+    }
+  }
+
+  function validateStep(s) {
+    const errors = {};
+    if (s === 0) {
+      if (!form.profile) errors.profile = true;
+      if (!form.nom) errors.nom = true;
+      if (!form.tel) errors.tel = true;
+    }
+    if (s === 1) {
+      if (!form.categorie) errors.categorie = true;
+    }
+    if (s === 2) {
+      if (!form.ville) errors.ville = true;
+    }
+    return errors;
+  }
+
+  function advance() {
+    const errors = validateStep(step);
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+    setFieldErrors({});
+    setStep((s) => s + 1);
   }
 
   async function handleSubmit() {
@@ -93,41 +137,67 @@ export default function DemandeDevis() {
 
     const waMsg = encodeURIComponent(
       `*DEMANDE DE DEVIS — Fogatech BTP*\n\n` +
-        `👤 Profil: ${form.profile}\n` +
-        `📛 Nom: ${form.nom}\n` +
-        `📞 Tél: ${form.tel}\n` +
-        `📧 Email: ${form.email}\n\n` +
-        `🏗️ Catégorie: ${form.categorie}\n` +
-        `💰 Budget: ${form.budget} FCFA\n` +
-        `📍 Lieu: ${form.quartier}, ${form.ville}\n` +
-        `📐 Surface: ${form.surface} m²\n\n` +
-        `📝 Besoin: ${form.description}`,
+        `Profil: ${form.profile}\n` +
+        `Nom: ${form.nom}\n` +
+        `Tel: ${form.tel}\n` +
+        `Email: ${form.email}\n\n` +
+        `Categorie: ${form.categorie}\n` +
+        `Budget: ${form.budget}\n` +
+        `Lieu: ${form.quartier}, ${form.ville}\n` +
+        `Surface: ${form.surface} m2\n\n` +
+        `Besoin: ${form.description}`,
     );
     window.open(`https://wa.me/242069610635?text=${waMsg}`, "_blank");
     setSubmitting(false);
     setDone(true);
   }
 
+  // ── D-5: Success screen ───────────────────────────────────────────────────
   if (done) {
+    const waMsg = encodeURIComponent(
+      `*DEMANDE DE DEVIS — Fogatech BTP*\n\n` +
+        `Profil: ${form.profile}\n` +
+        `Nom: ${form.nom}\n` +
+        `Tel: ${form.tel}\n` +
+        `Email: ${form.email}\n\n` +
+        `Categorie: ${form.categorie}\n` +
+        `Budget: ${form.budget}\n` +
+        `Lieu: ${form.quartier}, ${form.ville}\n` +
+        `Surface: ${form.surface} m2\n\n` +
+        `Besoin: ${form.description}`,
+    );
     return (
       <main className="pt-[72px] min-h-screen bg-surface flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <span className="material-symbols-outlined text-6xl text-[#4CAF50] block mb-6">
+        <div className="bg-surface-container-low rounded-xl p-8 text-center max-w-md w-full animate-fade-slide-up">
+          <span className="material-symbols-outlined text-5xl text-savane block mb-6">
             check_circle
           </span>
-          <h1 className="font-headline text-3xl font-black text-primary mb-4">
-            Devis envoyé !
-          </h1>
+          <h2 className="font-headline text-3xl font-black text-primary mb-4">
+            Demande envoyée !
+          </h2>
           <p className="text-on-surface-variant font-body mb-8">
-            Votre demande a été transmise. Un expert Fogatech vous contacte sous{" "}
-            <strong>48h</strong>.
+            Notre équipe vous contacte dans les 24h.
           </p>
-          <a
-            href="/"
-            className="inline-block bg-primary text-white px-10 py-4 font-headline font-bold uppercase tracking-widest text-xs hover:bg-secondary transition-colors"
+          <button
+            onClick={() =>
+              window.open(
+                `https://wa.me/242069610635?text=${waMsg}`,
+                "_blank",
+              )
+            }
+            className="inline-flex items-center gap-3 bg-secondary-container text-on-secondary-container font-headline font-bold px-8 py-4 uppercase tracking-widest text-xs hover:bg-secondary hover:text-white transition-colors"
           >
-            Retour à l'accueil
-          </a>
+            <span className="material-symbols-outlined text-base">chat</span>
+            Parler à un expert maintenant
+          </button>
+          <div className="mt-6">
+            <a
+              href="/"
+              className="text-sm text-primary underline hover:text-secondary transition-colors"
+            >
+              Retour à l'accueil
+            </a>
+          </div>
         </div>
       </main>
     );
@@ -139,9 +209,10 @@ export default function DemandeDevis() {
       <section className="relative h-80 flex items-center overflow-hidden bg-primary">
         <div className="absolute inset-0 opacity-40">
           <img
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkl3uhveXBxrUDN578k6kJyfFBVthPRacGDzmQWgN-QkZ_FKFQw1eG2LMEYjk9-HX25l7qK9YKdZvlLdcHt1kJ81JmLFQy7E4mofyvy5H3_i0DBPERtiIh_0w1o9VdTE4EK-_EwWnUoBtFkRIBU90Xi6G7lhmLg5NihwK6wLrXktM-3pba1lHJPUS_JJDGx-1H8DCvb00IQkuEQ1_pgFrOKOKLYtSRgcEnLyYcsRu5Qp2W7XmPwGGbghw7HF-PO83Zt0kkgRnPDn0u"
-            alt="Chantier Fogatech"
+            src={IMG_HERO_DEVIS}
+            alt="Chantier Fogatech BTP en construction"
             className="w-full h-full object-cover"
+            loading="eager"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-primary/90 to-primary-container/40" />
@@ -161,46 +232,25 @@ export default function DemandeDevis() {
       <section className="relative z-20 pb-24">
         <div className="max-w-screen-2xl mx-auto px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10">
-            {/* Sidebar steps */}
+            {/* Sidebar trust block */}
             <aside className="lg:col-span-3">
               <div className="bg-surface-container-low p-8 shadow-card sticky top-28">
                 <h3 className="font-label text-xs font-bold tracking-widest text-primary mb-8 uppercase">
-                  Étapes de Demande
+                  Pourquoi Fogatech
                 </h3>
-                <ul className="space-y-6">
-                  {STEPS.map((s, i) => (
-                    <li
-                      key={s}
-                      className={`flex items-center gap-4 ${i > step ? "opacity-40" : ""}`}
-                    >
-                      <span
-                        className={`flex items-center justify-center w-8 h-8 rounded-full font-headline font-bold text-sm ${i <= step ? "bg-secondary-container text-on-secondary-container" : "bg-outline-variant text-on-surface"}`}
-                      >
-                        {i < step ? "✓" : i + 1}
-                      </span>
-                      <span
-                        className={`font-body ${i === step ? "font-bold text-primary" : "font-medium text-on-surface-variant"}`}
-                      >
-                        {s}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Trust block */}
-                <div className="mt-10 pt-8 border-t border-outline-variant/30">
+                <div className="space-y-4">
                   {[
                     {
                       icon: "lock",
-                      text: "Données protégées & confidentielles",
+                      text: "Données protégées et confidentielles",
                     },
-                    { icon: "schedule", text: "Réponse sous 48h garantie" },
+                    { icon: "schedule", text: "Réponse sous 24h garantie" },
                     {
                       icon: "verified",
                       text: "Devis détaillé sans engagement",
                     },
                   ].map((t) => (
-                    <div key={t.text} className="flex items-start gap-3 mb-4">
+                    <div key={t.text} className="flex items-start gap-3">
                       <span className="material-symbols-outlined text-secondary-container text-lg mt-0.5">
                         {t.icon}
                       </span>
@@ -214,319 +264,589 @@ export default function DemandeDevis() {
             </aside>
 
             {/* Main form */}
-            <div className="lg:col-span-9 bg-surface-container-lowest p-8 md:p-12 shadow-tectonic">
-              {/* Step 0: Profil */}
-              {step === 0 && (
-                <div>
-                  <h2 className="font-headline text-3xl font-black text-primary mb-2 tracking-tight">
-                    Choisissez votre profil
-                  </h2>
-                  <p className="text-on-surface-variant mb-10 font-body">
-                    Nous adaptons nos solutions à la nature de votre structure.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                    {PROFILES.map((p) => (
-                      <button
-                        key={p.id}
-                        onClick={() => set("profile", p.id)}
-                        className={`group relative flex flex-col p-8 border-2 transition-all text-left h-full ${
-                          form.profile === p.id
-                            ? "border-secondary-container bg-secondary-container/5"
-                            : "border-surface-container hover:border-secondary-container/50 bg-surface-bright"
-                        }`}
+            <div className="lg:col-span-9">
+              {/* D-1: Horizontal progress stepper */}
+              <nav
+                aria-label="Étapes du formulaire"
+                className="mb-10 bg-surface-container-low p-6"
+              >
+                <ol className="flex items-center">
+                  {STEPS.map((label, i) => {
+                    const isCompleted = i < step;
+                    const isCurrent = i === step;
+                    return (
+                      <li
+                        key={label}
+                        className="flex items-center flex-1 last:flex-none"
                       >
-                        <span
-                          className={`material-symbols-outlined text-4xl mb-6 ${form.profile === p.id ? "text-secondary-container" : "text-primary group-hover:text-secondary-container"} transition-colors`}
-                        >
-                          {p.icon}
-                        </span>
-                        <h3 className="font-headline font-bold text-xl text-primary mb-3">
-                          {p.title}
-                        </h3>
-                        <p className="text-sm text-on-surface-variant font-body leading-relaxed">
-                          {p.desc}
-                        </p>
-                        <div
-                          className={`mt-8 flex items-center text-xs font-label font-bold uppercase tracking-widest ${form.profile === p.id ? "text-secondary-container" : "text-secondary opacity-0 group-hover:opacity-100"} transition-all`}
-                        >
-                          {form.profile === p.id
-                            ? "Sélectionné ✓"
-                            : "Sélectionner →"}
+                        {/* Step circle + label */}
+                        <div className="flex flex-col items-center gap-2 min-w-0">
+                          <span
+                            aria-current={isCurrent ? "step" : undefined}
+                            className={cn(
+                              "flex items-center justify-center w-8 h-8 rounded-full font-headline font-bold text-sm flex-shrink-0 transition-colors",
+                              isCompleted &&
+                                "bg-secondary-container text-on-secondary-container",
+                              isCurrent && "bg-primary text-on-primary",
+                              !isCompleted &&
+                                !isCurrent &&
+                                "bg-outline-variant text-on-surface-variant",
+                            )}
+                          >
+                            {isCompleted ? (
+                              <span className="material-symbols-outlined text-sm">
+                                check
+                              </span>
+                            ) : (
+                              i + 1
+                            )}
+                          </span>
+                          <span
+                            className={cn(
+                              "text-xs font-label font-medium text-center transition-colors",
+                              /* Mobile: hide non-current labels */
+                              !isCurrent && "hidden sm:block",
+                              isCompleted &&
+                                "text-on-surface line-through opacity-60",
+                              isCurrent && "text-primary font-bold",
+                              !isCompleted &&
+                                !isCurrent &&
+                                "text-on-surface-variant",
+                            )}
+                          >
+                            {label}
+                          </span>
                         </div>
-                      </button>
-                    ))}
-                  </div>
+                        {/* Connector line — not after last step */}
+                        {i < STEPS.length - 1 && (
+                          <div className="flex-1 mx-3 mb-5">
+                            <div
+                              className={cn(
+                                "h-px transition-colors",
+                                isCompleted
+                                  ? "bg-secondary-container"
+                                  : "bg-outline-variant",
+                              )}
+                            />
+                          </div>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ol>
+              </nav>
 
-                  <hr className="border-surface-container my-8" />
+              <div className="bg-surface-container-lowest p-8 md:p-12 shadow-tectonic">
+                {/* D-2: Step 0 — Profile selection */}
+                {step === 0 && (
+                  <div>
+                    <h2 className="font-headline text-3xl font-black text-primary mb-2 tracking-tight">
+                      Choisissez votre profil
+                    </h2>
+                    <p className="text-on-surface-variant mb-10 font-body">
+                      Nous adaptons nos solutions à la nature de votre
+                      structure.
+                    </p>
+                    <div
+                      role="radiogroup"
+                      aria-label="Type de profil client"
+                      className={cn(
+                        "grid grid-cols-1 md:grid-cols-3 gap-6 mb-12",
+                        fieldErrors.profile &&
+                          "ring-2 ring-error/30 rounded-sm p-1",
+                      )}
+                    >
+                      {PROFILES.map((p) => {
+                        const isSelected = form.profile === p.id;
+                        return (
+                          <button
+                            key={p.id}
+                            role="radio"
+                            aria-checked={isSelected}
+                            tabIndex={0}
+                            onClick={() => set("profile", p.id)}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                set("profile", p.id);
+                              }
+                            }}
+                            className={cn(
+                              "group relative flex flex-col p-8 border-2 transition-all text-left h-full focus:outline-none focus:ring-2 focus:ring-primary",
+                              isSelected
+                                ? "border-secondary-container bg-primary-container/20"
+                                : "border-outline-variant hover:border-primary bg-surface-bright",
+                            )}
+                          >
+                            <span
+                              className={cn(
+                                "material-symbols-outlined text-3xl mb-6 transition-colors",
+                                isSelected
+                                  ? "text-secondary-container"
+                                  : "text-primary group-hover:text-secondary-container",
+                              )}
+                            >
+                              {p.icon}
+                            </span>
+                            <h3 className="font-headline font-bold text-xl text-primary mb-3">
+                              {p.title}
+                            </h3>
+                            <p className="text-sm text-on-surface-variant font-body leading-relaxed">
+                              {p.desc}
+                            </p>
+                            <div
+                              className={cn(
+                                "mt-8 flex items-center text-xs font-label font-bold uppercase tracking-widest transition-all",
+                                isSelected
+                                  ? "text-secondary-container"
+                                  : "text-secondary opacity-0 group-hover:opacity-100",
+                              )}
+                            >
+                              {isSelected ? "Selectionne" : "Selectionner"}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8">
-                    {[
-                      {
-                        k: "nom",
-                        label: "Nom complet *",
-                        placeholder: "Jean Dupont",
-                        type: "text",
-                      },
-                      {
-                        k: "tel",
-                        label: "Téléphone *",
-                        placeholder: "+242 06 --- ---",
-                        type: "tel",
-                      },
-                      {
-                        k: "email",
-                        label: "Email",
-                        placeholder: "vous@exemple.com",
-                        type: "email",
-                      },
-                    ].map((f) => (
-                      <div key={f.k} className="flex flex-col gap-2">
-                        <label className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant">
-                          {f.label}
+                    <hr className="border-surface-container my-8" />
+
+                    {/* D-3: Contact fields with proper labels + focus rings */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8">
+                      <div className="flex flex-col gap-2">
+                        <label
+                          htmlFor="nom"
+                          className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant"
+                        >
+                          Nom complet *
                         </label>
                         <input
-                          type={f.type}
-                          value={form[f.k]}
-                          onChange={(e) => set(f.k, e.target.value)}
-                          placeholder={f.placeholder}
-                          className="bg-surface-container-high border-none border-b-2 border-transparent focus:border-primary px-4 py-4 text-sm outline-none transition-all font-body rounded-sm"
+                          id="nom"
+                          type="text"
+                          value={form.nom}
+                          onChange={(e) => set("nom", e.target.value)}
+                          placeholder="Jean Dupont"
+                          className={cn(
+                            INPUT_BASE,
+                            fieldErrors.nom && "border-error ring-2 ring-error/30",
+                          )}
+                        />
+                        {fieldErrors.nom && (
+                          <p className="text-xs text-error font-body">
+                            Ce champ est requis.
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <label
+                          htmlFor="tel"
+                          className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant"
+                        >
+                          Téléphone *
+                        </label>
+                        <input
+                          id="tel"
+                          type="tel"
+                          inputMode="tel"
+                          value={form.tel}
+                          onChange={(e) => set("tel", e.target.value)}
+                          placeholder="+242 0X XX XX XX"
+                          className={cn(
+                            INPUT_BASE,
+                            fieldErrors.tel && "border-error ring-2 ring-error/30",
+                          )}
+                        />
+                        {fieldErrors.tel && (
+                          <p className="text-xs text-error font-body">
+                            Ce champ est requis.
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <label
+                          htmlFor="email"
+                          className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant"
+                        >
+                          Email
+                        </label>
+                        <input
+                          id="email"
+                          type="email"
+                          value={form.email}
+                          onChange={(e) => set("email", e.target.value)}
+                          placeholder="vous@exemple.com"
+                          className={INPUT_BASE}
                         />
                       </div>
-                    ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Step 1: Détails Projet */}
-              {step === 1 && (
-                <div>
-                  <h2 className="font-headline text-3xl font-black text-primary mb-2 tracking-tight">
-                    Détails du projet
-                  </h2>
-                  <p className="text-on-surface-variant mb-10 font-body">
-                    Décrivez votre besoin pour recevoir un devis précis.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8">
-                    <div className="md:col-span-2">
-                      <label className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant block mb-3">
-                        Catégorie de Projet
-                      </label>
-                      <div className="flex flex-wrap gap-3">
-                        {PROJECT_CATS.map((c) => (
-                          <button
-                            key={c}
-                            type="button"
-                            onClick={() => set("categorie", c)}
-                            className={`px-4 py-2 text-xs font-label font-bold rounded-full transition-colors ${form.categorie === c ? "bg-primary text-white" : "bg-surface-container-high text-primary hover:bg-outline-variant"}`}
-                          >
-                            {c}
-                          </button>
-                        ))}
+                {/* Step 1: Détails Projet */}
+                {step === 1 && (
+                  <div>
+                    <h2 className="font-headline text-3xl font-black text-primary mb-2 tracking-tight">
+                      Détails du projet
+                    </h2>
+                    <p className="text-on-surface-variant mb-10 font-body">
+                      Décrivez votre besoin pour recevoir un devis précis.
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8">
+                      {/* D-3: Category group with error state */}
+                      <div className="md:col-span-2">
+                        <label
+                          id="categorie-label"
+                          className={cn(
+                            "font-label text-xs font-bold uppercase tracking-wider block mb-3",
+                            fieldErrors.categorie
+                              ? "text-error"
+                              : "text-on-surface-variant",
+                          )}
+                        >
+                          Catégorie de Projet *
+                        </label>
+                        <div
+                          role="group"
+                          aria-labelledby="categorie-label"
+                          className="flex flex-wrap gap-3"
+                        >
+                          {PROJECT_CATS.map((c) => (
+                            <button
+                              key={c}
+                              type="button"
+                              onClick={() => set("categorie", c)}
+                              className={cn(
+                                "px-4 py-2 text-xs font-label font-bold rounded-full transition-colors",
+                                form.categorie === c
+                                  ? "bg-primary text-white"
+                                  : "bg-surface-container-high text-primary hover:bg-outline-variant",
+                              )}
+                            >
+                              {c}
+                            </button>
+                          ))}
+                        </div>
+                        {fieldErrors.categorie && (
+                          <p className="mt-2 text-xs text-error font-body">
+                            Veuillez sélectionner une catégorie.
+                          </p>
+                        )}
+                      </div>
+
+                      {/* D-3: Budget as select with CFA options */}
+                      <div className="flex flex-col gap-2">
+                        <label
+                          htmlFor="budget"
+                          className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant"
+                        >
+                          Budget Estimé
+                        </label>
+                        <select
+                          id="budget"
+                          value={form.budget}
+                          onChange={(e) => set("budget", e.target.value)}
+                          className={INPUT_BASE}
+                        >
+                          {BUDGET_OPTIONS.map((opt) => (
+                            <option key={opt.value} value={opt.value}>
+                              {opt.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <label
+                          htmlFor="surface"
+                          className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant"
+                        >
+                          Surface (m²)
+                        </label>
+                        <input
+                          id="surface"
+                          type="number"
+                          value={form.surface}
+                          onChange={(e) => set("surface", e.target.value)}
+                          placeholder="Ex: 500"
+                          className={INPUT_BASE}
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-2 md:col-span-2">
+                        <label
+                          htmlFor="description"
+                          className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant"
+                        >
+                          Description du besoin *
+                        </label>
+                        <textarea
+                          id="description"
+                          rows={4}
+                          value={form.description}
+                          onChange={(e) => set("description", e.target.value)}
+                          placeholder="Décrivez les objectifs et contraintes de votre projet..."
+                          className={cn(INPUT_BASE, "resize-none")}
+                        />
                       </div>
                     </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant">
-                        Budget Estimé (FCFA)
-                      </label>
-                      <input
-                        type="number"
-                        value={form.budget}
-                        onChange={(e) => set("budget", e.target.value)}
-                        placeholder="Ex: 50 000 000"
-                        className="bg-surface-container-high border-none border-b-2 border-transparent focus:border-primary px-4 py-4 text-sm outline-none transition-all font-body rounded-sm"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant">
-                        Surface (m²)
-                      </label>
-                      <input
-                        type="number"
-                        value={form.surface}
-                        onChange={(e) => set("surface", e.target.value)}
-                        placeholder="Ex: 500"
-                        className="bg-surface-container-high border-none border-b-2 border-transparent focus:border-primary px-4 py-4 text-sm outline-none transition-all font-body rounded-sm"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2 md:col-span-2">
-                      <label className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant">
-                        Description du besoin *
-                      </label>
-                      <textarea
-                        rows={4}
-                        value={form.description}
-                        onChange={(e) => set("description", e.target.value)}
-                        placeholder="Décrivez les objectifs et contraintes de votre projet..."
-                        className="bg-surface-container-high border-none border-b-2 border-transparent focus:border-primary px-4 py-4 text-sm outline-none transition-all font-body resize-none rounded-sm"
-                      />
-                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Step 2: Localisation */}
-              {step === 2 && (
-                <div>
-                  <h2 className="font-headline text-3xl font-black text-primary mb-2 tracking-tight">
-                    Localisation du projet
-                  </h2>
-                  <p className="text-on-surface-variant mb-10 font-body">
-                    Précisez où se déroulera votre projet au Congo-Brazzaville.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8">
-                    <div className="flex flex-col gap-2">
-                      <label className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant">
-                        Ville *
-                      </label>
-                      <select
-                        value={form.ville}
-                        onChange={(e) => set("ville", e.target.value)}
-                        className="bg-surface-container-high border-none border-b-2 border-transparent focus:border-primary px-4 py-4 text-sm outline-none font-body rounded-sm"
-                      >
-                        <option value="">Sélectionner…</option>
-                        {[
-                          "Brazzaville",
-                          "Pointe-Noire",
-                          "Dolisie",
-                          "Ouésso",
-                          "Impfondo",
-                          "Madingou",
-                          "Autres",
-                        ].map((v) => (
-                          <option key={v}>{v}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant">
-                        Quartier / Zone
-                      </label>
-                      <input
-                        value={form.quartier}
-                        onChange={(e) => set("quartier", e.target.value)}
-                        placeholder="Ex: Bacongo, Moungali, Massina…"
-                        className="bg-surface-container-high border-none border-b-2 border-transparent focus:border-primary px-4 py-4 text-sm outline-none transition-all font-body rounded-sm"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Step 3: Validation */}
-              {step === 3 && (
-                <div>
-                  <h2 className="font-headline text-3xl font-black text-primary mb-2 tracking-tight">
-                    Validation
-                  </h2>
-                  <p className="text-on-surface-variant mb-10 font-body">
-                    Vérifiez vos informations avant d'envoyer.
-                  </p>
-                  <div className="space-y-4">
-                    {[
-                      { label: "Profil", val: form.profile },
-                      { label: "Nom", val: form.nom },
-                      { label: "Téléphone", val: form.tel },
-                      { label: "Email", val: form.email },
-                      { label: "Catégorie", val: form.categorie },
-                      {
-                        label: "Budget",
-                        val: form.budget ? `${form.budget} FCFA` : "—",
-                      },
-                      {
-                        label: "Localisation",
-                        val:
-                          [form.quartier, form.ville]
-                            .filter(Boolean)
-                            .join(", ") || "—",
-                      },
-                      {
-                        label: "Surface",
-                        val: form.surface ? `${form.surface} m²` : "—",
-                      },
-                    ].map((r) => (
-                      <div
-                        key={r.label}
-                        className="flex items-baseline justify-between py-3 border-b border-surface-container"
-                      >
-                        <span className="text-xs font-label font-bold uppercase tracking-widest text-on-surface-variant">
-                          {r.label}
-                        </span>
-                        <span className="font-body font-semibold text-primary text-sm">
-                          {r.val || "—"}
-                        </span>
+                {/* Step 2: Localisation */}
+                {step === 2 && (
+                  <div>
+                    <h2 className="font-headline text-3xl font-black text-primary mb-2 tracking-tight">
+                      Localisation du projet
+                    </h2>
+                    <p className="text-on-surface-variant mb-10 font-body">
+                      Précisez où se déroulera votre projet au Congo-Brazzaville.
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8">
+                      <div className="flex flex-col gap-2">
+                        <label
+                          htmlFor="ville"
+                          className={cn(
+                            "font-label text-xs font-bold uppercase tracking-wider",
+                            fieldErrors.ville
+                              ? "text-error"
+                              : "text-on-surface-variant",
+                          )}
+                        >
+                          Ville *
+                        </label>
+                        <select
+                          id="ville"
+                          value={form.ville}
+                          onChange={(e) => set("ville", e.target.value)}
+                          className={cn(
+                            INPUT_BASE,
+                            fieldErrors.ville &&
+                              "border-error ring-2 ring-error/30",
+                          )}
+                        >
+                          <option value="">Sélectionner…</option>
+                          {[
+                            "Brazzaville",
+                            "Pointe-Noire",
+                            "Dolisie",
+                            "Ouésso",
+                            "Impfondo",
+                            "Madingou",
+                            "Autres",
+                          ].map((v) => (
+                            <option key={v}>{v}</option>
+                          ))}
+                        </select>
+                        {fieldErrors.ville && (
+                          <p className="text-xs text-error font-body">
+                            Veuillez sélectionner une ville.
+                          </p>
+                        )}
                       </div>
-                    ))}
-                  </div>
-                  {form.description && (
-                    <div className="mt-6 p-4 bg-surface-container-low rounded">
-                      <p className="text-xs font-label font-bold uppercase tracking-widest text-on-surface-variant mb-2">
-                        Description
-                      </p>
-                      <p className="text-sm text-on-surface font-body leading-relaxed">
-                        {form.description}
-                      </p>
+
+                      <div className="flex flex-col gap-2">
+                        <label
+                          htmlFor="quartier"
+                          className="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant"
+                        >
+                          Quartier / Zone
+                        </label>
+                        <input
+                          id="quartier"
+                          value={form.quartier}
+                          onChange={(e) => set("quartier", e.target.value)}
+                          placeholder="Ex: Bacongo, Moungali, Massina…"
+                          className={INPUT_BASE}
+                        />
+                      </div>
                     </div>
-                  )}
-                </div>
-              )}
+                  </div>
+                )}
 
-              {/* Submit error feedback */}
-              {submitError && (
-                <div className="mt-8 p-4 bg-error-container border border-error/30 rounded flex items-start gap-3">
-                  <span className="material-symbols-outlined text-error text-lg mt-0.5 flex-shrink-0">
-                    error
-                  </span>
-                  <p className="text-sm text-on-error-container font-body">
-                    {submitError}
-                  </p>
-                </div>
-              )}
+                {/* D-4: Step 3 — Validation with Modifier buttons */}
+                {step === 3 && (
+                  <div>
+                    <h2 className="font-headline text-3xl font-black text-primary mb-2 tracking-tight">
+                      Validation
+                    </h2>
+                    <p className="text-on-surface-variant mb-10 font-body">
+                      Vérifiez vos informations avant d'envoyer.
+                    </p>
 
-              {/* Navigation */}
-              <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-                <div className="flex items-center gap-3">
-                  <span className="material-symbols-outlined text-secondary-container">
-                    lock
-                  </span>
-                  <p className="text-xs text-on-surface-variant font-body max-w-xs">
-                    Données protégées par notre politique de confidentialité.
-                  </p>
-                </div>
-                <div className="flex gap-4">
-                  {step > 0 && (
-                    <button
-                      onClick={() => setStep((s) => s - 1)}
-                      className="px-8 py-4 border border-outline-variant text-primary font-headline font-bold uppercase tracking-widest text-xs hover:bg-surface-container transition-colors"
-                    >
-                      Retour
-                    </button>
-                  )}
-                  {step < 3 ? (
-                    <button
-                      onClick={() => setStep((s) => s + 1)}
-                      disabled={
-                        (step === 0 &&
-                          (!form.profile || !form.nom || !form.tel)) ||
-                        (step === 1 && !form.categorie) ||
-                        (step === 2 && !form.ville)
-                      }
-                      className="bg-primary disabled:opacity-40 text-white font-headline font-black px-12 py-4 group flex items-center gap-4 hover:bg-secondary-container hover:text-on-secondary-container transition-all uppercase tracking-widest text-xs"
-                    >
-                      Étape suivante
-                      <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">
-                        arrow_forward
-                      </span>
-                    </button>
-                  ) : (
-                    <button
-                      onClick={handleSubmit}
-                      disabled={submitting}
-                      className="bg-secondary-container text-on-secondary-container font-headline font-black px-12 py-4 flex items-center gap-4 hover:bg-secondary hover:text-white transition-all uppercase tracking-widest text-xs disabled:opacity-50"
-                    >
-                      {submitting ? "Envoi…" : "Envoyer mon devis"}
-                      <span className="material-symbols-outlined">send</span>
-                    </button>
-                  )}
+                    {/* Section: Profil Client */}
+                    <div className="bg-surface-container rounded-lg p-4 space-y-3 mb-4">
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+                          Profil Client
+                        </h3>
+                        <button
+                          onClick={() => setStep(0)}
+                          className="text-sm text-primary underline hover:text-secondary transition-colors"
+                        >
+                          Modifier
+                        </button>
+                      </div>
+                      {[
+                        { label: "Profil", val: form.profile },
+                        { label: "Nom", val: form.nom },
+                        { label: "Téléphone", val: form.tel },
+                        { label: "Email", val: form.email || "—" },
+                      ].map((r) => (
+                        <div key={r.label} className="flex justify-between text-sm">
+                          <span className="text-on-surface-variant">
+                            {r.label}
+                          </span>
+                          <span className="text-on-surface font-medium">
+                            {r.val || "—"}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Section: Détails Projet */}
+                    <div className="bg-surface-container rounded-lg p-4 space-y-3 mb-4">
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+                          Détails Projet
+                        </h3>
+                        <button
+                          onClick={() => setStep(1)}
+                          className="text-sm text-primary underline hover:text-secondary transition-colors"
+                        >
+                          Modifier
+                        </button>
+                      </div>
+                      {[
+                        { label: "Catégorie", val: form.categorie },
+                        { label: "Budget", val: form.budget || "—" },
+                        {
+                          label: "Surface",
+                          val: form.surface ? `${form.surface} m²` : "—",
+                        },
+                      ].map((r) => (
+                        <div key={r.label} className="flex justify-between text-sm">
+                          <span className="text-on-surface-variant">
+                            {r.label}
+                          </span>
+                          <span className="text-on-surface font-medium">
+                            {r.val || "—"}
+                          </span>
+                        </div>
+                      ))}
+                      {form.description && (
+                        <div className="pt-2 border-t border-surface-container-high">
+                          <p className="text-xs text-on-surface-variant mb-1">
+                            Description
+                          </p>
+                          <p className="text-sm text-on-surface font-body leading-relaxed">
+                            {form.description}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Section: Localisation */}
+                    <div className="bg-surface-container rounded-lg p-4 space-y-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+                          Localisation
+                        </h3>
+                        <button
+                          onClick={() => setStep(2)}
+                          className="text-sm text-primary underline hover:text-secondary transition-colors"
+                        >
+                          Modifier
+                        </button>
+                      </div>
+                      {[
+                        { label: "Ville", val: form.ville },
+                        { label: "Quartier", val: form.quartier || "—" },
+                      ].map((r) => (
+                        <div key={r.label} className="flex justify-between text-sm">
+                          <span className="text-on-surface-variant">
+                            {r.label}
+                          </span>
+                          <span className="text-on-surface font-medium">
+                            {r.val || "—"}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* D-5: Submit error with retry */}
+                {submitError && (
+                  <div className="mt-8 bg-error-container text-on-error-container rounded-lg p-3 flex items-start gap-3">
+                    <span className="material-symbols-outlined text-lg mt-0.5 flex-shrink-0">
+                      error
+                    </span>
+                    <div className="flex-1">
+                      <p className="text-sm font-body">{submitError}</p>
+                      <button
+                        onClick={handleSubmit}
+                        className="mt-2 text-xs font-label font-bold underline hover:no-underline transition-all"
+                      >
+                        Réessayer
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Navigation */}
+                <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+                  <div className="flex items-center gap-3">
+                    <span className="material-symbols-outlined text-secondary-container">
+                      lock
+                    </span>
+                    <p className="text-xs text-on-surface-variant font-body max-w-xs">
+                      Données protégées par notre politique de confidentialité.
+                    </p>
+                  </div>
+                  <div className="flex gap-4">
+                    {step > 0 && (
+                      <button
+                        onClick={() => setStep((s) => s - 1)}
+                        className="px-8 py-4 border border-outline-variant text-primary font-headline font-bold uppercase tracking-widest text-xs hover:bg-surface-container transition-colors"
+                      >
+                        Retour
+                      </button>
+                    )}
+                    {step < 3 ? (
+                      <button
+                        onClick={advance}
+                        className="bg-primary text-white font-headline font-black px-12 py-4 group flex items-center gap-4 hover:bg-secondary-container hover:text-on-secondary-container transition-all uppercase tracking-widest text-xs"
+                      >
+                        Étape suivante
+                        <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">
+                          arrow_forward
+                        </span>
+                      </button>
+                    ) : (
+                      // D-5: Submit with spinner
+                      <button
+                        onClick={handleSubmit}
+                        disabled={submitting}
+                        className="bg-secondary-container text-on-secondary-container font-headline font-black px-12 py-4 flex items-center gap-3 hover:bg-secondary hover:text-white transition-all uppercase tracking-widest text-xs disabled:opacity-50"
+                      >
+                        {submitting ? (
+                          <>
+                            <span className="inline-block w-4 h-4 border-2 border-on-secondary-container/30 border-t-on-secondary-container rounded-full animate-spin" />
+                            Envoi en cours…
+                          </>
+                        ) : (
+                          <>
+                            Envoyer mon devis
+                            <span className="material-symbols-outlined text-base">
+                              send
+                            </span>
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

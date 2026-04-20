@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import Footer from '../components/Footer'
+
 
 const ENGINS_DATA = [
   {
@@ -398,7 +398,6 @@ export default function Location() {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   )
 }

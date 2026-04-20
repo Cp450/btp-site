@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import Footer from '../components/Footer'
+
 
 const specs = [
   {
@@ -229,7 +229,6 @@ export default function InfrastructuresRurales() {
         </div>
       </section>
 
-      <Footer />
     </main>
   )
 }

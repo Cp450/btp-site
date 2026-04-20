@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import Footer from '../components/Footer'
+
 
 export default function SolutionsDurables() {
   const whatsapp = (msg = '') => {
@@ -192,7 +192,6 @@ export default function SolutionsDurables() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   )
 }

@@ -1,118 +1,262 @@
-import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { cn } from "../lib/cn";
 
-const NAV_LINKS = [
-  { label: 'Accueil', to: '/' },
-  { label: 'Services', to: '/#services' },
-  { label: 'Smart City', to: '/smart-city' },
-  { label: 'Génie Rural', to: '/genie-rural' },
-  { label: 'Immobilier', to: '/#immobilier' },
-  { label: "Location d'Engins", to: '/location' },
-  { label: 'Portfolio', to: '/portfolio' },
-]
+/**
+ * Services dropdown items shown on desktop.
+ * On mobile these are rendered flat (no nested dropdown).
+ */
+const SERVICE_ITEMS = [
+  { label: "Génie Rural", to: "/genie-rural" },
+  { label: "Smart City", to: "/smart-city" },
+  { label: "Location Engins", to: "/location" },
+  {
+    label: "Infrastructures Rurales",
+    to: "/genie-rural/infrastructures-rurales",
+  },
+  { label: "Élevage & Pisciculture", to: "/genie-rural/levage-pisciculture" },
+];
+
+const MOBILE_ITEMS = [
+  { label: "Accueil", to: "/" },
+  { label: "Génie Rural", to: "/genie-rural" },
+  { label: "Smart City", to: "/smart-city" },
+  { label: "Location Engins", to: "/location" },
+  {
+    label: "Infrastructures Rurales",
+    to: "/genie-rural/infrastructures-rurales",
+  },
+  { label: "Élevage & Pisciculture", to: "/genie-rural/levage-pisciculture" },
+  { label: "Portfolio", to: "/portfolio" },
+];
+
+const WHATSAPP_URL = "https://wa.me/242069610635";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const location = useLocation()
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const location = useLocation();
+  const dropdownRef = useRef(null);
+  const hamburgerRef = useRef(null);
 
+  function closeMenus() {
+    setMobileOpen(false);
+    setDropdownOpen(false);
+  }
+
+  /** Escape key closes mobile menu and dropdown */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    function handleKeyDown(e) {
+      if (e.key === "Escape") {
+        if (mobileOpen) {
+          setMobileOpen(false);
+          hamburgerRef.current?.focus();
+        }
+        if (dropdownOpen) {
+          setDropdownOpen(false);
+        }
+      }
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [mobileOpen, dropdownOpen]);
 
-  useEffect(() => setOpen(false), [location])
+  /** Close dropdown when clicking outside */
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   function isActive(to) {
-    if (to === '/') return location.pathname === '/'
-    return location.pathname.startsWith(to.split('#')[0]) && to !== '/'
+    if (to === "/") return location.pathname === "/";
+    return location.pathname.startsWith(to);
+  }
+
+  function isServicesActive() {
+    return SERVICE_ITEMS.some((item) => isActive(item.to));
   }
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#002045]/95 shadow-tectonic-lg' : 'bg-[#002045]'} backdrop-blur-md`}>
-      {/* Top bar */}
-      <div className="hidden md:block bg-secondary-container/10 border-b border-white/5">
-        <div className="max-w-screen-2xl mx-auto px-8 py-1 flex justify-between items-center">
-          <p className="text-[10px] text-white/50 uppercase tracking-widest font-label">
-            Brazzaville, Congo · Excellence Industrielle depuis 2009
-          </p>
-          <p className="text-[10px] text-white/50 uppercase tracking-widest font-label">
-            +242 06 961 06 35 · Réponse &lt; 15min
-          </p>
-        </div>
-      </div>
-
-      <div className="max-w-screen-2xl mx-auto px-8 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-3">
-          <span className="text-2xl font-headline font-black tracking-tighter text-white uppercase">Fogatech</span>
-          <span className="hidden sm:block text-xs font-label font-bold text-secondary-container uppercase tracking-widest border border-secondary-container/40 px-2 py-0.5">BTP</span>
-        </Link>
-
-        {/* Desktop links */}
-        <div className="hidden lg:flex items-center gap-8">
-          {NAV_LINKS.map((l) => (
-            <Link
-              key={l.label}
-              to={l.to}
-              className={`font-headline font-bold text-xs uppercase tracking-widest transition-colors duration-200 pb-1 ${
-                isActive(l.to)
-                  ? 'text-secondary-container border-b-2 border-secondary-container'
-                  : 'text-white/70 hover:text-white border-b-2 border-transparent'
-              }`}
-            >
-              {l.label}
-            </Link>
-          ))}
-        </div>
-
-        {/* CTA buttons */}
-        <div className="hidden lg:flex items-center gap-3">
-          <Link
-            to="/client"
-            className="text-white/70 hover:text-white text-xs font-label font-bold uppercase tracking-widest px-4 py-2 border border-white/20 hover:border-white/40 transition-colors rounded"
-          >
-            Espace Client
+    <header className="fixed top-0 w-full z-50 h-16 bg-primary shadow-tectonic-inset">
+      <nav aria-label="Main navigation" className="h-full">
+        <div className="flex justify-between items-center max-w-7xl mx-auto px-4 sm:px-6 h-full">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2 shrink-0">
+            <span className="font-headline font-black text-on-primary uppercase tracking-tight text-xl">
+              FOGATECH
+            </span>
+            <span className="text-secondary-container font-headline font-black text-xl uppercase tracking-tight">
+              BTP
+            </span>
           </Link>
+
+          {/* Desktop nav links — hidden below md */}
+          <div className="hidden md:flex items-center gap-6">
+            {/* Accueil */}
+            <Link
+              to="/"
+              className={cn(
+                "font-headline font-bold text-xs uppercase tracking-widest pb-1 transition-colors duration-200 border-b-2",
+                isActive("/")
+                  ? "text-on-primary border-secondary-container"
+                  : "text-on-primary/70 border-transparent hover:text-on-primary",
+              )}
+            >
+              Accueil
+            </Link>
+
+            {/* Services dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setDropdownOpen((v) => !v)}
+                aria-expanded={dropdownOpen}
+                aria-haspopup="true"
+                className={cn(
+                  "flex items-center gap-1 font-headline font-bold text-xs uppercase tracking-widest pb-1 transition-colors duration-200 border-b-2 cursor-pointer",
+                  isServicesActive()
+                    ? "text-on-primary border-secondary-container"
+                    : "text-on-primary/70 border-transparent hover:text-on-primary",
+                )}
+              >
+                Services
+                <span
+                  className="material-symbols-outlined text-base leading-none"
+                  aria-hidden="true"
+                  style={{ fontSize: "16px" }}
+                >
+                  {dropdownOpen ? "expand_less" : "expand_more"}
+                </span>
+              </button>
+
+              {dropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-56 bg-primary-container shadow-tectonic rounded-sm py-1 z-50">
+                  {SERVICE_ITEMS.map((item) => (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      onClick={closeMenus}
+                      className={cn(
+                        "block px-4 py-3 text-xs font-headline font-bold uppercase tracking-widest transition-colors duration-150",
+                        isActive(item.to)
+                          ? "text-secondary-container bg-primary/40"
+                          : "text-on-primary-container hover:text-on-primary hover:bg-primary/40",
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Portfolio */}
+            <Link
+              to="/portfolio"
+              className={cn(
+                "font-headline font-bold text-xs uppercase tracking-widest pb-1 transition-colors duration-200 border-b-2",
+                isActive("/portfolio")
+                  ? "text-on-primary border-secondary-container"
+                  : "text-on-primary/70 border-transparent hover:text-on-primary",
+              )}
+            >
+              Portfolio
+            </Link>
+
+            {/* Contact WhatsApp */}
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-headline font-bold text-xs uppercase tracking-widest pb-1 text-on-primary/70 border-b-2 border-transparent hover:text-on-primary transition-colors duration-200"
+            >
+              Contact
+            </a>
+          </div>
+
+          {/* Desktop CTA — always visible */}
           <Link
             to="/devis"
-            className="bg-secondary-container text-on-secondary-container px-6 py-2.5 font-headline font-bold uppercase tracking-widest text-xs hover:scale-95 active:scale-90 transition-all duration-200 rounded"
+            className="hidden md:inline-flex items-center bg-secondary-container text-on-secondary-container px-5 py-2 font-headline font-bold uppercase tracking-widest text-xs shadow-tectonic-orange hover:brightness-105 active:scale-95 transition-all duration-200 rounded-sm shrink-0"
           >
-            Demander un Devis
+            Demander un devis
           </Link>
-        </div>
 
-        {/* Mobile burger */}
-        <button onClick={() => setOpen((o) => !o)} className="lg:hidden text-white p-2" aria-label="Menu">
-          <span className="material-symbols-outlined">{open ? 'close' : 'menu'}</span>
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      {open && (
-        <div className="lg:hidden bg-[#001530] border-t border-white/10 px-8 py-6 space-y-4">
-          {NAV_LINKS.map((l) => (
-            <Link
-              key={l.label}
-              to={l.to}
-              className={`block font-headline font-bold text-xs uppercase tracking-widest py-2 border-b border-white/5 transition-colors ${
-                isActive(l.to) ? 'text-secondary-container' : 'text-white/70 hover:text-white'
-              }`}
+          {/* Hamburger — visible below md */}
+          <button
+            ref={hamburgerRef}
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-expanded={mobileOpen}
+            aria-label="Menu principal"
+            aria-controls="mobile-menu"
+            className="md:hidden flex items-center justify-center w-11 h-11 text-on-primary"
+          >
+            <span
+              className="material-symbols-outlined"
+              aria-hidden="true"
+              style={{ fontSize: "24px" }}
             >
-              {l.label}
-            </Link>
-          ))}
-          <div className="pt-4 flex flex-col gap-3">
-            <Link to="/client" className="block text-center text-white text-xs font-bold uppercase tracking-widest py-3 border border-white/20 rounded">
-              Espace Client
-            </Link>
-            <Link to="/devis" className="block text-center bg-secondary-container text-on-secondary-container text-xs font-bold uppercase tracking-widest py-3 rounded">
-              Demander un Devis
-            </Link>
-          </div>
+              {mobileOpen ? "close" : "menu"}
+            </span>
+          </button>
         </div>
-      )}
-    </nav>
-  )
+
+        {/* Mobile menu */}
+        {mobileOpen && (
+          <div
+            id="mobile-menu"
+            className="md:hidden bg-primary animate-nav-mobile-in border-t border-primary-container/30"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu de navigation"
+          >
+            <ul className="flex flex-col" role="list">
+              {MOBILE_ITEMS.map((item) => (
+                <li key={item.to} role="listitem">
+                  <Link
+                    to={item.to}
+                    onClick={closeMenus}
+                    className={cn(
+                      "flex items-center min-h-[48px] px-6 font-headline font-bold text-xs uppercase tracking-widest border-b border-primary-container/30 transition-colors duration-150",
+                      isActive(item.to)
+                        ? "text-secondary-container"
+                        : "text-on-primary/75 hover:text-on-primary",
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+              <li role="listitem">
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={closeMenus}
+                  className="flex items-center min-h-[48px] px-6 font-headline font-bold text-xs uppercase tracking-widest border-b border-primary-container/30 text-on-primary/75 hover:text-on-primary transition-colors duration-150"
+                >
+                  Contact WhatsApp
+                </a>
+              </li>
+            </ul>
+
+            {/* Full-width CTA at bottom */}
+            <div className="px-6 py-4">
+              <Link
+                to="/devis"
+                onClick={closeMenus}
+                className="flex items-center justify-center w-full min-h-[48px] bg-secondary-container text-on-secondary-container font-headline font-bold uppercase tracking-widest text-xs shadow-tectonic-orange rounded-sm"
+              >
+                Demander un devis
+              </Link>
+            </div>
+          </div>
+        )}
+      </nav>
+    </header>
+  );
 }

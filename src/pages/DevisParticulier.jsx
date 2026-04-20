@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Footer from '../components/Footer'
+
 
 const API_URL = import.meta.env.VITE_API_URL || ''
 
@@ -481,7 +481,6 @@ export default function DevisParticulier() {
         </div>
       </section>
 
-      <Footer />
     </main>
   )
 }

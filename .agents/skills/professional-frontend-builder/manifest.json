@@ -1,0 +1,87 @@
+{
+  "name": "professional-frontend-builder",
+  "version": "1.0.0",
+  "type": "skill",
+  "description": "Build production-ready, visually stunning frontends across all use cases (landing pages, dashboards, e-commerce, portfolios, admin panels). Supports Next.js, Vue, Svelte, and other modern frameworks.",
+  "author": "Claude",
+  "license": "MIT",
+  "keywords": [
+    "frontend",
+    "web development",
+    "design system",
+    "accessibility",
+    "performance",
+    "next.js",
+    "react",
+    "vue",
+    "svelte",
+    "tailwind css",
+    "responsive design",
+    "landing pages",
+    "saas",
+    "dashboards"
+  ],
+  "documentation": {
+    "main": "SKILL.md",
+    "readme": "README.md",
+    "references": [
+      "references/design-tokens.md",
+      "references/component-patterns.md",
+      "references/performance-checklist.md",
+      "references/framework-comparison.md"
+    ],
+    "tests": "test-suite.json"
+  },
+  "triggers": [
+    "Build a landing page",
+    "Create a dashboard",
+    "Design a website",
+    "Build a SaaS application",
+    "Create an admin panel",
+    "Design a portfolio site",
+    "Build an e-commerce site",
+    "Create a design system",
+    "Optimize website performance",
+    "Choose a frontend framework",
+    "Build a professional website",
+    "Create a responsive design",
+    "Build with Next.js",
+    "Build with Vue.js",
+    "Build with Svelte"
+  ],
+  "coverage": {
+    "frameworks": ["Next.js", "Vue 3", "Svelte", "Astro"],
+    "design_systems": 5,
+    "components": 20,
+    "test_cases": 5,
+    "design_aesthetics": [
+      "Luxury/Premium",
+      "Minimal/Clean",
+      "Corporate/Professional",
+      "Tech/Playful",
+      "Warm/Organic"
+    ]
+  },
+  "topics": [
+    "Design Systems",
+    "Component Architecture",
+    "Responsive Design",
+    "Accessibility (WCAG 2.1 AA)",
+    "Performance Optimization",
+    "Image Strategy",
+    "SEO & Metadata",
+    "Animations & Micro-interactions",
+    "Framework Selection",
+    "Quality Assurance",
+    "Pre-launch Checklist"
+  ],
+  "fileStructure": {
+    "SKILL.md": "Main documentation (14,000+ words)",
+    "README.md": "Usage guide & quick reference",
+    "test-suite.json": "5 comprehensive test cases",
+    "references/design-tokens.md": "Tailwind configs for 5 aesthetics",
+    "references/component-patterns.md": "Reusable components (React/Vue/Svelte)",
+    "references/performance-checklist.md": "Optimization techniques",
+    "references/framework-comparison.md": "Framework selection guide"
+  }
+}

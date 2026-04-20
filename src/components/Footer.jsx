@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 export default function Footer() {
   return (
     <footer className="bg-primary text-white border-t border-white/10">
-      <div className="max-w-screen-2xl mx-auto px-8 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-8 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
         {/* Brand */}
         <div className="md:col-span-1">
           <span className="text-3xl font-headline font-black text-white mb-4 block">Fogatech</span>
@@ -70,13 +70,18 @@ export default function Footer() {
         {/* Contact */}
         <div>
           <h4 className="font-label text-xs font-bold uppercase tracking-widest mb-8 text-secondary-container">Siège Social</h4>
-          <p className="text-on-primary-container text-sm font-body leading-relaxed mb-6">
-            Avenue de l'Indépendance,<br />
-            Immeuble Fogatech, Brazzaville<br />
-            République du Congo
+          <p className="flex items-start gap-2 text-on-primary-container text-sm font-body leading-relaxed mb-6">
+            <span className="material-symbols-outlined text-base mt-0.5 flex-shrink-0">location_on</span>
+            <span>Avenue de l'Indépendance,<br />Immeuble Fogatech, Brazzaville<br />République du Congo</span>
           </p>
-          <p className="text-secondary-container font-label font-bold text-sm mb-1">+242 06 961 06 35</p>
-          <p className="text-on-primary-container font-body text-xs">contact@fogatech.cg</p>
+          <p className="flex items-center gap-2 text-secondary-container font-label font-bold text-sm mb-1">
+            <span className="material-symbols-outlined text-base">phone</span>
+            +242 06 961 06 35
+          </p>
+          <p className="flex items-center gap-2 text-on-primary-container font-body text-xs">
+            <span className="material-symbols-outlined text-sm">mail</span>
+            contact@fogatech.cg
+          </p>
           <div className="mt-6">
             <p className="text-xs font-label text-on-primary-container/60 mb-3 uppercase tracking-widest">Slogan</p>
             <p className="text-secondary-container font-headline font-bold italic">"Mokolo na mokolo"</p>
@@ -87,7 +92,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="max-w-screen-2xl mx-auto px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-on-primary-container/60 text-xs font-body">
             © 2026 Fogatech Congo-Brazzaville. Excellence en Infrastructure & Génie Rural.
           </p>

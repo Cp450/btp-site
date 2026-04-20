@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import DOMPurify from 'dompurify'
 
 // ─── Knowledge base FR/Lingala ───────────────────────────────────────────────
 const FAQS = [
@@ -77,12 +78,27 @@ function getBotResponse(input) {
   }
 }
 
-function formatMessage(text) {
+function escapeHtml(text) {
   return text
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function formatMessage(text) {
+  const escaped = escapeHtml(text);
+  const formatted = escaped
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-congo underline">$1</a>')
-    .replace(/\n/g, '<br/>')
-    .replace(/^• /gm, '&bull; ')
+    .replace(/\n/g, "<br/>")
+    .replace(/^• /gm, "&bull; ");
+  return DOMPurify.sanitize(formatted, {
+    ALLOWED_TAGS: ["strong", "a", "br"],
+    ALLOWED_ATTR: ["href", "class"],
+    ALLOWED_URI_REGEXP: /^(https?:|\/|#)/i,
+  });
 }
 
 const QUICK_REPLIES = [

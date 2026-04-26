@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 
 
 const specs = [
@@ -23,6 +24,11 @@ const specs = [
 export default function InfrastructuresRurales() {
   return (
     <main className="pt-[72px] bg-surface text-on-surface font-body">
+      <SEO
+        title="Infrastructures rurales Congo — Routes et ponts"
+        description="Construction et réhabilitation d'infrastructures rurales au Congo : routes, ponts, ouvrages hydrauliques. Fogatech BTP, expertise terrain depuis 2015."
+        canonical="https://fogatech.cg/genie-rural/infrastructures-rurales"
+      />
 
       {/* Hero */}
       <section className="relative h-[560px] flex items-center overflow-hidden bg-primary">

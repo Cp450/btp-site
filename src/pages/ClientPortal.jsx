@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
+import SEO from '../components/SEO'
 
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState('')
@@ -218,6 +219,7 @@ export default function ClientPortal() {
 
   return (
     <div className="min-h-screen pt-24 pb-16 flex items-start justify-center bg-foga-bg px-4">
+      <SEO title="Espace Client — Suivi de chantier" noindex />
       <div className="w-full max-w-lg bg-foga-card border border-foga-border rounded-2xl p-6 md:p-8">
         {user
           ? <Dashboard user={user} onLogout={() => supabase.auth.signOut()} />

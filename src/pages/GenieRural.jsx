@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 import {
   IMG_HERO_GENIE_RURAL, IMG_SILOS_STOCKAGE, IMG_AVICULTURE,
   IMG_PORCHERIE, IMG_BOVINS, IMG_PISCICULTURE, IMG_SOLUTIONS_DURABLES
@@ -7,6 +8,11 @@ import {
 export default function GenieRural() {
   return (
     <main className="pt-[72px] bg-surface text-on-surface font-body">
+      <SEO
+        title="Génie Rural Congo — Routes, ponts, irrigation"
+        description="Fogatech BTP réalise routes, ponts, irrigations et infrastructures agricoles dans tout le Congo-Brazzaville. Expertise génie rural depuis 2015."
+        canonical="https://fogatech.cg/genie-rural"
+      />
 
       {/* Hero */}
       <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-primary">

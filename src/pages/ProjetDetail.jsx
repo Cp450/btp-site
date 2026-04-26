@@ -1,4 +1,5 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
+import SEO from '../components/SEO'
 
 
 const PROJETS = {
@@ -184,6 +185,11 @@ export default function ProjetDetail() {
 
   return (
     <>
+      <SEO
+        title={`${projet.titre} — Smart City Congo`}
+        description={projet.description}
+        canonical={`https://fogatech.cg/smart-city/${projet.slug}`}
+      />
       <main className="pt-20 bg-surface min-h-screen">
         {/* Side nav (desktop) */}
         <div className="hidden lg:flex">

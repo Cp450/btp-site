@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
+import SEO from '../components/SEO'
 
 const PLOTS = Array.from({ length: 30 }, (_, i) => ({
   id: `${String.fromCharCode(65 + Math.floor(i / 10))}${(i % 10) + 1}`,
@@ -132,6 +133,11 @@ function PlotMap() {
 export default function SmartCity() {
   return (
     <main className="pt-[72px] bg-surface text-on-surface font-body">
+      <SEO
+        title="Smart City Congo — Éco-cités intelligentes"
+        description="Fogatech BTP conçoit les éco-cités intelligentes du Congo. Éco-Cité Massina, logements connectés, infrastructures urbaines durables à Brazzaville."
+        canonical="https://fogatech.cg/smart-city"
+      />
       {/* Hero */}
       <section className="relative min-h-[80vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">

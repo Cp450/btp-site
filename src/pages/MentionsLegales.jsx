@@ -1,10 +1,17 @@
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 
 export default function MentionsLegales() {
   const today = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
 
   return (
     <main className="pt-24 pb-16 bg-surface min-h-screen">
+      <SEO
+        title="Mentions légales"
+        description="Mentions légales de Fogatech BTP — éditeur, hébergeur, propriété intellectuelle et droit applicable."
+        canonical="https://fogatech.cg/mentions-legales"
+        noindex
+      />
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         <nav className="mb-6">
           <Link to="/" className="text-primary text-sm font-body hover:text-secondary transition-colors">← Accueil</Link>

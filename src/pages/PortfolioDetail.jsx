@@ -1,4 +1,5 @@
 import { useParams, Link, Navigate } from "react-router-dom";
+import SEO from "../components/SEO";
 import {
   IMG_PROJET_VILLA,
   IMG_PROJET_SMART,
@@ -101,6 +102,11 @@ export default function PortfolioDetail() {
 
   return (
     <main className="bg-surface min-h-screen">
+      <SEO
+        title={`${projet.title} — Portfolio Fogatech`}
+        description={projet.description}
+        canonical={`https://fogatech.cg/portfolio/${projet.id}`}
+      />
       {/* Hero */}
       <div className="relative h-[50vh] min-h-[360px] overflow-hidden">
         <img

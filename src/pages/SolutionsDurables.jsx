@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 
 
 export default function SolutionsDurables() {
@@ -9,6 +10,11 @@ export default function SolutionsDurables() {
 
   return (
     <>
+      <SEO
+        title="Solutions durables — Génie Rural Congo"
+        description="Fogatech BTP propose des solutions durables pour le génie rural congolais : énergie solaire, gestion de l'eau, agriculture durable."
+        canonical="https://fogatech.cg/genie-rural/solutions-durables"
+      />
       <main className="pt-20 bg-background min-h-screen">
         {/* Hero */}
         <section className="relative h-[700px] flex items-end overflow-hidden">

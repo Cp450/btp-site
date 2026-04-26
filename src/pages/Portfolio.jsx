@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import SEO from "../components/SEO";
 import {
   IMG_PROJET_VILLA,
   IMG_PROJET_COMMERCIAL,
@@ -273,6 +274,11 @@ export default function Portfolio() {
 
   return (
     <main className="min-h-screen bg-surface pt-20 pb-16">
+      <SEO
+        title="Portfolio — 50+ chantiers livrés"
+        description="Découvrez nos réalisations en BTP, Smart City et Génie Rural au Congo-Brazzaville. Budgets réels, délais respectés, certifications vérifiées."
+        canonical="https://fogatech.cg/portfolio"
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="py-16 md:py-20">

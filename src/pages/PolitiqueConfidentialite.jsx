@@ -1,10 +1,17 @@
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 
 export default function PolitiqueConfidentialite() {
   const today = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
 
   return (
     <main className="pt-24 pb-16 bg-surface min-h-screen">
+      <SEO
+        title="Politique de confidentialité"
+        description="Politique de confidentialité de Fogatech BTP — données collectées, finalité, droits des utilisateurs."
+        canonical="https://fogatech.cg/confidentialite"
+        noindex
+      />
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         <nav className="mb-6">
           <Link to="/" className="text-primary text-sm font-body hover:text-secondary transition-colors">← Accueil</Link>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 
 
 const standards = [
@@ -22,6 +23,11 @@ const standards = [
 export default function LevagePisciculture() {
   return (
     <main className="pt-[72px] bg-surface text-on-surface font-body">
+      <SEO
+        title="Levage, pisciculture et élevage — Génie Rural"
+        description="Fogatech BTP réalise des équipements de levage, pisciculture, aviculture et élevage pour les exploitations rurales congolaises."
+        canonical="https://fogatech.cg/genie-rural/levage-pisciculture"
+      />
 
       {/* Hero */}
       <section className="relative min-h-[560px] flex items-center overflow-hidden bg-primary">

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { cn } from "../lib/cn";
 import { IMG_HERO_DEVIS } from "../lib/images";
+import SEO from "../components/SEO";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
@@ -232,6 +233,11 @@ export default function DemandeDevis() {
 
   return (
     <main className="pt-[72px] bg-surface text-on-surface font-body">
+      <SEO
+        title="Demande de devis BTP"
+        description="Recevez un devis personnalisé sous 24h pour votre projet BTP au Congo. Villa, immeuble, route, location d'engins — Fogatech BTP répond en moins de 24h."
+        canonical="https://fogatech.cg/devis"
+      />
       {/* Hero */}
       <section className="relative h-80 flex items-center overflow-hidden bg-primary">
         <div className="absolute inset-0 opacity-40">

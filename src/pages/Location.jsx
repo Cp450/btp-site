@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import EnginsStock from '../components/EnginsStock'
+import SEO from '../components/SEO'
 
 
 const ENGINS_DATA = [
@@ -141,6 +142,11 @@ export default function Location() {
 
   return (
     <>
+      <SEO
+        title="Location d'engins BTP Brazzaville"
+        description="65 engins BTP disponibles à Brazzaville : pelleteuses, bulldozers, grues, camions. Livraison sous 24h, opérateurs certifiés. Fogatech BTP Congo."
+        canonical="https://fogatech.cg/location"
+      />
       <main className="pt-20 bg-surface min-h-screen">
         <EnginsStock />
         {/* Hero */}

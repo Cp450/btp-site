@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import CalculateurBudget from '../components/CalculateurBudget'
+import SEO from '../components/SEO'
 
 
 const API_URL = import.meta.env.VITE_API_URL || ''
@@ -122,6 +123,11 @@ export default function DevisParticulier() {
 
   return (
     <main className="pt-[72px] bg-surface text-on-surface font-body">
+      <SEO
+        title="Devis particulier — Villa, rénovation, construction"
+        description="Estimez le budget de votre projet BTP avec notre calculateur en ligne. Villa, rénovation, immeuble — réponse indicative immédiate."
+        canonical="https://fogatech.cg/devis-particulier"
+      />
 
       <CalculateurBudget />
 

@@ -109,35 +109,45 @@ export default function DemandeDevis() {
     setSubmitting(true);
     setSubmitError("");
 
-    try {
-      const res = await fetch(`${API_URL}/api/devis_requests`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          profile: form.profile,
-          nom: form.nom,
-          email: form.email,
-          tel: form.tel,
-          categorie: form.categorie,
-          budget: form.budget,
-          description: form.description,
-          ville: form.ville,
-          quartier: form.quartier,
-          surface: form.surface,
-        }),
-      });
-      if (!res.ok) {
-        const { error } = await res.json().catch(() => ({}));
-        console.error("API error:", error);
-        setSubmitError(
-          "Erreur lors de l'enregistrement. Votre message WhatsApp sera quand même envoyé.",
-        );
+    if (!API_URL) {
+      console.warn("VITE_API_URL non défini — envoi direct WhatsApp sans appel API.");
+    } else {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+
+      try {
+        const res = await fetch(`${API_URL}/api/devis_requests`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          signal: controller.signal,
+          body: JSON.stringify({
+            profile: form.profile,
+            nom: form.nom,
+            email: form.email,
+            tel: form.tel,
+            categorie: form.categorie,
+            budget: form.budget,
+            description: form.description,
+            ville: form.ville,
+            quartier: form.quartier,
+            surface: form.surface,
+          }),
+        });
+        if (!res.ok) {
+          const { error } = await res.json().catch(() => ({}));
+          console.error("API error:", error);
+          setSubmitError("Erreur serveur. Demande envoyée sur WhatsApp.");
+        }
+      } catch (err) {
+        if (err.name === "AbortError") {
+          setSubmitError("Le serveur met trop de temps à répondre. Votre demande a été envoyée sur WhatsApp.");
+        } else {
+          console.error("Network error:", err);
+          setSubmitError("Connexion impossible. Demande envoyée sur WhatsApp.");
+        }
+      } finally {
+        clearTimeout(timeout);
       }
-    } catch (err) {
-      console.error("Network error:", err);
-      setSubmitError(
-        "Erreur réseau. Votre message WhatsApp sera quand même envoyé.",
-      );
     }
 
     const waMsg = encodeURIComponent(

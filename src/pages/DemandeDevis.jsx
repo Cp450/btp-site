@@ -166,7 +166,7 @@ export default function DemandeDevis() {
     setWaUrl(url);
     setSubmitting(false);
     setRedirecting(true);
-    setTimeout(() => window.open(url, "_blank"), 300);
+    setTimeout(() => { window.open(url, "_blank"); setRedirecting(false); setDone(true); }, 300);
   }
 
   // ── D-4: WhatsApp redirect transition screen ─────────────────────────────

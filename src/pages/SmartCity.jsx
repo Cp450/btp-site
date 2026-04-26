@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { supabase } from '../lib/supabase'
 import SEO from '../components/SEO'
 
 const PLOTS = Array.from({ length: 30 }, (_, i) => ({

@@ -90,7 +90,6 @@ const CATEGORIES = ['Terrassement', 'Levage', 'Transport', 'Nivellement', 'Compa
 const MARQUES = ['Caterpillar', 'Komatsu', 'Liebherr', 'Volvo CE']
 
 export default function Location() {
-  const [engins, setEngins] = useState(ENGINS_DATA)
   const [search, setSearch] = useState('')
   const [categories, setCategories] = useState([])
   const [marque, setMarque] = useState('')

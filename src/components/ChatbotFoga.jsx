@@ -100,6 +100,9 @@ function formatMessage(text) {
   });
 }
 
+let _chatId = 0
+const nextChatId = () => { _chatId += 1; return _chatId }
+
 const QUICK_REPLIES = [
   'Devis gratuit',
   'Location engins',
@@ -128,16 +131,16 @@ export default function ChatbotFoga() {
 
   function sendMessage(text) {
     if (!text.trim()) return
-    const userMsg = { id: Date.now(), from: 'user', text }
+    const userMsg = { id: nextChatId(), from: 'user', text }
     setMessages((m) => [...m, userMsg])
     setInput('')
     setTyping(true)
 
     setTimeout(() => {
       const response = getBotResponse(text)
-      setMessages((m) => [...m, { id: Date.now() + 1, from: 'bot', ...response }])
+      setMessages((m) => [...m, { id: nextChatId(), from: 'bot', ...response }])
       setTyping(false)
-    }, 600 + Math.random() * 400)
+    }, 800)
   }
 
   return (

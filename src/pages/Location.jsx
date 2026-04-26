@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import EnginsStock from '../components/EnginsStock'
 
 
 const ENGINS_DATA = [
@@ -141,6 +142,7 @@ export default function Location() {
   return (
     <>
       <main className="pt-20 bg-surface min-h-screen">
+        <EnginsStock />
         {/* Hero */}
         <section className="relative h-[420px] flex items-center bg-primary overflow-hidden">
           <div className="absolute inset-0 opacity-35">

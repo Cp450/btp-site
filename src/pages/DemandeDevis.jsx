@@ -4,7 +4,7 @@ import { IMG_HERO_DEVIS } from "../lib/images";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
-const STEPS = ["Profil Client", "Détails Projet", "Localisation", "Validation"];
+const STEPS = ["Profil", "Contact", "Projet", "Localisation", "Confirmation"];
 
 const PROFILES = [
   {
@@ -66,6 +66,8 @@ export default function DemandeDevis() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [redirecting, setRedirecting] = useState(false);
+  const [waUrl, setWaUrl] = useState("");
 
   function set(k, v) {
     setForm((f) => ({ ...f, [k]: v }));
@@ -78,13 +80,15 @@ export default function DemandeDevis() {
     const errors = {};
     if (s === 0) {
       if (!form.profile) errors.profile = true;
+    }
+    if (s === 1) {
       if (!form.nom) errors.nom = true;
       if (!form.tel) errors.tel = true;
     }
-    if (s === 1) {
+    if (s === 2) {
       if (!form.categorie) errors.categorie = true;
     }
-    if (s === 2) {
+    if (s === 3) {
       if (!form.ville) errors.ville = true;
     }
     return errors;
@@ -147,9 +151,32 @@ export default function DemandeDevis() {
         `Surface: ${form.surface} m2\n\n` +
         `Besoin: ${form.description}`,
     );
-    window.open(`https://wa.me/242069610635?text=${waMsg}`, "_blank");
+    const url = `https://wa.me/242069610635?text=${waMsg}`;
+    setWaUrl(url);
     setSubmitting(false);
-    setDone(true);
+    setRedirecting(true);
+    setTimeout(() => window.open(url, "_blank"), 300);
+  }
+
+  // ── D-4: WhatsApp redirect transition screen ─────────────────────────────
+  if (redirecting) {
+    return (
+      <main className="pt-[72px] min-h-screen bg-surface flex items-center justify-center px-4">
+        <div className="text-center max-w-sm">
+          <div className="w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg viewBox="0 0 24 24" className="w-8 h-8 fill-white" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </div>
+          <h1 className="font-headline text-2xl font-black text-primary mb-3">Ouverture de WhatsApp…</h1>
+          <p className="text-on-surface-variant font-body text-sm">
+            Votre navigateur va ouvrir WhatsApp avec votre demande pré-remplie.{" "}
+            Si l'application ne s'ouvre pas,{" "}
+            <a href={waUrl} className="text-primary underline">cliquez ici</a>.
+          </p>
+        </div>
+      </main>
+    );
   }
 
   // ── D-5: Success screen ───────────────────────────────────────────────────
@@ -337,7 +364,7 @@ export default function DemandeDevis() {
               </nav>
 
               <div className="bg-surface-container-lowest p-8 md:p-12 shadow-tectonic">
-                {/* D-2: Step 0 — Profile selection */}
+                {/* Step 0 — Profile selection only */}
                 {step === 0 && (
                   <div>
                     <h2 className="font-headline text-3xl font-black text-primary mb-2 tracking-tight">
@@ -408,10 +435,23 @@ export default function DemandeDevis() {
                         );
                       })}
                     </div>
+                    {fieldErrors.profile && (
+                      <p className="text-xs text-error font-body">
+                        Veuillez sélectionner un profil.
+                      </p>
+                    )}
+                  </div>
+                )}
 
-                    <hr className="border-surface-container my-8" />
-
-                    {/* D-3: Contact fields with proper labels + focus rings */}
+                {/* Step 1 — Contact fields */}
+                {step === 1 && (
+                  <div>
+                    <h2 className="font-headline text-3xl font-black text-primary mb-2 tracking-tight">
+                      Vos coordonnées
+                    </h2>
+                    <p className="text-on-surface-variant mb-10 font-body">
+                      Comment pouvons-nous vous joindre pour votre devis ?
+                    </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8">
                       <div className="flex flex-col gap-2">
                         <label
@@ -484,8 +524,8 @@ export default function DemandeDevis() {
                   </div>
                 )}
 
-                {/* Step 1: Détails Projet */}
-                {step === 1 && (
+                {/* Step 2 — Détails Projet */}
+                {step === 2 && (
                   <div>
                     <h2 className="font-headline text-3xl font-black text-primary mb-2 tracking-tight">
                       Détails du projet
@@ -594,8 +634,8 @@ export default function DemandeDevis() {
                   </div>
                 )}
 
-                {/* Step 2: Localisation */}
-                {step === 2 && (
+                {/* Step 3: Localisation */}
+                {step === 3 && (
                   <div>
                     <h2 className="font-headline text-3xl font-black text-primary mb-2 tracking-tight">
                       Localisation du projet
@@ -665,8 +705,8 @@ export default function DemandeDevis() {
                   </div>
                 )}
 
-                {/* D-4: Step 3 — Validation with Modifier buttons */}
-                {step === 3 && (
+                {/* Step 4 — Confirmation/Validation with Modifier buttons */}
+                {step === 4 && (
                   <div>
                     <h2 className="font-headline text-3xl font-black text-primary mb-2 tracking-tight">
                       Validation
@@ -690,6 +730,32 @@ export default function DemandeDevis() {
                       </div>
                       {[
                         { label: "Profil", val: form.profile },
+                      ].map((r) => (
+                        <div key={r.label} className="flex justify-between text-sm">
+                          <span className="text-on-surface-variant">
+                            {r.label}
+                          </span>
+                          <span className="text-on-surface font-medium">
+                            {r.val || "—"}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Section: Contact */}
+                    <div className="bg-surface-container rounded-lg p-4 space-y-3 mb-4">
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+                          Contact
+                        </h3>
+                        <button
+                          onClick={() => setStep(1)}
+                          className="text-sm text-primary underline hover:text-secondary transition-colors"
+                        >
+                          Modifier
+                        </button>
+                      </div>
+                      {[
                         { label: "Nom", val: form.nom },
                         { label: "Téléphone", val: form.tel },
                         { label: "Email", val: form.email || "—" },
@@ -712,7 +778,7 @@ export default function DemandeDevis() {
                           Détails Projet
                         </h3>
                         <button
-                          onClick={() => setStep(1)}
+                          onClick={() => setStep(2)}
                           className="text-sm text-primary underline hover:text-secondary transition-colors"
                         >
                           Modifier
@@ -754,7 +820,7 @@ export default function DemandeDevis() {
                           Localisation
                         </h3>
                         <button
-                          onClick={() => setStep(2)}
+                          onClick={() => setStep(3)}
                           className="text-sm text-primary underline hover:text-secondary transition-colors"
                         >
                           Modifier
@@ -814,7 +880,7 @@ export default function DemandeDevis() {
                         Retour
                       </button>
                     )}
-                    {step < 3 ? (
+                    {step < 4 ? (
                       <button
                         onClick={advance}
                         className="bg-primary text-white font-headline font-black px-12 py-4 group flex items-center gap-4 hover:bg-secondary-container hover:text-on-secondary-container transition-all uppercase tracking-widest text-xs"

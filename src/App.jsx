@@ -17,7 +17,11 @@ const ProjetDetail         = lazy(() => import('./pages/ProjetDetail'))
 const SolutionsDurables    = lazy(() => import('./pages/SolutionsDurables'))
 const InfrastructuresRurales = lazy(() => import('./pages/InfrastructuresRurales'))
 const LevagePisciculture   = lazy(() => import('./pages/LevagePisciculture'))
+const PortfolioDetail      = lazy(() => import('./pages/PortfolioDetail'))
 const DevisParticulier     = lazy(() => import('./pages/DevisParticulier'))
+const MentionsLegales      = lazy(() => import('./pages/MentionsLegales'))
+const PolitiqueConfidentialite = lazy(() => import('./pages/PolitiqueConfidentialite'))
+const CGU                  = lazy(() => import('./pages/CGU'))
 
 function PageLoader() {
   return (
@@ -35,6 +39,7 @@ export default function App() {
         <Routes>
           <Route path="/"                                    element={<Home />} />
           <Route path="/portfolio"                           element={<Portfolio />} />
+          <Route path="/portfolio/:id"                       element={<PortfolioDetail />} />
           <Route path="/smart-city"                          element={<SmartCity />} />
           <Route path="/smart-city/:slug"                    element={<ProjetDetail />} />
           <Route path="/genie-rural"                         element={<GenieRural />} />
@@ -45,6 +50,9 @@ export default function App() {
           <Route path="/devis"                               element={<DemandeDevis />} />
           <Route path="/location"                            element={<Location />} />
           <Route path="/client/*"                            element={<ClientPortal />} />
+          <Route path="/mentions-legales"                    element={<MentionsLegales />} />
+          <Route path="/confidentialite"                     element={<PolitiqueConfidentialite />} />
+          <Route path="/cgu"                                 element={<CGU />} />
           <Route path="*"                                    element={<NotFound />} />
         </Routes>
       </Suspense>

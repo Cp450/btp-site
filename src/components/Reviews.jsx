@@ -272,7 +272,11 @@ function ReviewForm({ onSubmitted }) {
   );
 }
 
-export default function Reviews() {
+/**
+ * Reviews section.
+ * @param {boolean} compact - When true: shows max 3 reviews, hides form/CTA button, alternate title, no avg rating block.
+ */
+export default function Reviews({ compact = false }) {
   const [reviews, setReviews] = useState(FALLBACK_REVIEWS);
   const [showForm, setShowForm] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -314,6 +318,8 @@ export default function Reviews() {
     reviews.reduce((s, r) => s + r.rating, 0) / reviews.length
   ).toFixed(1);
 
+  const displayedReviews = compact ? reviews.slice(0, 3) : reviews.slice(0, 6);
+
   return (
     <section className="py-16 md:py-24 bg-surface-container-low">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -322,46 +328,62 @@ export default function Reviews() {
             Clients vérifiés
           </p>
           <h2 className="font-headline text-3xl md:text-4xl font-black text-primary mb-4">
-            Ce qu'ils disent de{" "}
-            <span className="text-secondary-container">Fogatech</span>
+            {compact ? (
+              "Ils nous font confiance"
+            ) : (
+              <>
+                Ce qu&apos;ils disent de{" "}
+                <span className="text-secondary-container">Fogatech</span>
+              </>
+            )}
           </h2>
-          <div className="flex items-center justify-center gap-4 mt-4">
-            <span className="font-headline font-black text-5xl text-primary">{avgRating}</span>
-            <div>
-              <Stars value={5} size="lg" />
-              <p className="text-xs text-on-surface-variant font-body mt-1">
-                {reviews.length} avis vérifiés
-              </p>
+          {!compact && (
+            <div className="flex items-center justify-center gap-4 mt-4">
+              <span className="font-headline font-black text-5xl text-primary">{avgRating}</span>
+              <div>
+                <Stars value={5} size="lg" />
+                <p className="text-xs text-on-surface-variant font-body mt-1">
+                  {reviews.length} avis vérifiés
+                </p>
+              </div>
             </div>
-          </div>
+          )}
+          {compact && (
+            <div className="flex items-center justify-center gap-2 mt-3">
+              <Stars value={5} size="sm" />
+              <span className="text-sm text-on-surface-variant font-body">{reviews.length} avis vérifiés</span>
+            </div>
+          )}
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-          {reviews.slice(0, 6).map((r) => (
+          {displayedReviews.map((r) => (
             <ReviewCard key={r.id} r={r} />
           ))}
         </div>
 
-        {submitted ? (
-          <div className="text-center py-8 bg-savane/10 border border-savane/30">
-            <span className="material-symbols-outlined text-4xl text-savane block mb-3" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-            <p className="text-savane font-headline font-bold text-lg">Merci pour votre avis !</p>
-            <p className="text-on-surface-variant text-sm mt-1 font-body">
-              Il sera publié après vérification par notre équipe.
-            </p>
-          </div>
-        ) : showForm ? (
-          <ReviewForm onSubmitted={() => { setShowForm(false); setSubmitted(true); }} />
-        ) : (
-          <div className="text-center">
-            <button
-              onClick={() => setShowForm(true)}
-              className="inline-flex items-center gap-2 border border-outline-variant text-primary font-headline font-bold px-8 py-3 hover:border-primary hover:bg-surface-container transition-colors text-sm uppercase tracking-widest"
-            >
-              <span className="material-symbols-outlined text-base">rate_review</span>
-              Laisser un avis
-            </button>
-          </div>
+        {!compact && (
+          submitted ? (
+            <div className="text-center py-8 bg-savane/10 border border-savane/30">
+              <span className="material-symbols-outlined text-4xl text-savane block mb-3" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+              <p className="text-savane font-headline font-bold text-lg">Merci pour votre avis !</p>
+              <p className="text-on-surface-variant text-sm mt-1 font-body">
+                Il sera publié après vérification par notre équipe.
+              </p>
+            </div>
+          ) : showForm ? (
+            <ReviewForm onSubmitted={() => { setShowForm(false); setSubmitted(true); }} />
+          ) : (
+            <div className="text-center">
+              <button
+                onClick={() => setShowForm(true)}
+                className="inline-flex items-center gap-2 border border-outline-variant text-primary font-headline font-bold px-8 py-3 hover:border-primary hover:bg-surface-container transition-colors text-sm uppercase tracking-widest"
+              >
+                <span className="material-symbols-outlined text-base">rate_review</span>
+                Laisser un avis
+              </button>
+            </div>
+          )
         )}
       </div>
     </section>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import CalculateurBudget from '../components/CalculateurBudget'
 
 
 const API_URL = import.meta.env.VITE_API_URL || ''
@@ -121,6 +122,8 @@ export default function DevisParticulier() {
 
   return (
     <main className="pt-[72px] bg-surface text-on-surface font-body">
+
+      <CalculateurBudget />
 
       {/* Hero */}
       <section className="relative bg-primary py-20 px-6 overflow-hidden">

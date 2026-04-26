@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 
-// Mock live data — replace with Supabase Realtime subscription
 const STATS = [
-  { label: 'Chantiers en cours', value: 12, suffix: '', color: 'text-congo' },
+  { label: 'Chantiers en cours', value: 12, suffix: '', color: 'text-secondary-container' },
   { label: 'Livrés en Avril', value: 3, suffix: '', color: 'text-savane' },
-  { label: 'Engins actifs', value: 22, suffix: '', color: 'text-blue-400' },
-  { label: 'Clients servis', value: 847, suffix: '+', color: 'text-purple-400' },
+  { label: 'Engins actifs', value: 22, suffix: '', color: 'text-primary' },
+  { label: 'Clients servis', value: 847, suffix: '+', color: 'text-on-surface-variant' },
 ]
 
 function CountUp({ target, suffix }) {
@@ -47,11 +46,11 @@ export default function LiveDashboard() {
   }, [])
 
   return (
-    <section className="bg-foga-card border-y border-foga-border py-10">
+    <section className="bg-surface-container-low border-y border-outline-variant py-10">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-center gap-2 mb-6">
           <span className={`w-2.5 h-2.5 rounded-full bg-green-400 ${pulse ? 'opacity-100' : 'opacity-40'} transition-opacity duration-700`} />
-          <p className="text-xs uppercase tracking-widest text-stitch-grey">Tableau de bord en direct</p>
+          <p className="text-xs uppercase tracking-widest text-on-surface-variant">Tableau de bord en direct</p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -60,7 +59,7 @@ export default function LiveDashboard() {
               <div className={`text-4xl md:text-5xl font-black ${s.color}`}>
                 <CountUp target={s.value} suffix={s.suffix} />
               </div>
-              <div className="text-sm text-stitch-grey mt-1">{s.label}</div>
+              <div className="text-sm text-on-surface-variant mt-1">{s.label}</div>
             </div>
           ))}
         </div>

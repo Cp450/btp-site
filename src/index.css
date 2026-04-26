@@ -45,10 +45,26 @@
   animation: navMobileIn 0.25s ease-out both;
 }
 
+/* Mobile nav menu transition */
+.nav-mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+.nav-mobile-menu.open {
+  max-height: 700px;
+}
+
 /* ── Reduced motion ────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-slide-up,
   .animate-nav-mobile-in {
     animation: none;
+  }
+  .nav-mobile-menu,
+  .nav-mobile-menu.open {
+    transition: none;
+    max-height: none;
+    overflow: visible;
   }
 }

@@ -1,22 +1,21 @@
-import Hero from '../components/Hero'
-import LiveDashboard from '../components/LiveDashboard'
-import Configurateur from '../components/Configurateur'
-import EnginsStock from '../components/EnginsStock'
-import ChefsSection from '../components/ChefCard'
-import CalculateurBudget from '../components/CalculateurBudget'
-import Reviews from '../components/Reviews'
-
+import Hero from "../components/Hero";
+import ServicesGrid from "../components/ServicesGrid";
+import ProjetsPhares from "../components/ProjetsPhares";
+import PourquoiNous from "../components/PourquoiNous";
+import Process from "../components/Process";
+import Reviews from "../components/Reviews";
+import CtaFinal from "../components/CtaFinal";
 
 export default function Home() {
   return (
     <main>
       <Hero />
-      <LiveDashboard />
-      <CalculateurBudget />
-      <ChefsSection />
-      <Configurateur />
-      <EnginsStock />
-      <Reviews />
+      <ServicesGrid />
+      <ProjetsPhares />
+      <PourquoiNous />
+      <Process />
+      <Reviews compact />
+      <CtaFinal />
     </main>
-  )
+  );
 }

@@ -15,7 +15,7 @@ const CHEFS = [
     ],
     bio: "Diplômé de l'ENSP Brazzaville + INSA Lyon. Spécialiste structures R+4 et éco-construction.",
     dispo: true,
-    photo: null, // URL photo réelle à brancher
+    photo: null,
   },
   {
     id: 2,
@@ -59,9 +59,11 @@ function StarRating({ note }) {
       {[1, 2, 3, 4, 5].map((i) => (
         <span
           key={i}
-          className={`text-sm ${i <= full ? "text-congo" : i === full + 1 && half ? "text-congo/50" : "text-stitch-grey/30"}`}
+          className={`material-symbols-outlined text-sm ${i <= full ? "text-secondary-container" : i === full + 1 && half ? "text-secondary-container/50" : "text-outline-variant"}`}
+          style={{ fontVariationSettings: i <= full || (i === full + 1 && half) ? "'FILL' 1" : "'FILL' 0" }}
+          aria-hidden="true"
         >
-          ★
+          star
         </span>
       ))}
     </span>
@@ -74,75 +76,70 @@ function ChefCard({ chef }) {
     .map((n) => n[0])
     .join("");
   return (
-    <div className="bg-foga-card border border-foga-border rounded-xl p-5 hover:border-savane/50 transition-colors flex flex-col">
-      {/* Avatar + dispo */}
+    <div className="bg-surface-container-low border border-outline-variant p-5 hover:border-savane/50 transition-colors flex flex-col">
       <div className="flex items-start gap-4 mb-4">
         <div className="relative flex-shrink-0">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-savane/40 flex items-center justify-center text-white text-xl font-black">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-savane/40 flex items-center justify-center text-on-primary text-xl font-black">
             {initials}
           </div>
           <span
-            className={`absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-foga-card ${chef.dispo ? "bg-green-400" : "bg-gray-500"}`}
+            className={`absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-surface-container-low ${chef.dispo ? "bg-green-400" : "bg-gray-500"}`}
           />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-white font-bold text-sm leading-tight">
+          <h3 className="text-on-surface font-bold text-sm leading-tight">
             {chef.nom}
           </h3>
-          <p className="text-congo text-xs font-semibold">{chef.titre}</p>
-          <p className="text-stitch-grey text-xs mt-0.5 truncate">
+          <p className="text-secondary-container text-xs font-semibold">{chef.titre}</p>
+          <p className="text-on-surface-variant text-xs mt-0.5 truncate">
             {chef.specialite}
           </p>
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-2 text-center mb-4 py-3 border-y border-foga-border">
+      <div className="grid grid-cols-3 gap-2 text-center mb-4 py-3 border-y border-outline-variant">
         <div>
-          <div className="text-white font-black text-lg">{chef.experience}</div>
-          <div className="text-stitch-grey text-[10px]">ans exp.</div>
+          <div className="text-on-surface font-black text-lg">{chef.experience}</div>
+          <div className="text-on-surface-variant text-[10px]">ans exp.</div>
         </div>
         <div>
           <div className="text-savane font-black text-lg">{chef.projets}</div>
-          <div className="text-stitch-grey text-[10px]">projets</div>
+          <div className="text-on-surface-variant text-[10px]">projets</div>
         </div>
         <div>
-          <div className="text-congo font-black text-lg">{chef.note}</div>
-          <div className="text-stitch-grey text-[10px]">/ 5</div>
+          <div className="text-secondary-container font-black text-lg">{chef.note}</div>
+          <div className="text-on-surface-variant text-[10px]">/ 5</div>
         </div>
       </div>
 
-      {/* Note étoiles */}
       <div className="flex items-center gap-2 mb-3">
         <StarRating note={chef.note} />
-        <span className="text-xs text-stitch-grey">
+        <span className="text-xs text-on-surface-variant">
           {chef.avis} avis vérifiés
         </span>
       </div>
 
-      {/* Bio */}
-      <p className="text-stitch-grey text-xs leading-relaxed mb-4 flex-1">
+      <p className="text-on-surface-variant text-xs leading-relaxed mb-4 flex-1">
         {chef.bio}
       </p>
 
-      {/* Certifications */}
       <div className="flex flex-wrap gap-1 mb-4">
         {chef.certifs.map((c) => (
           <span
             key={c}
-            className="text-[10px] bg-primary/10 border border-primary/30 text-blue-300 px-2 py-0.5 rounded-full"
+            className="text-[10px] bg-primary/10 border border-primary/30 text-primary px-2 py-0.5 flex items-center gap-0.5"
           >
-            ✓ {c}
+            <span className="material-symbols-outlined text-xs" aria-hidden="true" style={{ fontVariationSettings: "'FILL' 1", fontSize: "12px" }}>check_circle</span>
+            {c}
           </span>
         ))}
       </div>
 
-      {/* CTA */}
       <a
         href={`https://wa.me/242069610635?text=Bonjour%2C%20je%20voudrais%20travailler%20avec%20${encodeURIComponent(chef.nom)}%20sur%20mon%20projet`}
         target="_blank"
         rel="noreferrer"
-        className={`w-full text-center text-sm py-2 rounded-lg font-semibold transition-colors ${chef.dispo ? "bg-savane text-white hover:bg-savane/80" : "bg-surface text-stitch-grey border border-foga-border cursor-not-allowed"}`}
+        className={`w-full text-center text-sm py-2 font-semibold transition-colors ${chef.dispo ? "bg-savane text-white hover:bg-savane/80" : "bg-surface text-on-surface-variant border border-outline-variant cursor-not-allowed"}`}
       >
         {chef.dispo ? "Demander ce chef →" : "Indisponible actuellement"}
       </a>
@@ -155,13 +152,13 @@ export default function ChefsSection() {
     <section className="py-16 bg-surface">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-10">
-          <p className="text-xs uppercase tracking-widest text-stitch-grey mb-2">
+          <p className="text-xs uppercase tracking-widest text-on-surface-variant mb-2">
             Équipe certifiée
           </p>
-          <h2 className="text-3xl font-black text-white mb-2">
+          <h2 className="text-3xl font-black text-primary mb-2">
             Vos Chefs de <span className="text-savane">Projet</span>
           </h2>
-          <p className="text-stitch-grey text-sm max-w-md mx-auto">
+          <p className="text-on-surface-variant text-sm max-w-md mx-auto">
             Vous choisissez votre chef. Certifications publiques, notes clients
             vérifiées.
           </p>

@@ -4,7 +4,7 @@ import { supabase } from "../lib/supabase";
 const FALLBACK_STOCK = [
   {
     id: "bull",
-    icon: "🚜",
+    icon: "agriculture",
     name: "Bulldozers",
     available: 12,
     total: 15,
@@ -13,7 +13,7 @@ const FALLBACK_STOCK = [
   },
   {
     id: "grue",
-    icon: "🏗️",
+    icon: "precision_manufacturing",
     name: "Grues mobiles",
     available: 8,
     total: 10,
@@ -22,7 +22,7 @@ const FALLBACK_STOCK = [
   },
   {
     id: "pelle",
-    icon: "⛏️",
+    icon: "handyman",
     name: "Pelles hydrauliques",
     available: 15,
     total: 18,
@@ -31,7 +31,7 @@ const FALLBACK_STOCK = [
   },
   {
     id: "compac",
-    icon: "🛞",
+    icon: "tire_repair",
     name: "Compacteurs",
     available: 6,
     total: 8,
@@ -40,7 +40,7 @@ const FALLBACK_STOCK = [
   },
   {
     id: "beton",
-    icon: "🔩",
+    icon: "hardware",
     name: "Bétonnières",
     available: 20,
     total: 20,
@@ -49,7 +49,7 @@ const FALLBACK_STOCK = [
   },
   {
     id: "camion",
-    icon: "🚛",
+    icon: "local_shipping",
     name: "Camions benne",
     available: 4,
     total: 12,
@@ -77,7 +77,6 @@ export default function EnginsStock() {
   const [pulse, setPulse] = useState(false);
 
   useEffect(() => {
-    // Fetch live stock from Supabase
     supabase
       .from("engins")
       .select("id, icon, name, available, total, price, tag")
@@ -85,7 +84,6 @@ export default function EnginsStock() {
         if (data?.length) setStock(data);
       });
 
-    // Realtime subscription — any UPDATE on engins table
     const channel = supabase
       .channel("engins-stock")
       .on(
@@ -110,7 +108,7 @@ export default function EnginsStock() {
     `Bonjour Fogatech, je voudrais réserver un(e) ${name} (${price}) - disponibilité immédiate?`;
 
   return (
-    <section id="engins" className="py-20 bg-foga-card">
+    <section id="engins" className="py-20 bg-surface-container-low">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>
@@ -118,28 +116,28 @@ export default function EnginsStock() {
               <span
                 className={`w-2 h-2 rounded-full bg-green-400 ${pulse ? "scale-150" : "scale-100"} transition-transform`}
               />
-              <span className="text-xs uppercase tracking-widest text-stitch-grey">
+              <span className="text-xs uppercase tracking-widest text-on-surface-variant">
                 Stock en temps réel
               </span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-white">
-              Location <span className="text-congo">Engins BTP</span>
+            <h2 className="text-3xl md:text-4xl font-black text-primary">
+              Location <span className="text-secondary-container">Engins BTP</span>
             </h2>
-            <p className="text-stitch-grey mt-1">
+            <p className="text-on-surface-variant mt-1">
               Confirmation sous 2h · Livraison chantier sous 24h · Maintenance
               incluse
             </p>
           </div>
           <div className="flex gap-4 text-center">
-            <div className="bg-surface rounded-xl px-4 py-3 border border-foga-border">
-              <div className="text-2xl font-black text-congo">
+            <div className="bg-surface px-4 py-3 border border-outline-variant">
+              <div className="text-2xl font-black text-secondary-container">
                 {stock.reduce((s, e) => s + e.available, 0)}
               </div>
-              <div className="text-xs text-stitch-grey">Engins dispo</div>
+              <div className="text-xs text-on-surface-variant">Engins dispo</div>
             </div>
-            <div className="bg-surface rounded-xl px-4 py-3 border border-foga-border">
+            <div className="bg-surface px-4 py-3 border border-outline-variant">
               <div className="text-2xl font-black text-savane">24h</div>
-              <div className="text-xs text-stitch-grey">Livraison max</div>
+              <div className="text-xs text-on-surface-variant">Livraison max</div>
             </div>
           </div>
         </div>
@@ -148,23 +146,23 @@ export default function EnginsStock() {
           {stock.map((e) => (
             <div
               key={e.id}
-              className="bg-surface border border-foga-border rounded-2xl p-5 hover:border-congo/50 transition-colors group"
+              className="bg-surface border border-outline-variant p-5 hover:border-secondary-container/50 transition-colors group"
             >
               <div className="flex items-start justify-between mb-3">
-                <div className="text-3xl">{e.icon}</div>
+                <span className="material-symbols-outlined text-3xl text-on-surface-variant" aria-hidden="true">{e.icon}</span>
                 <span
-                  className={`text-xs px-2 py-1 rounded-full font-semibold ${
+                  className={`text-xs px-2 py-1 font-semibold ${
                     e.available > 0
-                      ? "bg-savane/20 text-green-400"
-                      : "bg-red-500/20 text-red-400"
+                      ? "bg-savane/20 text-green-700"
+                      : "bg-red-500/20 text-red-600"
                   }`}
                 >
                   {e.tag}
                 </span>
               </div>
-              <h3 className="text-white font-bold mb-1">{e.name}</h3>
-              <p className="text-congo font-bold text-sm mb-2">{e.price}</p>
-              <div className="flex justify-between text-xs text-stitch-grey mb-1">
+              <h3 className="text-on-surface font-bold mb-1">{e.name}</h3>
+              <p className="text-secondary-container font-bold text-sm mb-2">{e.price}</p>
+              <div className="flex justify-between text-xs text-on-surface-variant mb-1">
                 <span>{e.available} disponibles</span>
                 <span>/{e.total} total</span>
               </div>
@@ -173,7 +171,7 @@ export default function EnginsStock() {
                 href={`https://wa.me/242069610635?text=${encodeURIComponent(waMsg(e.name, e.price))}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 block w-full text-center bg-congo/10 border border-congo/30 hover:bg-congo text-congo hover:text-white text-sm font-semibold py-2 rounded-lg transition-all"
+                className="mt-4 block w-full text-center bg-secondary-container/10 border border-secondary-container/30 hover:bg-secondary-container text-secondary-container hover:text-on-secondary-container text-sm font-semibold py-2 transition-all"
               >
                 Réserver maintenant
               </a>
@@ -181,13 +179,13 @@ export default function EnginsStock() {
           ))}
         </div>
 
-        <div className="mt-8 bg-surface border border-foga-border rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-8 bg-surface border border-outline-variant p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h3 className="text-white font-bold">
+            <h3 className="text-on-surface font-bold">
               Engin URGENCE — Modèle Uber
             </h3>
-            <p className="text-sm text-stitch-grey">
-              Besoin d'un engin maintenant? Confirmation sous 2h · Tarif urgence
+            <p className="text-sm text-on-surface-variant">
+              Besoin d&apos;un engin maintenant? Confirmation sous 2h · Tarif urgence
               +15%
             </p>
           </div>
@@ -195,9 +193,9 @@ export default function EnginsStock() {
             href={`https://wa.me/242069610635?text=${encodeURIComponent("URGENT - J'ai besoin d'un engin BTP immédiatement pour mon chantier.")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 bg-red-600 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors"
+            className="shrink-0 bg-red-600 hover:bg-red-500 text-white font-bold px-6 py-3 text-sm transition-colors"
           >
-            🚨 Engin MAINTENANT
+            Engin MAINTENANT
           </a>
         </div>
       </div>

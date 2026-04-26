@@ -24,7 +24,7 @@ function LoginForm({ onLogin }) {
   if (sent) {
     return (
       <div className="text-center py-8">
-        <div className="text-5xl mb-4">📧</div>
+        <span className="material-symbols-outlined text-5xl text-primary block mb-4" style={{ fontVariationSettings: "'FILL' 1" }}>mail</span>
         <h3 className="text-on-surface font-bold text-xl mb-2">Lien envoyé !</h3>
         <p className="text-on-surface-variant text-sm">
           Vérifiez <span className="text-on-surface font-semibold">{email}</span>
@@ -39,7 +39,7 @@ function LoginForm({ onLogin }) {
   return (
     <div>
       <div className="text-center mb-8">
-        <div className="text-4xl mb-3">🏗️</div>
+        <span className="material-symbols-outlined text-4xl text-primary block mb-3" style={{ fontVariationSettings: "'FILL' 1" }}>construction</span>
         <h2 className="text-2xl font-black text-primary mb-1">Espace Client</h2>
         <p className="text-on-surface-variant text-sm">Suivez votre chantier en temps réel</p>
       </div>
@@ -143,7 +143,10 @@ function Dashboard({ user, onLogout }) {
       </div>
 
       {/* Feed */}
-      <h3 className="text-on-surface font-bold text-sm mb-3">📸 Journal de chantier</h3>
+      <h3 className="text-on-surface font-bold text-sm mb-3 flex items-center gap-1.5">
+        <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 1" }}>photo_camera</span>
+        Journal de chantier
+      </h3>
       {loading ? (
         <div className="text-center py-8 text-on-surface-variant text-sm">Chargement…</div>
       ) : (
@@ -151,7 +154,7 @@ function Dashboard({ user, onLogout }) {
           {updates.map((item) => (
             <div key={item.id} className="bg-surface-container-lowest border border-outline-variant rounded-xl p-4">
               <div className="flex items-start gap-3">
-                <div className="text-3xl">{item.photo ?? '📸'}</div>
+                <span className="material-symbols-outlined text-3xl text-on-surface-variant" style={{ fontVariationSettings: "'FILL' 1" }}>{item.photo ?? 'photo_camera'}</span>
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
                     <span className="text-xs font-semibold text-blue-300">{item.author ?? item.chef_name}</span>
@@ -178,16 +181,17 @@ function Dashboard({ user, onLogout }) {
         target="_blank" rel="noopener noreferrer"
         className="mt-6 flex items-center justify-center gap-2 w-full bg-[#25D366]/10 border border-[#25D366]/30 hover:bg-[#25D366] text-[#25D366] hover:text-white font-semibold py-3 rounded-xl text-sm transition-all"
       >
-        <span>💬</span> Contacter Chef Mbemba sur WhatsApp
+        <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
+        Contacter Chef Mbemba sur WhatsApp
       </a>
     </div>
   )
 }
 
 const FALLBACK_FEED = [
-  { id: 1, date: '2026-04-07', pct: 72, text: 'Dalle 2ème étage coulée. Prochaine étape: maçonnerie.', photo: '🏗️', author: 'Chef Mbemba' },
-  { id: 2, date: '2026-04-01', pct: 58, text: 'Colonnes RDC terminées. Photos dispo dans la galerie.', photo: '📸', author: 'Chef Mbemba' },
-  { id: 3, date: '2026-03-25', pct: 40, text: 'Fondations validées par ingénieur. Travaux en avance.', photo: '✅', author: 'Équipe Fogatech' },
+  { id: 1, date: '2026-04-07', pct: 72, text: 'Dalle 2ème étage coulée. Prochaine étape: maçonnerie.', photo: 'construction', author: 'Chef Mbemba' },
+  { id: 2, date: '2026-04-01', pct: 58, text: 'Colonnes RDC terminées. Photos dispo dans la galerie.', photo: 'photo_camera', author: 'Chef Mbemba' },
+  { id: 3, date: '2026-03-25', pct: 40, text: 'Fondations validées par ingénieur. Travaux en avance.', photo: 'check_circle', author: 'Équipe Fogatech' },
 ]
 
 export default function ClientPortal() {

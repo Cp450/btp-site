@@ -67,11 +67,9 @@ export default {
         "error-container": "#ffdad6",
         "on-error-container": "#93000a",
 
-        // Legacy compat — keep existing components working during migration
-        stitch: { blue: "#002045", dark: "#0F172A", grey: "#74777f" },
-        savane: "#4A7C59",
-        congo: "#fe932c",
-        foga: { bg: "#f7f9fb", card: "#ffffff", border: "#e0e3e5" },
+        // Semantic success (green — stock disponible, statut livré)
+        success: "#4A7C59",
+        "on-success": "#ffffff",
       },
 
       // ── Typography ───────────────────────────────────────────

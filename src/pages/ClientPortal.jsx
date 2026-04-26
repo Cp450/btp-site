@@ -25,11 +25,11 @@ function LoginForm({ onLogin }) {
     return (
       <div className="text-center py-8">
         <div className="text-5xl mb-4">📧</div>
-        <h3 className="text-white font-bold text-xl mb-2">Lien envoyé !</h3>
-        <p className="text-stitch-grey text-sm">
-          Vérifiez <span className="text-white font-semibold">{email}</span>
+        <h3 className="text-on-surface font-bold text-xl mb-2">Lien envoyé !</h3>
+        <p className="text-on-surface-variant text-sm">
+          Vérifiez <span className="text-on-surface font-semibold">{email}</span>
         </p>
-        <p className="text-xs text-stitch-grey mt-2">
+        <p className="text-xs text-on-surface-variant mt-2">
           Cliquez le lien magic-link pour accéder à votre espace chantier.
         </p>
       </div>
@@ -40,27 +40,27 @@ function LoginForm({ onLogin }) {
     <div>
       <div className="text-center mb-8">
         <div className="text-4xl mb-3">🏗️</div>
-        <h2 className="text-2xl font-black text-white mb-1">Espace Client</h2>
-        <p className="text-stitch-grey text-sm">Suivez votre chantier en temps réel</p>
+        <h2 className="text-2xl font-black text-primary mb-1">Espace Client</h2>
+        <p className="text-on-surface-variant text-sm">Suivez votre chantier en temps réel</p>
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="text-sm text-stitch-grey block mb-1">Votre email</label>
+          <label className="text-sm text-on-surface-variant block mb-1">Votre email</label>
           <input
             type="email" required value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="vous@exemple.com"
-            className="w-full bg-foga-bg border border-foga-border rounded-xl px-4 py-3 text-white text-sm focus:border-stitch-blue outline-none"
+            className="w-full bg-surface border border-outline-variant rounded-xl px-4 py-3 text-on-surface text-sm focus:border-primary outline-none"
           />
         </div>
         {error && <p className="text-red-400 text-xs">{error}</p>}
         <button
           type="submit" disabled={loading}
-          className="w-full bg-stitch-blue disabled:opacity-50 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors text-sm"
+          className="w-full bg-primary disabled:opacity-50 hover:bg-primary-container text-on-primary font-bold py-3 rounded-xl transition-colors text-sm"
         >
           {loading ? 'Envoi...' : 'Recevoir mon lien de connexion →'}
         </button>
-        <p className="text-xs text-stitch-grey text-center">Magic link — aucun mot de passe requis</p>
+        <p className="text-xs text-on-surface-variant text-center">Magic link — aucun mot de passe requis</p>
       </form>
     </div>
   )
@@ -105,24 +105,24 @@ function Dashboard({ user, onLogout }) {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h2 className="text-xl font-black text-white">Mon Chantier</h2>
-          <p className="text-xs text-stitch-grey">{user.email}</p>
+          <h2 className="text-xl font-black text-primary">Mon Chantier</h2>
+          <p className="text-xs text-on-surface-variant">{user.email}</p>
         </div>
-        <button onClick={onLogout} className="text-xs text-stitch-grey hover:text-white border border-foga-border rounded-lg px-3 py-1.5 transition-colors">
+        <button onClick={onLogout} className="text-xs text-on-surface-variant hover:text-on-surface border border-outline-variant rounded-lg px-3 py-1.5 transition-colors">
           Déconnexion
         </button>
       </div>
 
       {/* Progress */}
-      <div className="bg-foga-card border border-foga-border rounded-2xl p-5 mb-6">
+      <div className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-5 mb-6">
         <div className="flex justify-between items-center mb-2">
-          <h3 className="text-white font-bold text-sm">Villa Nganga — Bacongo</h3>
-          <span className="text-congo font-black text-lg">72%</span>
+          <h3 className="text-on-surface font-bold text-sm">Villa Nganga — Bacongo</h3>
+          <span className="text-secondary-container font-black text-lg">72%</span>
         </div>
-        <div className="w-full bg-foga-bg rounded-full h-3">
-          <div className="h-3 rounded-full bg-gradient-to-r from-stitch-blue to-savane transition-all" style={{ width: '72%' }} />
+        <div className="w-full bg-surface rounded-full h-3">
+          <div className="h-3 rounded-full bg-gradient-to-r from-primary to-success transition-all" style={{ width: '72%' }} />
         </div>
-        <div className="flex justify-between text-xs text-stitch-grey mt-2">
+        <div className="flex justify-between text-xs text-on-surface-variant mt-2">
           <span>Démarré: 15 Jan 2026</span>
           <span>Livraison: 15 Juil 2026</span>
         </div>
@@ -131,39 +131,39 @@ function Dashboard({ user, onLogout }) {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3 mb-6">
         {[
-          { label: 'Avancement', val: '72%', color: 'text-congo' },
+          { label: 'Avancement', val: '72%', color: 'text-secondary-container' },
           { label: 'Chef chantier', val: '⭐ 4.9', color: 'text-yellow-400' },
           { label: 'Prochaine étape', val: 'J+8', color: 'text-blue-400' },
         ].map((s) => (
-          <div key={s.label} className="bg-foga-card border border-foga-border rounded-xl p-3 text-center">
+          <div key={s.label} className="bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-center">
             <div className={`font-black text-lg ${s.color}`}>{s.val}</div>
-            <div className="text-xs text-stitch-grey">{s.label}</div>
+            <div className="text-xs text-on-surface-variant">{s.label}</div>
           </div>
         ))}
       </div>
 
       {/* Feed */}
-      <h3 className="text-white font-bold text-sm mb-3">📸 Journal de chantier</h3>
+      <h3 className="text-on-surface font-bold text-sm mb-3">📸 Journal de chantier</h3>
       {loading ? (
-        <div className="text-center py-8 text-stitch-grey text-sm">Chargement…</div>
+        <div className="text-center py-8 text-on-surface-variant text-sm">Chargement…</div>
       ) : (
         <div className="space-y-3">
           {updates.map((item) => (
-            <div key={item.id} className="bg-foga-card border border-foga-border rounded-xl p-4">
+            <div key={item.id} className="bg-surface-container-lowest border border-outline-variant rounded-xl p-4">
               <div className="flex items-start gap-3">
                 <div className="text-3xl">{item.photo ?? '📸'}</div>
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
                     <span className="text-xs font-semibold text-blue-300">{item.author ?? item.chef_name}</span>
-                    <span className="text-xs text-stitch-grey">{(item.created_at ?? item.date)?.slice(0, 10)}</span>
+                    <span className="text-xs text-on-surface-variant">{(item.created_at ?? item.date)?.slice(0, 10)}</span>
                   </div>
-                  <p className="text-sm text-white mt-1">{item.text ?? item.content}</p>
+                  <p className="text-sm text-on-surface mt-1">{item.text ?? item.content}</p>
                   {item.pct != null && (
                     <div className="flex items-center gap-2 mt-2">
-                      <div className="flex-1 bg-foga-bg rounded-full h-1.5">
-                        <div className="h-1.5 rounded-full bg-savane" style={{ width: `${item.pct}%` }} />
+                      <div className="flex-1 bg-surface rounded-full h-1.5">
+                        <div className="h-1.5 rounded-full bg-success" style={{ width: `${item.pct}%` }} />
                       </div>
-                      <span className="text-xs text-savane font-bold">{item.pct}%</span>
+                      <span className="text-xs text-success font-bold">{item.pct}%</span>
                     </div>
                   )}
                 </div>
@@ -211,16 +211,16 @@ export default function ClientPortal() {
 
   if (checking) {
     return (
-      <div className="min-h-screen pt-24 flex items-center justify-center bg-foga-bg">
-        <div className="text-stitch-grey text-sm">Vérification session…</div>
+      <div className="min-h-screen pt-24 flex items-center justify-center bg-surface">
+        <div className="text-on-surface-variant text-sm">Vérification session…</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen pt-24 pb-16 flex items-start justify-center bg-foga-bg px-4">
+    <div className="min-h-screen pt-24 pb-16 flex items-start justify-center bg-surface px-4">
       <SEO title="Espace Client — Suivi de chantier" noindex />
-      <div className="w-full max-w-lg bg-foga-card border border-foga-border rounded-2xl p-6 md:p-8">
+      <div className="w-full max-w-lg bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 md:p-8">
         {user
           ? <Dashboard user={user} onLogout={() => supabase.auth.signOut()} />
           : <LoginForm onLogin={setUser} />}

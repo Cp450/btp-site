@@ -76,10 +76,10 @@ function ChefCard({ chef }) {
     .map((n) => n[0])
     .join("");
   return (
-    <div className="bg-surface-container-low border border-outline-variant p-5 hover:border-savane/50 transition-colors flex flex-col">
+    <div className="bg-surface-container-low border border-outline-variant p-5 hover:border-success/50 transition-colors flex flex-col">
       <div className="flex items-start gap-4 mb-4">
         <div className="relative flex-shrink-0">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-savane/40 flex items-center justify-center text-on-primary text-xl font-black">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-success/40 flex items-center justify-center text-on-primary text-xl font-black">
             {initials}
           </div>
           <span
@@ -103,7 +103,7 @@ function ChefCard({ chef }) {
           <div className="text-on-surface-variant text-[10px]">ans exp.</div>
         </div>
         <div>
-          <div className="text-savane font-black text-lg">{chef.projets}</div>
+          <div className="text-success font-black text-lg">{chef.projets}</div>
           <div className="text-on-surface-variant text-[10px]">projets</div>
         </div>
         <div>
@@ -139,7 +139,7 @@ function ChefCard({ chef }) {
         href={`https://wa.me/242069610635?text=Bonjour%2C%20je%20voudrais%20travailler%20avec%20${encodeURIComponent(chef.nom)}%20sur%20mon%20projet`}
         target="_blank"
         rel="noreferrer"
-        className={`w-full text-center text-sm py-2 font-semibold transition-colors ${chef.dispo ? "bg-savane text-white hover:bg-savane/80" : "bg-surface text-on-surface-variant border border-outline-variant cursor-not-allowed"}`}
+        className={`w-full text-center text-sm py-2 font-semibold transition-colors ${chef.dispo ? "bg-success text-on-success hover:bg-success/80" : "bg-surface text-on-surface-variant border border-outline-variant cursor-not-allowed"}`}
       >
         {chef.dispo ? "Demander ce chef →" : "Indisponible actuellement"}
       </a>
@@ -156,7 +156,7 @@ export default function ChefsSection() {
             Équipe certifiée
           </p>
           <h2 className="text-3xl font-black text-primary mb-2">
-            Vos Chefs de <span className="text-savane">Projet</span>
+            Vos Chefs de <span className="text-success">Projet</span>
           </h2>
           <p className="text-on-surface-variant text-sm max-w-md mx-auto">
             Vous choisissez votre chef. Certifications publiques, notes clients

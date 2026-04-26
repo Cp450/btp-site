@@ -207,7 +207,7 @@ export default function DemandeDevis() {
     return (
       <main className="pt-[72px] min-h-screen bg-surface flex items-center justify-center px-4">
         <div className="bg-surface-container-low rounded-xl p-8 text-center max-w-md w-full animate-fade-slide-up">
-          <span className="material-symbols-outlined text-5xl text-savane block mb-6">
+          <span className="material-symbols-outlined text-5xl text-success block mb-6">
             check_circle
           </span>
           <h2 className="font-headline text-3xl font-black text-primary mb-4">

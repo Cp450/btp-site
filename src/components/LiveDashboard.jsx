@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 
 const STATS = [
   { label: 'Chantiers en cours', value: 12, suffix: '', color: 'text-secondary-container' },
-  { label: 'Livrés en Avril', value: 3, suffix: '', color: 'text-savane' },
+  { label: 'Livrés en Avril', value: 3, suffix: '', color: 'text-success' },
   { label: 'Engins actifs', value: 22, suffix: '', color: 'text-primary' },
   { label: 'Clients servis', value: 847, suffix: '+', color: 'text-on-surface-variant' },
 ]

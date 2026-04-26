@@ -61,7 +61,7 @@ const FALLBACK_STOCK = [
 function StockBar({ available, total }) {
   const pct = (available / total) * 100;
   const color =
-    pct > 60 ? "bg-savane" : pct > 30 ? "bg-yellow-500" : "bg-red-500";
+    pct > 60 ? "bg-success" : pct > 30 ? "bg-yellow-500" : "bg-red-500";
   return (
     <div className="w-full bg-surface rounded-full h-1.5 mt-2">
       <div
@@ -136,7 +136,7 @@ export default function EnginsStock() {
               <div className="text-xs text-on-surface-variant">Engins dispo</div>
             </div>
             <div className="bg-surface px-4 py-3 border border-outline-variant">
-              <div className="text-2xl font-black text-savane">24h</div>
+              <div className="text-2xl font-black text-success">24h</div>
               <div className="text-xs text-on-surface-variant">Livraison max</div>
             </div>
           </div>
@@ -153,7 +153,7 @@ export default function EnginsStock() {
                 <span
                   className={`text-xs px-2 py-1 font-semibold ${
                     e.available > 0
-                      ? "bg-savane/20 text-green-700"
+                      ? "bg-success/20 text-green-700"
                       : "bg-red-500/20 text-red-600"
                   }`}
                 >

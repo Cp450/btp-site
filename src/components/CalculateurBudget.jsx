@@ -252,7 +252,7 @@ export default function CalculateurBudget() {
                   return (
                     <div
                       key={e.id}
-                      className={`flex items-center gap-3 p-3 border transition-all ${selected ? "border-savane bg-savane/5" : "border-outline-variant bg-surface hover:border-on-surface-variant"}`}
+                      className={`flex items-center gap-3 p-3 border transition-all ${selected ? "border-success bg-success/5" : "border-outline-variant bg-surface hover:border-on-surface-variant"}`}
                     >
                       <button
                         onClick={() => toggleEngin(e.id)}
@@ -287,7 +287,7 @@ export default function CalculateurBudget() {
                             onChange={(ev) =>
                               setEnginJours(e.id, ev.target.value)
                             }
-                            className="w-16 bg-surface border border-outline-variant text-on-surface text-xs px-2 py-1 focus:border-savane outline-none text-center"
+                            className="w-16 bg-surface border border-outline-variant text-on-surface text-xs px-2 py-1 focus:border-success outline-none text-center"
                           />
                           <span className="text-on-surface-variant text-[10px]">
                             j
@@ -340,7 +340,7 @@ export default function CalculateurBudget() {
                           <span className="material-symbols-outlined text-sm align-middle" aria-hidden="true">{e.icon}</span>
                           {e.label} · {jours}j
                         </span>
-                        <span className="text-savane font-semibold text-xs">
+                        <span className="text-success font-semibold text-xs">
                           {formatEur(e.prixJour * jours)}
                         </span>
                       </div>
@@ -350,7 +350,7 @@ export default function CalculateurBudget() {
                     <span className="text-on-surface-variant text-xs">
                       Sous-total engins
                     </span>
-                    <span className="text-savane font-bold text-sm">
+                    <span className="text-success font-bold text-sm">
                       {formatEur(budget.enginTotal)}
                     </span>
                   </div>

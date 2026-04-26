@@ -119,7 +119,7 @@ function ReviewCard({ r }) {
               {r.client_name}
             </span>
             {r.verified && (
-              <span className="inline-flex items-center gap-1 text-[10px] bg-savane/10 text-savane px-2 py-0.5 border border-savane/30 font-label font-bold">
+              <span className="inline-flex items-center gap-1 text-[10px] bg-success/10 text-success px-2 py-0.5 border border-success/30 font-label font-bold">
                 <span className="material-symbols-outlined text-xs" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
                 Vérifié
               </span>
@@ -364,9 +364,9 @@ export default function Reviews({ compact = false }) {
 
         {!compact && (
           submitted ? (
-            <div className="text-center py-8 bg-savane/10 border border-savane/30">
-              <span className="material-symbols-outlined text-4xl text-savane block mb-3" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-              <p className="text-savane font-headline font-bold text-lg">Merci pour votre avis !</p>
+            <div className="text-center py-8 bg-success/10 border border-success/30">
+              <span className="material-symbols-outlined text-4xl text-success block mb-3" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+              <p className="text-success font-headline font-bold text-lg">Merci pour votre avis !</p>
               <p className="text-on-surface-variant text-sm mt-1 font-body">
                 Il sera publié après vérification par notre équipe.
               </p>

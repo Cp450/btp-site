@@ -189,12 +189,12 @@ export default function ChatbotFoga() {
                     <div className="mt-2 pt-2 border-t border-outline-variant/30">
                       <button
                         onClick={() => setShowLingala((s) => ({ ...s, [msg.id]: !s[msg.id] }))}
-                        className="text-[10px] text-on-surface-variant hover:text-savane transition-colors"
+                        className="text-[10px] text-on-surface-variant hover:text-success transition-colors"
                       >
                         {showLingala[msg.id] ? '▼ Lingala' : '▶ Voir en Lingala'}
                       </button>
                       {showLingala[msg.id] && (
-                        <p className="text-xs text-savane mt-1 italic">{msg.lingala}</p>
+                        <p className="text-xs text-success mt-1 italic">{msg.lingala}</p>
                       )}
                     </div>
                   )}

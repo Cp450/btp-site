@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-on-background;
+    font-family: "Inter", system-ui, sans-serif;
+    margin: 0;
+  }
+  #root {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* ── Keyframes ─────────────────────────────────────── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes navMobileIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-slide-up { animation: fadeSlideUp 0.4s ease-out both; }
+.animate-nav-mobile-in { animation: navMobileIn 0.25s ease-out both; }
+
+/* Mobile nav menu transition */
+.nav-mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+.nav-mobile-menu.open {
+  max-height: 700px;
+}
+
+/* ── Partners infinite scroll ──────────────────────── */
+@keyframes partners-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-partners-scroll {
+  animation: partners-scroll 30s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* ── Hero Ken Burns cross-fade (5 images, 20s cycle) ─ */
+@keyframes hero-bg-fade {
+  0%, 30%, 100% { opacity: 0; }
+  10%, 20%      { opacity: 1; }
+}
+@keyframes hero-bg-kenburns {
+  0%   { transform: scale(1) translate(0, 0); }
+  30%  { transform: scale(1.10) translate(-2%, 1.5%); }
+  100% { transform: scale(1.10) translate(-2%, 1.5%); }
+}
+.hero-bg-img {
+  animation: hero-bg-fade 20s linear infinite, hero-bg-kenburns 20s linear infinite;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+.hero-bg-img.hb-1 { animation-delay: -2s, -2s; }
+.hero-bg-img.hb-2 { animation-delay:  2s,  2s; }
+.hero-bg-img.hb-3 { animation-delay:  6s,  6s; }
+.hero-bg-img.hb-4 { animation-delay: 10s, 10s; }
+.hero-bg-img.hb-5 { animation-delay: 14s, 14s; }
+
+/* ── GenieCivil Ken Burns (4 images, 16s cycle) ─ */
+@keyframes gc-bg-fade {
+  0%, 37.5%, 100% { opacity: 0; }
+  12.5%, 25%      { opacity: 1; }
+}
+@keyframes gc-bg-kenburns {
+  0%    { transform: scale(1) translate(0, 0); }
+  37.5% { transform: scale(1.10) translate(-2%, 1.5%); }
+  100%  { transform: scale(1.10) translate(-2%, 1.5%); }
+}
+.gc-bg-img {
+  animation: gc-bg-fade 16s linear infinite, gc-bg-kenburns 16s linear infinite;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+.gc-bg-img.gc-1 { animation-delay: -2s, -2s; }
+.gc-bg-img.gc-2 { animation-delay:  2s,  2s; }
+.gc-bg-img.gc-3 { animation-delay:  6s,  6s; }
+.gc-bg-img.gc-4 { animation-delay: 10s, 10s; }
+
+/* ── Elevage Ken Burns (3 images, 18s) ─ */
+@keyframes el-bg-fade {
+  0%, 44.44%, 100% { opacity: 0; }
+  11.11%, 33.33%   { opacity: 1; }
+}
+@keyframes el-bg-kenburns {
+  0%     { transform: scale(1) translate(0, 0); }
+  44.44% { transform: scale(1.10) translate(-2%, 1.5%); }
+  100%   { transform: scale(1.10) translate(-2%, 1.5%); }
+}
+.el-bg-img {
+  animation: el-bg-fade 18s ease-in-out infinite, el-bg-kenburns 18s ease-in-out infinite;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+.el-bg-img.el-1 { animation-delay: -2s, -2s; }
+.el-bg-img.el-2 { animation-delay:  4s,  4s; }
+.el-bg-img.el-3 { animation-delay: 10s, 10s; }
+
+/* ── Solutions Durables Ken Burns (2 imgs, hard cut) ─ */
+@keyframes sd-bg-step {
+  0%, 49.99% { opacity: 1; }
+  50%, 100%  { opacity: 0; }
+}
+@keyframes sd-bg-kenburns {
+  0%   { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.10) translate(-2%, 1.5%); }
+}
+.sd-bg-img {
+  animation: sd-bg-step 16s steps(1, end) infinite, sd-bg-kenburns 8s linear infinite alternate;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+.sd-bg-img.sd-1 { animation-delay: 0s, 0s; }
+.sd-bg-img.sd-2 { animation-delay: -8s, 0s; }
+
+/* ── GenieRural Ken Burns (1 image, slow zoom) ─ */
+@keyframes gr-bg-kenburns {
+  0%   { transform: scale(1) translate(0, 0); }
+  50%  { transform: scale(1.10) translate(-2%, 1.5%); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+.gr-bg-img {
+  animation: gr-bg-kenburns 24s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* ── Wave background ──────────────────────────────── */
+@keyframes wave-flow {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-1200px); }
+}
+.wave-flow {
+  will-change: transform;
+  animation: wave-flow linear infinite;
+}
+.wave-1 { animation-duration: 28s; }
+.wave-2 { animation-duration: 22s; animation-direction: reverse; }
+.wave-3 { animation-duration: 35s; }
+.wave-4 { animation-duration: 18s; animation-direction: reverse; }
+.wave-5 { animation-duration: 40s; }
+
+/* ── Performance — GPU layers & containment ──────── */
+.animate-fade-slide-up { will-change: opacity, transform; }
+section { contain: layout style; }
+
+/* ── Reduced motion ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-slide-up,
+  .animate-nav-mobile-in,
+  .animate-partners-scroll,
+  .wave-flow,
+  .hero-bg-img,
+  .gc-bg-img,
+  .gr-bg-img,
+  .el-bg-img,
+  .sd-bg-img {
+    animation: none;
+  }
+  .nav-mobile-menu,
+  .nav-mobile-menu.open {
+    transition: none;
+    max-height: none;
+    overflow: visible;
+  }
+}

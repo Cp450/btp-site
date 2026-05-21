@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s 'https://edau-congo.com/wp-content/themes/archimak/includes/js/plugins.js?ver=2.1.3' -A Mozilla/5.0 --compressed -o /tmp/edau_plugins.js)",
+      "Read(//tmp/**)"
+    ]
+  }
+}

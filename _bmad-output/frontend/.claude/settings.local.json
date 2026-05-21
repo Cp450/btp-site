@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/tmp/**)",
+      "Bash(mkdir -p stitch_fogatech)",
+      "Bash(unzip -o \"C:\\\\Users\\\\NPJ_CP450\\\\Downloads\\\\site_foga_tech\\\\stitch_fogatech_home_page.zip\" -d /tmp/stitch_fogatech)"
+    ]
+  }
+}

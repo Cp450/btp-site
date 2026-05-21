@@ -1,0 +1,84 @@
+{
+  "testCases": [
+    {
+      "id": "test-1-landing-page",
+      "name": "Build a Luxury SaaS Landing Page (Next.js)",
+      "prompt": "Create a production-ready landing page for 'DataFlow' — a B2B data analytics SaaS. Requirements:\n\n1. Tech: Next.js + TypeScript + Tailwind CSS + Framer Motion\n2. Sections: Sticky navbar, hero with CTA, features grid (3 items), pricing tiers (3), testimonials carousel, footer\n3. Design: Premium/luxury aesthetic (dark mode, glassmorphism, subtle neon accents)\n4. Must include: responsive design (mobile-first), accessibility (WCAG AA), optimized images, SEO metadata\n5. Use remote images from Unsplash Source\n6. Structure: organized components, design system in tailwind.config\n7. Quality bar: Apple-level polish, no placeholders\n\nProvide complete, ready-to-run code.",
+      "success_criteria": [
+        "Complete Next.js project structure with app/ and components/ folders",
+        "Tailwind config with custom colors, typography, shadows for luxury aesthetic",
+        "At least 5 reusable components (Button, Card, Input, Hero, PricingCard)",
+        "Framer Motion animations for scroll-reveal and hover interactions",
+        "next/image configured with Unsplash remote domains",
+        "SEO metadata (title, description, OpenGraph)",
+        "Responsive design with Tailwind breakpoints (mobile, tablet, desktop)",
+        "Accessible (focus states, ARIA labels, semantic HTML)",
+        "No TypeScript errors or unused imports",
+        "README with setup instructions"
+      ]
+    },
+    {
+      "id": "test-2-admin-dashboard",
+      "name": "Build an Admin Dashboard (Vue 3 Alternative)",
+      "prompt": "Create an admin dashboard using Vue 3 (instead of Next.js). Name: 'AdminHub' — for managing users, orders, analytics.\n\n1. Tech: Vue 3 + TypeScript + Tailwind CSS + Vue Router\n2. Pages: Login → Dashboard (with stats cards, chart, user table), Users (CRUD table), Settings\n3. Design: Corporate/professional aesthetic (clean, minimal)\n4. Features: Mock data, navigation between pages, form validation, table sorting\n5. Must be: responsive, accessible, production-quality\n\nShow me the Vue component structure and explain framework choice.",
+      "success_criteria": [
+        "Vue 3 project with Composition API",
+        "Router configured with protected routes",
+        "At least 4 reusable Vue components",
+        "Form validation (email, required fields)",
+        "Table with sorting/filtering mock data",
+        "Responsive grid layouts with Tailwind",
+        "Accessible form inputs and labels",
+        "Corporate color scheme in tailwind.config",
+        "No console errors"
+      ]
+    },
+    {
+      "id": "test-3-high-performance-e-commerce",
+      "name": "Optimize an E-Commerce Product Page (Performance Focus)",
+      "prompt": "You're given a slow e-commerce product page. Apply performance optimization techniques to achieve:\n- Lighthouse score: 90+ (Performance)\n- LCP < 2.5s\n- CLS < 0.1\n\nTask: Describe optimizations for a Next.js product page that shows:\n- Hero image (2400x1400)\n- Product gallery (6 images)\n- Product details form\n- Related products grid (4 items)\n\nInclude: next.config setup, Image component usage, code-splitting strategy, font optimization, CSS purging.",
+      "success_criteria": [
+        "next/image with proper sizing and responsive srcSet",
+        "Remote image domain configuration",
+        "Lazy loading strategy for below-fold images",
+        "Font loading with display: swap",
+        "CSS purging configuration",
+        "Dynamic import example for heavy components",
+        "Bundle analysis approach explained",
+        "Cache headers strategy described",
+        "Web Vitals monitoring code snippet"
+      ]
+    },
+    {
+      "id": "test-4-design-system",
+      "name": "Create a Reusable Design System (Color + Components)",
+      "prompt": "Design a complete design system for a 'wellness app' that must work across multiple projects.\n\nInclude:\n1. Tailwind config with: custom colors (warm/organic palette), typography (2 fonts), spacing scale, shadows\n2. 5 core components: Button, Card, Input, Badge, Modal with proper variants\n3. Global CSS with focus states, transitions, reduced-motion support\n4. Usage examples for each component\n5. Accessibility checklist\n\nMake it copy-paste ready for teams.",
+      "success_criteria": [
+        "Complete tailwind.config.ts with warm/organic colors",
+        "Typography scale with @layer base",
+        "Button component with 4+ variants",
+        "Card, Input, Badge, Modal components",
+        "Focus ring styles for accessibility",
+        "Reduced-motion media query",
+        "Global styles in globals.css",
+        "Component props documentation",
+        "No unused Tailwind plugins"
+      ]
+    },
+    {
+      "id": "test-5-framework-decision",
+      "name": "Framework Selection Guidance (Client Scenario)",
+      "prompt": "A client asks: 'We're building a B2B SaaS tool with real-time dashboards, user authentication, API backend, and we have a team of 4 junior React developers.'\n\nGive a detailed framework recommendation:\n1. Which framework? Why?\n2. Tech stack breakdown\n3. Project structure outline\n4. Pros/cons of alternatives\n5. Setup steps\n6. Estimated learning curve\n7. Hiring/ecosystem notes",
+      "success_criteria": [
+        "Clear framework recommendation with reasoning",
+        "Full tech stack specified (build tool, UI library, state management, DB)",
+        "Project folder structure example",
+        "Comparison to at least 2 alternatives with pros/cons",
+        "Step-by-step setup commands",
+        "Learning curve assessment",
+        "Ecosystem/hiring market analysis",
+        "Links to documentation"
+      ]
+    }
+  ]
+}

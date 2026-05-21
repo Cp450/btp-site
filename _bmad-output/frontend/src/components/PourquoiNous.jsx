@@ -1,8 +1,13 @@
+import { motion } from "framer-motion";
+import AnimatedCounter from "./AnimatedCounter";
+import { fadeUp, fadeLeft, stagger, scaleUp, viewport } from "../lib/motion";
+import TextReveal from "./TextReveal";
+
 const BIG_STATS = [
-  { val: "10", suffix: "ans", label: "d'ancrage local au Congo" },
-  { val: "50", suffix: "+", label: "chantiers livrés" },
-  { val: "98", suffix: "%", label: "de satisfaction client" },
-  { val: "65", suffix: "", label: "engins en parc propre" },
+  { val: 10, suffix: " ans", label: "d'ancrage local au Congo" },
+  { val: 50, suffix: "+", label: "chantiers livrés" },
+  { val: 98, suffix: "%", label: "de satisfaction client" },
+  { val: 65, suffix: "", label: "engins en parc propre" },
 ];
 
 const PILIERS = [
@@ -39,45 +44,75 @@ export default function PourquoiNous() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 md:py-28">
 
         {/* Section label */}
-        <div className="flex items-center gap-3 mb-12">
+        <motion.div
+          className="flex items-center gap-3 mb-12"
+          variants={fadeLeft}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+        >
           <span className="w-8 h-0.5 bg-secondary-container block flex-shrink-0" />
           <p className="text-secondary-container font-label text-xs uppercase tracking-widest">
             Notre engagement
           </p>
-        </div>
+        </motion.div>
 
-        {/* Big stats row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 border border-white/10 mb-16">
+        {/* Big stats row — counters animate on enter */}
+        <motion.div
+          className="grid grid-cols-2 lg:grid-cols-4 gap-0 border border-white/10 mb-16"
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+        >
           {BIG_STATS.map((s, i) => (
-            <div
+            <motion.div
               key={s.label}
-              className={`p-8 md:p-10 ${i < BIG_STATS.length - 1 ? "border-b lg:border-b-0 border-r lg:border-r border-white/10" : ""} ${i === 1 || i === 3 ? "lg:border-r-0" : ""}`}
+              variants={fadeUp}
+              className={`p-8 md:p-10 ${
+                i < BIG_STATS.length - 1
+                  ? "border-b lg:border-b-0 border-r lg:border-r border-white/10"
+                  : ""
+              } ${i === 1 || i === 3 ? "lg:border-r-0" : ""}`}
             >
               <p
                 className="font-headline font-black text-white leading-none"
                 style={{ fontSize: "clamp(3rem, 5vw, 5rem)" }}
               >
-                {s.val}
-                <span className="text-secondary-container">{s.suffix}</span>
+                <AnimatedCounter end={s.val} suffix={s.suffix} />
               </p>
               <p className="text-on-primary/50 font-body text-xs mt-3 leading-relaxed">
                 {s.label}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Heading */}
-        <h2 className="font-headline text-3xl md:text-5xl font-black text-white mb-16 leading-tight max-w-xl">
-          Pourquoi choisir<br />
-          <span className="text-secondary-container">Fogatech.</span>
-        </h2>
+        <div className="mb-16 max-w-xl">
+          <TextReveal
+            text="Pourquoi choisir"
+            as="h2"
+            className="font-headline text-3xl md:text-5xl font-black text-white leading-tight"
+          />
+          <TextReveal
+            text="Fogatech."
+            as="div"
+            className="font-headline text-3xl md:text-5xl font-black text-secondary-container leading-tight"
+          />
+        </div>
 
-        {/* 4 pillars */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+        {/* 4 pillars — stagger reveal */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8"
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+        >
           {PILIERS.map((p) => (
-            <div key={p.icon} className="group">
-              <div className="mb-5 w-12 h-12 border border-white/20 flex items-center justify-center group-hover:border-secondary-container transition-colors">
+            <motion.div key={p.icon} variants={fadeUp} className="group">
+              <div className="mb-5 w-12 h-12 border border-white/20 flex items-center justify-center group-hover:border-secondary-container transition-colors duration-300">
                 <span
                   className="material-symbols-outlined text-2xl text-secondary-container"
                   aria-hidden="true"
@@ -92,26 +127,39 @@ export default function PourquoiNous() {
               <p className="text-on-primary/70 font-body text-sm leading-relaxed">
                 {p.body}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Certifications strip */}
-        <div className="mt-20 pt-12 border-t border-white/10">
+        <motion.div
+          className="mt-20 pt-12 border-t border-white/10"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+        >
           <p className="text-on-primary/40 font-label text-[10px] uppercase tracking-widest mb-6 text-center">
             Certifications &amp; accréditations
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
+          <motion.div
+            className="flex flex-wrap items-center justify-center gap-8 md:gap-16"
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+          >
             {CERTIFS.map((c) => (
-              <span
+              <motion.span
                 key={c}
+                variants={fadeUp}
                 className="text-on-primary/50 hover:text-on-primary/80 font-headline font-bold text-xs uppercase tracking-widest transition-colors"
               >
                 {c}
-              </span>
+              </motion.span>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "../lib/cn";
+import MagneticButton from "./MagneticButton";
 
 // Grouped service structure for the dropdown
 const SERVICE_GROUPS = [
@@ -254,19 +255,21 @@ export default function Navbar() {
           </div>
 
           {/* Desktop CTA */}
-          <Link
-            to="/devis"
-            className="hidden md:inline-flex items-center gap-2 bg-secondary-container text-on-secondary-container px-5 py-2.5 font-headline font-bold uppercase tracking-widest text-xs shadow-tectonic-orange hover:brightness-105 active:scale-95 transition-all duration-200 shrink-0 rounded-full"
-          >
-            <span
-              className="material-symbols-outlined text-sm"
-              aria-hidden="true"
-              style={{ fontVariationSettings: "'FILL' 1" }}
+          <MagneticButton className="hidden md:inline-block shrink-0">
+            <Link
+              to="/devis"
+              className="inline-flex items-center gap-2 bg-secondary-container text-on-secondary-container px-5 py-2.5 font-headline font-bold uppercase tracking-widest text-xs shadow-tectonic-orange hover:brightness-105 active:scale-95 transition-all duration-200 rounded-full"
             >
-              description
-            </span>
-            Demander un devis
-          </Link>
+              <span
+                className="material-symbols-outlined text-sm"
+                aria-hidden="true"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                description
+              </span>
+              Demander un devis
+            </Link>
+          </MagneticButton>
 
           {/* Hamburger */}
           <button

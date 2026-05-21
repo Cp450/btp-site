@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
+import TextReveal from '../components/TextReveal'
 import { supabase } from '../lib/supabase'
 
 /* ── Data ─────────────────────────────────────────────────────────── */
@@ -107,12 +108,22 @@ export default function Location() {
         <section className="min-h-screen flex flex-col px-6 py-24">
           {/* Titre */}
           <div className="text-center mb-16">
-            <h1
-              className="font-headline font-black text-white leading-[0.92] tracking-tight mb-4"
-              style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}
-            >
-              Quel engin pour<br />votre chantier ?
-            </h1>
+            <div style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}>
+              <TextReveal
+                text="Quel engin pour"
+                as="h1"
+                className="font-headline font-black text-white leading-[0.92] tracking-tight"
+                animate
+                delay={0.1}
+              />
+              <TextReveal
+                text="votre chantier ?"
+                as="div"
+                className="font-headline font-black text-secondary-container leading-[0.92] tracking-tight mb-4"
+                animate
+                delay={0.3}
+              />
+            </div>
             <p className="font-body text-white/50 text-base max-w-lg mx-auto">
               Sélectionnez une catégorie — on vous guide vers le bon matériel.
             </p>

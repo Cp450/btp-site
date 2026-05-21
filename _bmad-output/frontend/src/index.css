@@ -154,6 +154,25 @@
 .wave-4 { animation-duration: 18s; animation-direction: reverse; }
 .wave-5 { animation-duration: 40s; }
 
+/* ── Card hover elevation ──────────────────────────── */
+.card-lift {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 32, 69, 0.14);
+}
+/* Dark background variant */
+.card-lift-dark {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-lift-dark:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
 /* ── Performance — GPU layers & containment ──────── */
 .animate-fade-slide-up { will-change: opacity, transform; }
 section { contain: layout style; }
@@ -176,5 +195,15 @@ section { contain: layout style; }
     transition: none;
     max-height: none;
     overflow: visible;
+  }
+  /* Framer Motion — disable all transitions */
+  .card-lift,
+  .card-lift-dark {
+    transition: none;
+  }
+  .card-lift:hover,
+  .card-lift-dark:hover {
+    transform: none;
+    box-shadow: none;
   }
 }

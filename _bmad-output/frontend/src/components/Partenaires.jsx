@@ -1,12 +1,14 @@
-﻿import { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
+import { motion } from "framer-motion";
 import { PARTENAIRES } from "../data/partenaires";
 import PartenaireModal from "./PartenaireModal";
 import WaveBackground from "./WaveBackground";
+import { staggerFast, scaleUp, fadeUp, viewport } from "../lib/motion";
 
 /* ─── Card logo (glass effect au-dessus des vagues) ────────────── */
 function PartenaireCard({ partenaire, onOpen }) {
   return (
-    <article className="group relative z-10 flex flex-col items-center justify-between gap-5 bg-white/[0.06] backdrop-blur-md hover:bg-white/[0.12] ring-1 ring-white/15 hover:ring-[#234998]/50 rounded-2xl p-6 transition-all duration-300">
+    <article className="group relative z-10 flex flex-col items-center justify-between gap-5 bg-white/[0.06] backdrop-blur-md hover:bg-white/[0.12] ring-1 ring-white/15 hover:ring-[#234998]/50 rounded-2xl p-6 transition-all duration-300 card-lift-dark">
       {/* Logo monochrome → couleur au hover */}
       <div className="flex items-center justify-center h-16 w-full">
         <img
@@ -45,15 +47,29 @@ export default function Partenaires() {
       {/* Vagues animées en background (desktop only) */}
       <WaveBackground />
 
-      {/* Grille */}
-      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 mb-20">
+      {/* Grille partenaires — stagger reveal */}
+      <motion.div
+        className="relative z-10 max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 mb-20"
+        variants={staggerFast}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewport}
+      >
         {PARTENAIRES.map((p) => (
-          <PartenaireCard key={p.id} partenaire={p} onOpen={() => setActif(p)} />
+          <motion.div key={p.id} variants={scaleUp}>
+            <PartenaireCard partenaire={p} onOpen={() => setActif(p)} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* CTA bas */}
-      <div className="relative z-10 max-w-7xl mx-auto flex justify-center">
+      <motion.div
+        className="relative z-10 max-w-7xl mx-auto flex justify-center"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewport}
+      >
         <a
           href="https://wa.me/242069610635?text=Bonjour%20Foga-Tech%2C%20je%20souhaite%20discuter%20d%27un%20partenariat."
           target="_blank"
@@ -63,7 +79,7 @@ export default function Partenaires() {
           <span className="material-symbols-outlined text-sm" aria-hidden="true">handshake</span>
           Devenir partenaire Foga-Tech
         </a>
-      </div>
+      </motion.div>
 
       {actif && <PartenaireModal partenaire={actif} onClose={fermer} />}
     </section>

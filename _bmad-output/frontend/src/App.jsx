@@ -1,5 +1,6 @@
-import { lazy, Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { lazy, Suspense, useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import Lenis from 'lenis'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import StickyMobileBar from './components/StickyMobileBar'
@@ -35,7 +36,40 @@ function PageLoader() {
   )
 }
 
+function useLenis() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 0.85,
+      touchMultiplier: 1.5,
+    });
+
+    let rafId;
+    function raf(time) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
+  }, []);
+
+  // Reset Lenis on route change (Lenis persists scroll state)
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+}
+
 export default function App() {
+  useLenis();
+
   return (
     <>
       <ScrollToTop />

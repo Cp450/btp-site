@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
+import TextReveal from '../components/TextReveal'
 import { supabase } from '../lib/supabase'
 
 /* ── Bureaux ──────────────────────────────────────────────────── */
@@ -89,13 +90,22 @@ export default function Contact() {
           <p className="font-label font-bold text-[11px] uppercase tracking-[0.22em] text-secondary-container mb-6">
             · Brazzaville &amp; Pointe-Noire ·
           </p>
-          <h1
-            className="font-headline font-black leading-[0.95] tracking-tight text-white mb-6"
-            style={{ fontSize: 'clamp(2.2rem, 5.5vw, 4rem)' }}
-          >
-            Parlons de<br />
-            <span className="text-secondary-container">votre projet.</span>
-          </h1>
+          <div style={{ fontSize: 'clamp(2.2rem, 5.5vw, 4rem)' }}>
+            <TextReveal
+              text="Parlons de"
+              as="h1"
+              className="font-headline font-black leading-[0.95] tracking-tight text-white"
+              animate
+              delay={0.1}
+            />
+            <TextReveal
+              text="votre projet."
+              as="div"
+              className="font-headline font-black leading-[0.95] tracking-tight text-secondary-container mb-6"
+              animate
+              delay={0.3}
+            />
+          </div>
           <p className="text-white/55 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
             Notre équipe répond en lingala et en français &mdash; 7 jours sur 7, urgences comprises.
           </p>

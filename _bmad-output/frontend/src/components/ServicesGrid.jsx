@@ -1,4 +1,7 @@
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { fadeUp, fadeLeft, fadeRight, stagger, scaleUp, viewport } from "../lib/motion";
+import TextReveal from "./TextReveal";
 import {
   IMG_HERO_CHANTIER,
   IMG_HERO_SMART_CITY,
@@ -46,7 +49,7 @@ function ServiceCard({ s, className = "", imgHeight = "h-64" }) {
   return (
     <Link
       to={s.to}
-      className={`group relative overflow-hidden block ${className}`}
+      className={`group relative overflow-hidden block card-lift ${className}`}
     >
       {/* Background image */}
       <div className={`${imgHeight} relative overflow-hidden`}>
@@ -105,53 +108,74 @@ export default function ServicesGrid() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div>
+          <motion.div
+            variants={fadeLeft}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+          >
             <p className="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-3">
               Nos expertises
             </p>
-            <h2 className="font-headline text-3xl md:text-5xl font-black text-primary leading-none">
-              Quatre métiers,<br />
-              <span className="text-secondary-container">une exigence.</span>
-            </h2>
-          </div>
-          <p className="text-on-surface-variant max-w-xs text-sm leading-relaxed md:text-right">
+            <TextReveal
+              text="Quatre métiers,"
+              as="h2"
+              className="font-headline text-3xl md:text-5xl font-black text-primary leading-none"
+            />
+            <TextReveal
+              text="une exigence."
+              as="div"
+              className="font-headline text-3xl md:text-5xl font-black text-secondary-container leading-none"
+            />
+          </motion.div>
+          <motion.p
+            className="text-on-surface-variant max-w-xs text-sm leading-relaxed md:text-right"
+            variants={fadeRight}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+          >
             De la villa individuelle à la route rurale — Fogatech couvre
             l&apos;intégralité du cycle BTP au Congo.
-          </p>
+          </motion.p>
         </div>
 
-        {/* Zigzag grid: col 1 & 2 = featured + regular, col 2 flip */}
-        {/* Mobile: single column stack */}
-        {/* Desktop: 3-col grid with zigzag sizing */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-outline-variant">
+        {/* Grid */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-outline-variant"
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+        >
           {/* 01 — Featured (spans 2 cols on lg) */}
-          <div className="lg:col-span-2 border-b md:border-b lg:border-b-0 border-outline-variant md:border-r">
+          <motion.div variants={scaleUp} className="lg:col-span-2 border-b md:border-b lg:border-b-0 border-outline-variant md:border-r">
             <ServiceCard s={SERVICES[0]} imgHeight="h-80 lg:h-[440px]" />
-          </div>
+          </motion.div>
 
-          {/* Right column: 02 + 03 stacked */}
-          <div className="hidden lg:flex lg:flex-col">
+          {/* Right column: 02 + 03 stacked — desktop */}
+          <motion.div variants={scaleUp} className="hidden lg:flex lg:flex-col">
             <div className="border-b border-outline-variant flex-1">
               <ServiceCard s={SERVICES[1]} imgHeight="h-[216px]" />
             </div>
             <div className="flex-1">
               <ServiceCard s={SERVICES[2]} imgHeight="h-[216px]" />
             </div>
-          </div>
+          </motion.div>
 
-          {/* 02 + 03 visible on md only (2-col grid) */}
-          <div className="lg:hidden border-b md:border-b-0 border-outline-variant md:border-r">
+          {/* 02 + 03 — tablet */}
+          <motion.div variants={scaleUp} className="lg:hidden border-b md:border-b-0 border-outline-variant md:border-r">
             <ServiceCard s={SERVICES[1]} imgHeight="h-64" />
-          </div>
-          <div className="lg:hidden border-b border-outline-variant">
+          </motion.div>
+          <motion.div variants={scaleUp} className="lg:hidden border-b border-outline-variant">
             <ServiceCard s={SERVICES[2]} imgHeight="h-64" />
-          </div>
+          </motion.div>
 
-          {/* 04 — full width on lg */}
-          <div className="lg:col-span-3 border-t border-outline-variant">
+          {/* 04 — full width */}
+          <motion.div variants={fadeUp} className="lg:col-span-3 border-t border-outline-variant">
             <Link
               to={SERVICES[3].to}
-              className="group flex flex-col md:flex-row items-stretch overflow-hidden"
+              className="group flex flex-col md:flex-row items-stretch overflow-hidden card-lift"
             >
               <div className="md:w-2/5 h-56 md:h-auto relative overflow-hidden flex-shrink-0">
                 <img
@@ -192,8 +216,8 @@ export default function ServicesGrid() {
                 </div>
               </div>
             </Link>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

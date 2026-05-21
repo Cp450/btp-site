@@ -1,5 +1,8 @@
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
+import TextReveal from '../components/TextReveal'
+import { fadeUp, fadeLeft, stagger, viewport } from '../lib/motion'
 
 const IMG_AVICULTURE      = '/aviculture.webp'
 const IMG_PORCHERIE       = '/porcherie.webp'
@@ -121,53 +124,60 @@ export default function GenieRural() {
           </div>
 
           {/* Headline block */}
-          <div className="max-w-[640px]">
-            <div className="flex items-center gap-3 mb-6 animate-fade-slide-up">
+          <motion.div
+            className="max-w-[640px]"
+            variants={stagger}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.div variants={fadeLeft} className="flex items-center gap-3 mb-6">
               <span className="w-4 h-px bg-secondary-container" />
               <span className="font-headline font-black text-[10px] uppercase tracking-[0.25em] text-secondary-container">
                 Infrastructure &amp; Agriculture
               </span>
+            </motion.div>
+
+            <div style={{ fontSize: "clamp(52px,7.5vw,100px)" }}>
+              <TextReveal
+                text="Bâtir le futur rural."
+                as="h1"
+                className="font-headline font-black text-white leading-[0.92] tracking-[-0.03em] mb-6"
+                animate
+                delay={0.1}
+              />
             </div>
 
-            <h1
-              className="font-headline font-black text-white leading-[0.92] tracking-[-0.03em] mb-6 animate-fade-slide-up"
-              style={{ fontSize: "clamp(52px,7.5vw,100px)" }}
-            >
-              Bâtir<br />
-              le futur<br />
-              <span className="text-secondary-container">rural.</span>
-            </h1>
-
-            <p
-              className="font-body text-white/70 text-lg leading-relaxed mb-10 max-w-xl animate-fade-slide-up"
-              style={{ animationDelay: "150ms" }}
+            <motion.p
+              variants={fadeUp}
+              className="font-body text-white/70 text-lg leading-relaxed mb-10 max-w-xl"
             >
               Ingénierie de précision pour la transformation des espaces agricoles.
               Nous construisons les fondations de la souveraineté alimentaire congolaise.
-            </p>
+            </motion.p>
 
-            <div
-              className="flex flex-col sm:flex-row gap-4 animate-fade-slide-up"
-              style={{ animationDelay: "300ms" }}
-            >
-              <a
-                href="https://wa.me/242069610635?text=Bonjour%2C%20je%20souhaite%20consulter%20vos%20experts%20en%20G%C3%A9nie%20Rural"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-black text-[13px] uppercase tracking-[0.18em] px-8 py-4 rounded-full hover:shadow-tectonic-orange hover:-translate-y-px transition-all"
-              >
-                <span className="material-symbols-outlined text-base" aria-hidden="true" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
-                Consulter nos experts
-              </a>
-              <Link
-                to="/devis"
-                className="flex items-center justify-center gap-2 border border-white/25 text-white hover:bg-white/10 px-8 py-4 font-headline font-bold uppercase text-[13px] tracking-[0.18em] rounded-full transition-all"
-              >
-                Demander un devis
-                <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
-              </Link>
-            </div>
-          </div>
+            <motion.div variants={stagger} className="flex flex-col sm:flex-row gap-4">
+              <motion.div variants={fadeUp}>
+                <a
+                  href="https://wa.me/242069610635?text=Bonjour%2C%20je%20souhaite%20consulter%20vos%20experts%20en%20G%C3%A9nie%20Rural"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-black text-[13px] uppercase tracking-[0.18em] px-8 py-4 rounded-full hover:shadow-tectonic-orange hover:-translate-y-px transition-all"
+                >
+                  <span className="material-symbols-outlined text-base" aria-hidden="true" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
+                  Consulter nos experts
+                </a>
+              </motion.div>
+              <motion.div variants={fadeUp}>
+                <Link
+                  to="/devis"
+                  className="flex items-center justify-center gap-2 border border-white/25 text-white hover:bg-white/10 px-8 py-4 font-headline font-bold uppercase text-[13px] tracking-[0.18em] rounded-full transition-all"
+                >
+                  Demander un devis
+                  <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
+                </Link>
+              </motion.div>
+            </motion.div>
+          </motion.div>
 
           {/* Stats row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-white/10 pt-8 mt-12">

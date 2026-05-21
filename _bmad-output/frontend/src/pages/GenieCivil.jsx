@@ -1,5 +1,8 @@
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
+import TextReveal from "../components/TextReveal";
+import { fadeUp, fadeLeft, stagger, viewport } from "../lib/motion";
 
 const IMG_HERO_CHANTIER = "/gc-hero-1.webp";
 const IMG_DEVIS_SIDEBAR = "/bureau-etude.webp";
@@ -70,9 +73,14 @@ export default function GenieCivil() {
         />
 
         {/* Left — text */}
-        <div className="relative z-10 flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-24 lg:py-32">
+        <motion.div
+          className="relative z-10 flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-24 lg:py-32"
+          variants={stagger}
+          initial="hidden"
+          animate="visible"
+        >
           {/* Breadcrumb */}
-          <nav aria-label="Fil d'Ariane" className="flex items-center gap-2 mb-8">
+          <motion.nav variants={fadeLeft} aria-label="Fil d'Ariane" className="flex items-center gap-2 mb-8">
             <Link
               to="/"
               className="text-on-primary/50 text-xs font-label font-bold uppercase tracking-widest hover:text-on-primary transition-colors"
@@ -83,25 +91,40 @@ export default function GenieCivil() {
             <span className="text-secondary-container text-xs font-label font-bold uppercase tracking-widest">
               Génie Civil
             </span>
-          </nav>
+          </motion.nav>
 
           {/* Tag */}
-          <span className="inline-block self-start px-3 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-label font-bold tracking-[0.2em] uppercase mb-6">
+          <motion.span
+            variants={fadeUp}
+            className="inline-block self-start px-3 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-label font-bold tracking-[0.2em] uppercase mb-6"
+          >
             BTP · Études · Construction
-          </span>
+          </motion.span>
 
-          {/* Headline */}
-          <h1 className="font-headline text-5xl md:text-6xl lg:text-7xl text-white font-black tracking-tighter leading-none mb-6">
-            GÉNIE CIVIL
-            <br />
-            <span className="text-secondary-container">&amp; BTP CONGO.</span>
-          </h1>
+          {/* Headline — text reveal */}
+          <TextReveal
+            text="GÉNIE CIVIL"
+            as="div"
+            className="font-headline text-5xl md:text-6xl lg:text-7xl text-white font-black tracking-tighter leading-none mb-2"
+            animate
+            delay={0.15}
+          />
+          <TextReveal
+            text="& BTP CONGO."
+            as="div"
+            className="font-headline text-5xl md:text-6xl lg:text-7xl text-secondary-container font-black tracking-tighter leading-none mb-6"
+            animate
+            delay={0.3}
+          />
 
-          <p className="text-on-primary/70 font-body text-base mb-10 max-w-sm leading-relaxed">
+          <motion.p
+            variants={fadeUp}
+            className="text-on-primary/70 font-body text-base mb-10 max-w-sm leading-relaxed"
+          >
             De l&apos;étude de sol au bâtiment livré — ingénierie structurelle,
             architecture, construction bâtiment et travaux publics aux normes
             internationales.
-          </p>
+          </motion.p>
 
           {/* Stats row */}
           <div className="flex flex-wrap gap-8 mb-12">
@@ -118,23 +141,27 @@ export default function GenieCivil() {
           </div>
 
           {/* CTA buttons */}
-          <div className="flex flex-wrap gap-4">
-            <Link
-              to="/devis"
-              className="inline-flex items-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-bold px-8 py-4 uppercase tracking-widest text-xs shadow-tectonic-orange hover:brightness-105 active:scale-95 transition-all rounded-full"
-            >
-              <span className="material-symbols-outlined text-sm" aria-hidden="true">description</span>
-              Demander un devis
-            </Link>
-            <a
-              href="#bureau-etude"
-              className="inline-flex items-center gap-2 border border-white/30 text-white font-headline font-bold px-8 py-4 uppercase tracking-widest text-xs hover:bg-white/10 transition-colors rounded-full"
-            >
-              Nos disciplines
-              <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_downward</span>
-            </a>
-          </div>
-        </div>
+          <motion.div variants={stagger} className="flex flex-wrap gap-4">
+            <motion.div variants={fadeUp}>
+              <Link
+                to="/devis"
+                className="inline-flex items-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-bold px-8 py-4 uppercase tracking-widest text-xs shadow-tectonic-orange hover:brightness-105 active:scale-95 transition-all rounded-full"
+              >
+                <span className="material-symbols-outlined text-sm" aria-hidden="true">description</span>
+                Demander un devis
+              </Link>
+            </motion.div>
+            <motion.div variants={fadeUp}>
+              <a
+                href="#bureau-etude"
+                className="inline-flex items-center gap-2 border border-white/30 text-white font-headline font-bold px-8 py-4 uppercase tracking-widest text-xs hover:bg-white/10 transition-colors rounded-full"
+              >
+                Nos disciplines
+                <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_downward</span>
+              </a>
+            </motion.div>
+          </motion.div>
+        </motion.div>
 
         {/* Right — image */}
         <div className="relative hidden lg:block">

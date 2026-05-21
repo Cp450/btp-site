@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { fadeUp, stagger, viewport } from '../lib/motion'
 import SEO from '../components/SEO'
+import TextReveal from '../components/TextReveal'
 const IMG_SOLUTIONS_DURABLES = '/solutions-durables-hero.webp'
 
 
@@ -70,35 +73,45 @@ export default function SolutionsDurables() {
               <span className="text-secondary-container">Solutions Durables</span>
             </div>
 
-            <div className="max-w-[680px]">
-              <div className="flex items-center gap-3 mb-6 animate-fade-slide-up">
+            <motion.div
+              className="max-w-[680px]"
+              variants={stagger}
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
                 <span className="w-4 h-px bg-secondary-container" />
                 <span className="font-headline font-black text-[10px] uppercase tracking-[0.25em] text-secondary-container">
                   Génie Rural Éco-Responsable
                 </span>
+              </motion.div>
+
+              <div style={{ fontSize: "clamp(48px,7vw,92px)" }}>
+                <TextReveal
+                  text="Solutions durables"
+                  as="h1"
+                  className="font-headline font-black text-white leading-[0.92] tracking-[-0.03em]"
+                  animate
+                  delay={0.1}
+                />
+                <TextReveal
+                  text="& vie sur site."
+                  as="div"
+                  className="font-headline font-black text-secondary-container leading-[0.92] tracking-[-0.03em] mb-6"
+                  animate
+                  delay={0.3}
+                />
               </div>
 
-              <h1
-                className="font-headline font-black text-white leading-[0.92] tracking-[-0.03em] mb-6 animate-fade-slide-up"
-                style={{ fontSize: "clamp(48px,7vw,92px)" }}
-              >
-                Solutions<br />
-                durables<br />
-                <span className="text-secondary-container">&amp; vie sur site.</span>
-              </h1>
-
-              <p
-                className="font-body text-white/70 text-lg leading-relaxed mb-10 max-w-xl animate-fade-slide-up"
-                style={{ animationDelay: "150ms" }}
+              <motion.p
+                variants={fadeUp}
+                className="font-body text-white/70 text-lg leading-relaxed mb-10 max-w-xl"
               >
                 Autonomie énergétique, gestion circulaire des ressources et cadre de
                 vie exemplaire pour les équipes sur le terrain.
-              </p>
+              </motion.p>
 
-              <div
-                className="flex flex-col sm:flex-row gap-4 animate-fade-slide-up"
-                style={{ animationDelay: "300ms" }}
-              >
+              <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4">
                 <button
                   type="button"
                   onClick={() => whatsapp()}
@@ -114,8 +127,8 @@ export default function SolutionsDurables() {
                   Demander un devis
                   <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
                 </Link>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             <div />
           </div>

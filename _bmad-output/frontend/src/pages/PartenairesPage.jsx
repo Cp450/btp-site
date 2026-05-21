@@ -1,5 +1,6 @@
 ﻿import SEO from "../components/SEO";
 import Partenaires from "../components/Partenaires";
+import TextReveal from "../components/TextReveal";
 
 export default function PartenairesPage() {
   return (
@@ -33,12 +34,15 @@ export default function PartenairesPage() {
             </span>
             <span className="w-6 h-px bg-[#4A7BC8]/60 flex-shrink-0" />
           </div>
-          <h1
-            className="font-headline font-black text-white leading-[0.95] tracking-[-0.03em] mb-6"
-            style={{ fontSize: "clamp(40px, 6vw, 72px)" }}
-          >
-            Partenaires &amp; clients
-          </h1>
+          <div style={{ fontSize: "clamp(40px, 6vw, 72px)" }}>
+            <TextReveal
+              text="Partenaires & clients"
+              as="h1"
+              className="font-headline font-black text-white leading-[0.95] tracking-[-0.03em] mb-6"
+              animate
+              delay={0.1}
+            />
+          </div>
           <p className="font-body text-white/50 text-base max-w-xl mx-auto">
             Institutions, entreprises nationales et groupes internationaux —
             ensemble nous façonnons l&apos;infrastructure du Congo de demain.

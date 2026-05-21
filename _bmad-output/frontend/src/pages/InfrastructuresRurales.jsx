@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { fadeUp, stagger, viewport } from '../lib/motion'
 import SEO from '../components/SEO'
+import TextReveal from '../components/TextReveal'
 
 
 const specs = [
@@ -63,30 +66,44 @@ export default function InfrastructuresRurales() {
 
         {/* Layer 3 — content */}
         <div className="relative z-10 flex-1 flex flex-col justify-center max-w-7xl mx-auto w-full px-6 lg:px-12 pt-32 pb-20">
-          <div className="max-w-[720px]">
-            <div className="flex items-center gap-3 mb-6 animate-fade-slide-up">
+          <motion.div
+            className="max-w-[720px]"
+            variants={stagger}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
               <span className="w-4 h-px bg-secondary-container" />
               <span className="font-headline font-black text-[10px] uppercase tracking-[0.25em] text-secondary-container">
                 Pôle Génie Rural
               </span>
+            </motion.div>
+
+            <div style={{ fontSize: "clamp(48px,7vw,92px)" }}>
+              <TextReveal
+                text="Préparation &"
+                as="h1"
+                className="font-headline font-black text-white leading-[0.92] tracking-[-0.03em]"
+                animate
+                delay={0.1}
+              />
+              <TextReveal
+                text="Infrastructures."
+                as="div"
+                className="font-headline font-black text-secondary-container leading-[0.92] tracking-[-0.03em] mb-6"
+                animate
+                delay={0.3}
+              />
             </div>
 
-            <h1
-              className="font-headline font-black text-white leading-[0.92] tracking-[-0.03em] mb-6 animate-fade-slide-up"
-              style={{ fontSize: "clamp(48px,7vw,92px)" }}
-            >
-              Préparation &amp;<br />
-              <span className="text-secondary-container">Infrastructures.</span>
-            </h1>
-
-            <p
-              className="font-body text-white/70 text-lg leading-relaxed mb-10 max-w-xl animate-fade-slide-up"
-              style={{ animationDelay: "150ms" }}
+            <motion.p
+              variants={fadeUp}
+              className="font-body text-white/70 text-lg leading-relaxed mb-10 max-w-xl"
             >
               Maîtrise technologique et puissance industrielle pour transformer
               les terrains bruts en pôles de production agricole performants.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </div>
       </section>
 

@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { fadeUp, stagger, viewport } from '../lib/motion'
+import { fadeUp, stagger } from '../lib/motion'
 import SEO from '../components/SEO'
 import TextReveal from '../components/TextReveal'
 
@@ -28,9 +28,9 @@ export default function InfrastructuresRurales() {
   return (
     <main className="bg-surface text-on-surface font-body">
       <SEO
-        title="Infrastructures rurales Congo — Routes et ponts"
-        description="Construction et réhabilitation d'infrastructures rurales au Congo : routes, ponts, ouvrages hydrauliques. Fogatech BTP, expertise terrain depuis 2015."
-        canonical="https://fogatech.cg/genie-rural/infrastructures-rurales"
+        title="Infrastructures rurales Congo — Adduction d'eau, électrification, terrassement | Foga-Tech BTP"
+        description="Construction d'infrastructures rurales au Congo : adduction d'eau, électrification, dessouchage, voies d'accès, ouvrages hydrauliques. Foga-Tech BTP, expertise terrain depuis 2012."
+        canonical="https://foga-tech.tech/genie-rural/infrastructures-rurales"
       />
 
       {/* Hero — Home DNA Ken Burns + radial glow */}
@@ -53,14 +53,12 @@ export default function InfrastructuresRurales() {
           />
         </div>
 
-        {/* Layer 2 — radial glow */}
+        {/* Layer 2 — radial glow orange uniquement */}
         <div
           className="absolute inset-0 z-0 pointer-events-none"
           style={{
-            backgroundImage: `
-              radial-gradient(circle at 20% 30%, rgba(254,147,44,0.10), transparent 60%),
-              radial-gradient(circle at 80% 20%, rgba(37,99,235,0.08), transparent 60%)
-            `,
+            backgroundImage:
+              "radial-gradient(circle at 20% 30%, rgba(254,147,44,0.10), transparent 60%)",
           }}
         />
 
@@ -72,6 +70,19 @@ export default function InfrastructuresRurales() {
             initial="hidden"
             animate="visible"
           >
+            <motion.nav variants={fadeUp} aria-label="Fil d'Ariane" className="flex items-center gap-2 mb-6">
+              <Link to="/" className="text-white/45 text-[11px] font-headline font-black uppercase tracking-[0.2em] hover:text-white transition-colors">
+                Accueil
+              </Link>
+              <span className="text-white/55 text-[11px]" aria-hidden="true">/</span>
+              <Link to="/genie-rural" className="text-white/45 text-[11px] font-headline font-black uppercase tracking-[0.2em] hover:text-white transition-colors">
+                Génie Rural
+              </Link>
+              <span className="text-white/55 text-[11px]" aria-hidden="true">/</span>
+              <span className="text-secondary-container text-[11px] font-headline font-black uppercase tracking-[0.2em]">
+                Infrastructures Rurales
+              </span>
+            </motion.nav>
             <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
               <span className="w-4 h-px bg-secondary-container" />
               <span className="font-headline font-black text-[10px] uppercase tracking-[0.25em] text-secondary-container">
@@ -116,7 +127,7 @@ export default function InfrastructuresRurales() {
                 {"L'expertise technique au service de la souveraineté alimentaire."}
               </h2>
               <p className="text-on-surface-variant mb-6 leading-relaxed">
-                {"FOGATECH déploie des solutions d'ingénierie lourde pour l'aménagement rural. Nous"
+                {"Foga-Tech déploie des solutions d'ingénierie lourde pour l'aménagement rural. Nous"
                   + " intervenons sur les environnements les plus complexes pour garantir une base structurelle"
                   + " inébranlable à vos projets agro-industriels."}
               </p>
@@ -157,7 +168,7 @@ export default function InfrastructuresRurales() {
               <div className="w-full aspect-video relative z-10 shadow-2xl overflow-hidden rounded-2xl">
                 <img
                   src="/dessouchage-voies.webp"
-                  alt="Dessouchage & voies de désenclavement — Fogatech BTP"
+                  alt="Dessouchage & voies de désenclavement — Foga-Tech BTP"
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
@@ -196,7 +207,7 @@ export default function InfrastructuresRurales() {
               <div className="w-full aspect-[4/3] shadow-2xl overflow-hidden rounded-2xl">
                 <img
                   src="/electrification-site.webp"
-                  alt="Électrification de site rural — Fogatech"
+                  alt="Électrification de site rural — Foga-Tech"
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
@@ -210,7 +221,7 @@ export default function InfrastructuresRurales() {
                 Électrification de Site &amp; Énergies
               </h2>
               <p className="text-on-surface-variant mb-8 leading-relaxed">
-                {"L'autonomie énergétique est la clé du succès. FOGATECH installe des réseaux mixtes"
+                {"L'autonomie énergétique est la clé du succès. Foga-Tech installe des réseaux mixtes"
                   + " (Photovoltaïque / Groupe Électrogène / Réseau National) pour alimenter vos unités de"
                   + " pompage, de transformation et de vie."}
               </p>
@@ -237,7 +248,7 @@ export default function InfrastructuresRurales() {
               <div className="w-full aspect-video shadow-2xl overflow-hidden rounded-2xl">
                 <img
                   src="/hangar-conservation.webp"
-                  alt="Hangars de stockage & conservation — Fogatech"
+                  alt="Hangars de stockage & conservation — Foga-Tech"
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
@@ -277,29 +288,34 @@ export default function InfrastructuresRurales() {
       </section>
 
       {/* CTA final */}
-      <section className="py-24 bg-primary text-white relative overflow-hidden">
-        <div className="absolute right-0 top-0 h-full w-1/3 bg-secondary-container/10 -skew-x-12 translate-x-1/2" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="font-headline text-4xl md:text-5xl font-bold mb-8">
-              {"Confiez votre aménagement à l'expert BTP."}
-            </h2>
-            <p className="text-on-primary-container text-lg mb-12 max-w-2xl mx-auto">
-              {"De l'étude de faisabilité à la remise des clés, nous gérons l'intégralité du chantier"
-                + " avec une rigueur industrielle."}
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
+      <section className="py-20 bg-surface relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-10 items-center">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-6 h-px bg-secondary-container flex-shrink-0" />
+                <p className="font-label text-xs uppercase tracking-widest text-on-surface-variant">Passer à l'action</p>
+              </div>
+              <h2 className="font-headline text-3xl md:text-4xl font-black text-primary leading-tight mb-4">
+                {"Confiez votre aménagement à l'expert BTP."}
+              </h2>
+              <p className="text-on-surface-variant font-body text-base max-w-2xl">
+                {"De l'étude de faisabilité à la remise des clés — chantier géré avec rigueur industrielle."}
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row md:flex-col gap-3 md:min-w-[260px]">
               <Link
                 to="/devis"
-                className="bg-secondary-container text-on-secondary-container px-10 py-4 font-headline font-bold uppercase tracking-widest text-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all rounded-full"
+                className="inline-flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container px-6 py-3.5 font-headline font-bold uppercase tracking-widest text-xs hover:opacity-90 transition-all rounded-full"
               >
-                Demander un Devis Technique
+                Devis Technique
+                <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
               </Link>
               <Link
                 to="/portfolio"
-                className="border-2 border-on-primary-container text-white px-10 py-4 font-headline font-bold uppercase tracking-widest text-sm hover:bg-white hover:text-primary transition-all rounded-full"
+                className="inline-flex items-center justify-center gap-2 border border-primary text-primary px-6 py-3.5 font-headline font-bold uppercase tracking-widest text-xs hover:bg-primary hover:text-white transition-all rounded-full"
               >
-                Voir nos Réalisations
+                Nos Réalisations
               </Link>
             </div>
           </div>

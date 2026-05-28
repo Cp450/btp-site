@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
 
 export default function PolitiqueConfidentialite() {
@@ -7,7 +7,7 @@ export default function PolitiqueConfidentialite() {
       <SEO
         title="Politique de confidentialité"
         description="Politique de confidentialité de Foga-Tech International — données collectées, finalité, droits des utilisateurs."
-        canonical="https://fogatech.cg/confidentialite"
+        canonical="https://foga-tech.tech/confidentialite"
         noindex
       />
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
@@ -77,7 +77,7 @@ export default function PolitiqueConfidentialite() {
           <div className="font-body text-on-surface">
             <p>Vos données sont accessibles à :</p>
             <ul className="list-disc list-inside space-y-1 ml-4">
-              <li>L'équipe Fogatech BTP (direction, chefs de projet, commerciaux)</li>
+              <li>L'équipe Foga-Tech BTP (direction, chefs de projet, commerciaux)</li>
               <li>L'hébergeur Vercel Inc. (États-Unis)</li>
               <li>Supabase Inc. (base de données hébergée dans l'Union Européenne)</li>
             </ul>

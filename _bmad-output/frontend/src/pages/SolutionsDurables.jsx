@@ -1,23 +1,19 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { fadeUp, stagger, viewport } from '../lib/motion'
+import { fadeUp, stagger } from '../lib/motion'
 import SEO from '../components/SEO'
 import TextReveal from '../components/TextReveal'
 const IMG_SOLUTIONS_DURABLES = '/solutions-durables-hero.webp'
 
 
 export default function SolutionsDurables() {
-  const whatsapp = (msg = '') => {
-    const text = encodeURIComponent(msg || 'Bonjour Fogatech, je souhaite un audit de solutions durables pour mon site agricole.')
-    window.open(`https://wa.me/242069610635?text=${text}`, '_blank')
-  }
 
   return (
     <>
       <SEO
-        title="Solutions durables — Génie Rural Congo"
-        description="Fogatech BTP propose des solutions durables pour le génie rural congolais : énergie solaire, gestion de l'eau, agriculture durable."
-        canonical="https://fogatech.cg/genie-rural/solutions-durables"
+        title="Solutions durables Congo — Énergie solaire, biogaz, irrigation intelligente | Foga-Tech BTP"
+        description="Foga-Tech BTP conçoit des solutions durables pour le génie rural au Congo-Brazzaville : irrigation intelligente, biogaz, biofertilisants, énergie hybride. Innovation écologique BTP depuis 2012."
+        canonical="https://foga-tech.tech/genie-rural/solutions-durables"
       />
       <main className="bg-surface min-h-screen">
         {/* Hero — Home DNA full-bleed + Ken Burns */}
@@ -64,21 +60,25 @@ export default function SolutionsDurables() {
 
           {/* Layer 3 — content */}
           <div className="relative z-10 flex-1 flex flex-col justify-between max-w-7xl mx-auto w-full px-6 lg:px-12 pt-32 pb-20">
-            {/* Breadcrumb */}
-            <div className="flex items-center gap-2 text-white/40 font-body text-xs mb-8">
-              <Link to="/" className="hover:text-secondary-container transition-colors">Accueil</Link>
-              <span aria-hidden="true">›</span>
-              <Link to="/genie-rural" className="hover:text-secondary-container transition-colors">Génie Rural</Link>
-              <span aria-hidden="true">›</span>
-              <span className="text-secondary-container">Solutions Durables</span>
-            </div>
-
             <motion.div
               className="max-w-[680px]"
               variants={stagger}
               initial="hidden"
               animate="visible"
             >
+              <motion.nav variants={fadeUp} aria-label="Fil d'Ariane" className="flex items-center gap-2 mb-6">
+                <Link to="/" className="text-white/55 text-[11px] font-headline font-black uppercase tracking-[0.2em] hover:text-white transition-colors">
+                  Accueil
+                </Link>
+                <span className="text-white/55 text-[11px]" aria-hidden="true">/</span>
+                <Link to="/genie-rural" className="text-white/55 text-[11px] font-headline font-black uppercase tracking-[0.2em] hover:text-white transition-colors">
+                  Génie Rural
+                </Link>
+                <span className="text-white/55 text-[11px]" aria-hidden="true">/</span>
+                <span className="text-secondary-container text-[11px] font-headline font-black uppercase tracking-[0.2em]">
+                  Solutions Durables
+                </span>
+              </motion.nav>
               <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
                 <span className="w-4 h-px bg-secondary-container" />
                 <span className="font-headline font-black text-[10px] uppercase tracking-[0.25em] text-secondary-container">
@@ -111,18 +111,10 @@ export default function SolutionsDurables() {
                 vie exemplaire pour les équipes sur le terrain.
               </motion.p>
 
-              <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4">
-                <button
-                  type="button"
-                  onClick={() => whatsapp()}
-                  className="flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-black text-[13px] uppercase tracking-[0.18em] px-8 py-4 rounded-full hover:shadow-tectonic-orange hover:-translate-y-px transition-all"
-                >
-                  <span className="material-symbols-outlined text-base" aria-hidden="true" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
-                  Audit gratuit
-                </button>
+              <motion.div variants={fadeUp}>
                 <Link
                   to="/devis"
-                  className="flex items-center justify-center gap-2 border border-white/25 text-white hover:bg-white/10 px-8 py-4 font-headline font-bold uppercase text-[13px] tracking-[0.18em] rounded-full transition-all"
+                  className="inline-flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-black text-[13px] uppercase tracking-[0.18em] px-8 py-4 rounded-full hover:shadow-tectonic-orange hover:-translate-y-px transition-all"
                 >
                   Demander un devis
                   <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
@@ -237,12 +229,6 @@ export default function SolutionsDurables() {
                 <h2 className="font-headline text-4xl font-black text-primary uppercase tracking-tighter">Architecture du Projet</h2>
                 <p className="text-on-surface-variant mt-2 font-body">La précision industrielle au service de la nature.</p>
               </div>
-              <button
-                onClick={() => whatsapp()}
-                className="hidden md:block bg-primary text-white font-label font-bold text-xs uppercase tracking-widest px-8 py-4 hover:bg-secondary-container hover:text-on-secondary-container transition-colors mt-4 md:mt-0 rounded-full"
-              >
-                Demander un Audit
-              </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               {[
@@ -287,17 +273,17 @@ export default function SolutionsDurables() {
               Nos experts en génie rural conçoivent des solutions sur mesure alliant rentabilité et respect de l&apos;environnement.
             </p>
             <div className="relative z-10 flex flex-col md:flex-row gap-4 justify-center">
-              <button
-                onClick={() => whatsapp()}
+              <Link
+                to="/devis"
                 className="bg-secondary-container text-on-secondary-container font-headline font-black text-sm uppercase tracking-widest px-10 py-5 hover:shadow-tectonic-orange transition-all rounded-full"
               >
-                Demander un Audit
-              </button>
+                Demander un devis
+              </Link>
               <Link
                 to="/genie-rural"
                 className="bg-white/10 text-white border border-white/20 font-headline font-black text-sm uppercase tracking-widest px-10 py-5 hover:bg-white/20 transition-colors rounded-full"
               >
-                Voir nos Réalisations
+                Voir nos réalisations
               </Link>
             </div>
           </div>

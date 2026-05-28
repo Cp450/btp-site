@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
 import TextReveal from '../components/TextReveal'
-import { fadeUp, fadeLeft, stagger, viewport } from '../lib/motion'
+import { fadeUp, fadeLeft, stagger } from '../lib/motion'
 
 const IMG_AVICULTURE      = '/aviculture.webp'
 const IMG_PORCHERIE       = '/porcherie.webp'
@@ -74,9 +74,9 @@ export default function GenieRural() {
   return (
     <main className="bg-surface text-on-surface font-body">
       <SEO
-        title="Génie Rural Congo — Routes, ponts, irrigation | Fogatech BTP"
-        description="Fogatech BTP réalise routes, ponts, irrigations et infrastructures agricoles dans tout le Congo-Brazzaville. Expertise génie rural depuis 2015."
-        canonical="https://fogatech.cg/genie-rural"
+        title="Génie Rural Congo — Irrigation, élevage, infrastructures agricoles | Foga-Tech BTP"
+        description="Foga-Tech BTP réalise irrigation, élevage, pisciculture et infrastructures agricoles dans tout le Congo-Brazzaville. Expertise génie rural depuis 2012."
+        canonical="https://foga-tech.tech/genie-rural"
       />
 
       {/* ── HERO — Home DNA full-bleed + Ken Burns ───────────────── */}
@@ -117,11 +117,15 @@ export default function GenieRural() {
         {/* Layer 3 — content */}
         <div className="relative z-10 flex-1 flex flex-col justify-between max-w-7xl mx-auto w-full px-6 lg:px-12 pt-32 pb-12">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-white/40 font-body text-xs mb-8">
-            <Link to="/" className="hover:text-secondary-container transition-colors">Accueil</Link>
-            <span aria-hidden="true">›</span>
-            <span className="text-secondary-container">Génie Rural</span>
-          </div>
+          <nav aria-label="Fil d'Ariane" className="flex items-center gap-2 mb-8">
+            <Link to="/" className="text-white/55 text-[11px] font-headline font-black uppercase tracking-[0.2em] hover:text-white transition-colors">
+              Accueil
+            </Link>
+            <span className="text-white/55 text-[11px]" aria-hidden="true">/</span>
+            <span className="text-secondary-container text-[11px] font-headline font-black uppercase tracking-[0.2em]">
+              Génie Rural
+            </span>
+          </nav>
 
           {/* Headline block */}
           <motion.div
@@ -157,24 +161,22 @@ export default function GenieRural() {
 
             <motion.div variants={stagger} className="flex flex-col sm:flex-row gap-4">
               <motion.div variants={fadeUp}>
-                <a
-                  href="https://wa.me/242069610635?text=Bonjour%2C%20je%20souhaite%20consulter%20vos%20experts%20en%20G%C3%A9nie%20Rural"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-black text-[13px] uppercase tracking-[0.18em] px-8 py-4 rounded-full hover:shadow-tectonic-orange hover:-translate-y-px transition-all"
-                >
-                  <span className="material-symbols-outlined text-base" aria-hidden="true" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
-                  Consulter nos experts
-                </a>
-              </motion.div>
-              <motion.div variants={fadeUp}>
                 <Link
                   to="/devis"
-                  className="flex items-center justify-center gap-2 border border-white/25 text-white hover:bg-white/10 px-8 py-4 font-headline font-bold uppercase text-[13px] tracking-[0.18em] rounded-full transition-all"
+                  className="flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-black text-[13px] uppercase tracking-[0.18em] px-8 py-4 rounded-full hover:shadow-tectonic-orange hover:-translate-y-px transition-all"
                 >
                   Demander un devis
                   <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
                 </Link>
+              </motion.div>
+              <motion.div variants={fadeUp}>
+                <a
+                  href="#expertises"
+                  className="flex items-center justify-center gap-2 border border-white/25 text-white hover:bg-white/10 px-8 py-4 font-headline font-bold uppercase text-[13px] tracking-[0.18em] rounded-full transition-all"
+                >
+                  Nos expertises
+                  <span className="material-symbols-outlined text-base" aria-hidden="true">arrow_downward</span>
+                </a>
               </motion.div>
             </motion.div>
           </motion.div>
@@ -194,7 +196,7 @@ export default function GenieRural() {
       </section>
 
       {/* ── NOS EXPERTISES ────────────────────────────────────────── */}
-      <section className="py-20 md:py-28 bg-surface">
+      <section id="expertises" className="py-20 md:py-28 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
             <div>
@@ -208,16 +210,27 @@ export default function GenieRural() {
               </h2>
             </div>
             <p className="text-on-surface-variant max-w-xs text-sm leading-relaxed md:text-right">
-              De la préparation du sol aux solutions énergétiques — Fogatech couvre
+              De la préparation du sol aux solutions énergétiques — Foga-Tech couvre
               l&apos;intégralité du génie rural congolais.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-outline-variant">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-outline-variant rounded-2xl overflow-hidden">
             {EXPERTISES.map((e, i) => (
               <Link
                 key={e.num}
                 to={e.to}
+                onClick={(ev) => {
+                  const hashIdx = e.to.indexOf('#')
+                  if (hashIdx === -1) return
+                  const id = e.to.slice(hashIdx + 1)
+                  const el = document.getElementById(id)
+                  if (el) {
+                    ev.preventDefault()
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    history.replaceState(null, '', '#' + id)
+                  }
+                }}
                 className={[
                   'group p-8 md:p-10 flex gap-6 hover:bg-surface-container-low transition-colors duration-200',
                   i === 0 ? 'border-b border-r border-outline-variant' : '',
@@ -285,7 +298,7 @@ export default function GenieRural() {
             </div>
 
             {/* Cards grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 border border-outline-variant">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 border border-outline-variant rounded-2xl overflow-hidden">
               {TERRAIN_ITEMS.map((s, i) => (
                 <div
                   key={s.title}
@@ -313,10 +326,10 @@ export default function GenieRural() {
           </div>
 
           {/* Full-width image */}
-          <div className="h-64 md:h-80 overflow-hidden relative">
+          <div className="h-64 md:h-80 overflow-hidden relative rounded-2xl">
             <img
               src="/gc-hero-3.webp"
-              alt="Voiries Owando — Fogatech Congo"
+              alt="Voiries Owando — Foga-Tech Congo"
               className="w-full h-full object-cover"
               loading="lazy"
             />
@@ -331,7 +344,6 @@ export default function GenieRural() {
 
       {/* ── STOCKAGE & TRANSFORMATION ─────────────────────────────── */}
       <section id="stockage" className="py-20 md:py-28 bg-primary text-white overflow-hidden scroll-mt-32">
-        <div className="h-1 bg-secondary-container -mt-20 mb-20 w-full" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
@@ -340,8 +352,8 @@ export default function GenieRural() {
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-secondary-container z-0" aria-hidden="true" />
               <img
                 src="/stockage-transformation.webp"
-                alt="Stockage & transformation — Fogatech"
-                className="relative z-10 w-full aspect-[4/3] object-cover shadow-tectonic-lg"
+                alt="Stockage & transformation — Foga-Tech"
+                className="relative z-10 w-full aspect-[4/3] object-cover shadow-tectonic-lg rounded-2xl"
                 loading="lazy"
               />
               {/* Stats overlay */}
@@ -409,7 +421,7 @@ export default function GenieRural() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border border-outline-variant">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border border-outline-variant rounded-2xl overflow-hidden">
             {ELEVAGE_ITEMS.map((c, i) => (
               <div
                 key={c.title}
@@ -458,7 +470,7 @@ export default function GenieRural() {
             <div className="lg:row-span-2 relative overflow-hidden bg-primary group min-h-[320px] lg:border-r border-outline-variant">
               <img
                 src={IMG_SOLUTIONS_DURABLES}
-                alt="Irrigation intelligente — solutions durables Fogatech"
+                alt="Irrigation intelligente — solutions durables Foga-Tech"
                 className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:scale-105 transition-transform duration-700"
                 loading="lazy"
               />
@@ -514,61 +526,45 @@ export default function GenieRural() {
         </div>
       </section>
 
-      {/* ── CTA ───────────────────────────────────────────────────── */}
-      <section className="relative bg-primary overflow-hidden">
-        <div className="h-1 bg-secondary-container w-full" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-24 md:py-32">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-3 mb-10">
-              <span className="w-8 h-0.5 bg-secondary-container flex-shrink-0" />
-              <span className="text-secondary-container font-headline font-bold text-[11px] uppercase tracking-[0.25em]">
-                Prêt à commencer ?
-              </span>
+      {/* ── CTA final ───────────────────────────────────────────────────── */}
+      <section className="py-20 bg-surface relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-10 items-center">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-6 h-px bg-secondary-container flex-shrink-0" />
+                <p className="font-label text-xs uppercase tracking-widest text-on-surface-variant">Passer à l'action</p>
+              </div>
+              <h2 className="font-headline text-3xl md:text-4xl font-black text-primary leading-tight mb-4">
+                Transformez votre exploitation, <span className="text-secondary-container">dès aujourd'hui.</span>
+              </h2>
+              <p className="text-on-surface-variant font-body text-base max-w-2xl mb-6">
+                Visite technique offerte sur toute l'étendue du Congo · équipe génie rural dédiée.
+              </p>
+              <div className="flex flex-wrap gap-5 text-xs text-on-surface-variant">
+                {[
+                  { icon: 'bolt', label: 'Réponse sous 24h' },
+                  { icon: 'location_on', label: 'Visite technique offerte' },
+                  { icon: 'groups', label: "Expertise locale professionnelle" },
+                ].map((g) => (
+                  <div key={g.icon} className="flex items-center gap-2">
+                    <span className="material-symbols-outlined text-secondary-container text-base" aria-hidden="true" style={{ fontVariationSettings: "'FILL' 1" }}>{g.icon}</span>
+                    <span className="font-body">{g.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <h2
-              className="font-headline font-black text-white leading-[0.9] tracking-tight mb-8"
-              style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}
-            >
-              Transformez<br />votre exploitation<br />
-              <span className="text-secondary-container">dès aujourd&apos;hui.</span>
-            </h2>
-            <p className="text-on-primary/60 font-body text-base leading-relaxed max-w-md mb-12">
-              Notre équipe de génie rural répond en moins de 24h.
-              Visite technique gratuite sur toute l&apos;étendue du Congo.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <a
-                href="https://wa.me/242069610635?text=Bonjour%2C%20je%20veux%20un%20devis%20G%C3%A9nie%20Rural"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-black uppercase tracking-widest text-xs px-10 py-5 hover:shadow-tectonic-orange transition-all duration-200 rounded-full"
-              >
-                <span className="material-symbols-outlined text-base" aria-hidden="true" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
-                WhatsApp · Expert Génie Rural
-              </a>
+            <div className="md:min-w-[260px]">
               <Link
                 to="/devis"
-                className="inline-flex items-center justify-center gap-2 border border-on-primary/30 text-on-primary hover:bg-on-primary/10 font-headline font-bold uppercase text-xs tracking-widest px-8 py-5 transition-colors rounded-full"
+                className="inline-flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container px-8 py-4 font-headline font-bold uppercase tracking-widest text-xs hover:opacity-90 transition-all rounded-full w-full"
               >
-                <span className="material-symbols-outlined text-base" aria-hidden="true" style={{ fontVariationSettings: "'FILL' 1" }}>description</span>
                 Demander un devis
+                <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
               </Link>
-            </div>
-            <div className="flex flex-wrap gap-6 border-t border-white/10 pt-10">
-              {[
-                { icon: 'bolt', label: 'Réponse sous 24h' },
-                { icon: 'location_on', label: 'Visite technique gratuite' },
-                { icon: 'groups', label: 'Équipe 100% congolaise' },
-              ].map((g) => (
-                <div key={g.icon} className="flex items-center gap-2.5">
-                  <span className="material-symbols-outlined text-secondary-container text-lg" aria-hidden="true" style={{ fontVariationSettings: "'FILL' 1" }}>{g.icon}</span>
-                  <span className="text-on-primary/60 font-body text-sm">{g.label}</span>
-                </div>
-              ))}
             </div>
           </div>
         </div>
-        <div className="absolute right-8 bottom-8 font-headline font-black text-white/5 select-none hidden lg:block" style={{ fontSize: '16rem', lineHeight: 1 }} aria-hidden="true">GR</div>
       </section>
     </main>
   )

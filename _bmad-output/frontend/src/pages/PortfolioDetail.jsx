@@ -1,8 +1,7 @@
-import { useParams, Link, Navigate } from "react-router-dom";
+﻿import { useParams, Link, Navigate } from "react-router-dom";
 import SEO from "../components/SEO";
 import {
   IMG_PROJET_VILLA,
-  IMG_PROJET_SMART,
   IMG_PROJET_ROUTE,
   IMG_HERO_CHANTIER,
   IMG_PROJET_IMMEUBLE,
@@ -31,39 +30,39 @@ const PROJETS = {
       { icon: "bed", label: "Chambres", value: "5" },
       { icon: "schedule", label: "Durée", value: "5 mois" },
       { icon: "paid", label: "Budget", value: "280 000 €" },
-      { icon: "person", label: "Chef de projet", value: "Parfait Moukassa" },
+      { icon: "engineering", label: "Chef de projet", value: "Parfait Moukassa" },
     ],
     certifs: ["Agrément Ministère BTP", "Garantie décennale"],
     gallery: [IMG_PROJET_VILLA, IMG_HERO_CHANTIER, IMG_PROJET_IMMEUBLE],
     whatsapp_msg:
-      "Bonjour Fogatech, je suis intéressé(e) par le projet Villa Nganga R+2 à Bacongo. Pouvez-vous me contacter ?",
+      "Bonjour Foga-Tech, je suis intéressé(e) par le projet Villa Nganga R+2 à Bacongo. Pouvez-vous me contacter ?",
   },
-  "ecocite-massina": {
-    id: "ecocite-massina",
-    title: "Éco-Cité Massina F4",
-    category: "Smart City",
-    year: 2026,
-    location: "Massina, Brazzaville",
-    image: IMG_PROJET_SMART,
-    surface: "20 logements",
-    duree: "14 mois",
-    statut: "En cours",
-    budget: "1 200 000 €",
+  "immeuble-ouenze": {
+    id: "immeuble-ouenze",
+    title: "Immeuble R+4 Ouenzé",
+    category: "Génie Civil",
+    year: 2024,
+    location: "Ouenzé, Brazzaville",
+    image: IMG_PROJET_IMMEUBLE,
+    surface: "1 200 m²",
+    duree: "18 mois",
+    statut: "Livré",
+    budget: "2 100 000 €",
     chef: "Christelle Nzaba",
     description:
-      "Programme de 20 appartements F4 dans un ensemble résidentiel connecté. Chaque logement dispose d'une gestion domotique, de panneaux solaires en toiture, et d'un accès à une plateforme de suivi de consommation énergétique. Espace vert central de 2 000 m², parking souterrain, local vélos. Certification HQE en cours d'obtention.",
+      "Immeuble à usage mixte de 4 étages — rez-de-chaussée commercial et 16 appartements du F2 au F4. Structure béton armé avec remplissage parpaing, façade en crépi taloché, menuiseries aluminium thermolaqué. Réseau d'eau chaude solaire collectif, groupe électrogène de secours, ascenseur, parking sous-sol. Finitions standard Foga-Tech — carrelage grès cérame, peinture glycéro, plomberie complète.",
     specs: [
-      { icon: "apartment", label: "Logements", value: "20 F4" },
-      { icon: "square_foot", label: "Surface/logement", value: "130 m²" },
-      { icon: "bolt", label: "Énergie", value: "Solaire + réseau" },
-      { icon: "schedule", label: "Durée", value: "14 mois" },
-      { icon: "paid", label: "Budget", value: "1 200 000 €" },
-      { icon: "person", label: "Chef de projet", value: "Christelle Nzaba" },
+      { icon: "apartment", label: "Logements", value: "16 appts" },
+      { icon: "square_foot", label: "Surface SHON", value: "1 200 m²" },
+      { icon: "storefront", label: "Commerces RDC", value: "4 locaux" },
+      { icon: "schedule", label: "Durée", value: "18 mois" },
+      { icon: "paid", label: "Budget", value: "2 100 000 €" },
+      { icon: "engineering", label: "Chef de projet", value: "Christelle Nzaba" },
     ],
-    certifs: ["Agrément Ministère BTP", "HQE (en cours)"],
-    gallery: [IMG_PROJET_SMART, IMG_HERO_CHANTIER, IMG_PROJET_IMMEUBLE],
+    certifs: ["Agrément Ministère BTP", "Garantie décennale"],
+    gallery: [IMG_PROJET_IMMEUBLE, IMG_HERO_CHANTIER, IMG_PROJET_VILLA],
     whatsapp_msg:
-      "Bonjour Fogatech, je suis intéressé(e) par l'Éco-Cité Massina F4. Pouvez-vous me donner plus d'informations ?",
+      "Bonjour Foga-Tech, je suis intéressé(e) par l'Immeuble R+4 Ouenzé. Pouvez-vous me donner plus d'informations ?",
   },
   "route-pool": {
     id: "route-pool",
@@ -85,12 +84,12 @@ const PROJETS = {
       { icon: "water", label: "Ouvrages hydrauliques", value: "4 dalots" },
       { icon: "schedule", label: "Durée", value: "9 mois" },
       { icon: "paid", label: "Budget", value: "650 000 €" },
-      { icon: "person", label: "Chef de projet", value: "Emmanuel Koubemba" },
+      { icon: "engineering", label: "Chef de projet", value: "Emmanuel Koubemba" },
     ],
     certifs: ["Agrément Ministère BTP", "Garantie biennale équipements"],
     gallery: [IMG_PROJET_ROUTE, IMG_TERRAIN_PREP, IMG_IRRIGATION],
     whatsapp_msg:
-      "Bonjour Fogatech, je souhaite un projet similaire à la route rurale du Pool. Pouvez-vous me contacter ?",
+      "Bonjour Foga-Tech, je souhaite un projet similaire à la route rurale du Pool. Pouvez-vous me contacter ?",
   },
 };
 
@@ -103,9 +102,9 @@ export default function PortfolioDetail() {
   return (
     <main className="bg-surface min-h-screen">
       <SEO
-        title={`${projet.title} — Portfolio Fogatech`}
+        title={`${projet.title} — Portfolio Foga-Tech`}
         description={projet.description}
-        canonical={`https://fogatech.cg/portfolio/${projet.id}`}
+        canonical={`https://foga-tech.tech/portfolio/${projet.id}`}
       />
       {/* Hero */}
       <div className="relative h-[50vh] min-h-[360px] overflow-hidden">
@@ -185,7 +184,7 @@ export default function PortfolioDetail() {
               {projet.certifs.map((c) => (
                 <span
                   key={c}
-                  className="border border-outline-variant text-on-surface-variant font-label text-xs uppercase tracking-widest px-4 py-2"
+                  className="border border-outline-variant text-on-surface-variant font-label text-xs uppercase tracking-widest px-4 py-2 rounded-full"
                 >
                   {c}
                 </span>
@@ -195,7 +194,7 @@ export default function PortfolioDetail() {
         </div>
 
         {/* Sidebar */}
-        <aside className="space-y-8">
+        <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start h-fit">
           {/* Specs */}
           <div className="bg-surface-container-low border border-outline-variant p-6 rounded-2xl">
             <h3 className="font-headline font-bold text-lg text-primary mb-6">
@@ -227,7 +226,7 @@ export default function PortfolioDetail() {
               Projet similaire ?
             </p>
             <p className="text-on-primary/70 font-body text-sm">
-              Demandez un devis gratuit. Réponse en moins de 24h.
+              Devis offert sous 48 h, sans engagement.
             </p>
             <Link
               to="/devis"
@@ -236,12 +235,12 @@ export default function PortfolioDetail() {
               Demander un devis
             </Link>
             <a
-              href={`https://wa.me/242069610635?text=${encodeURIComponent(projet.whatsapp_msg)}`}
+              href={`https://wa.me/242069905640?text=${encodeURIComponent(projet.whatsapp_msg)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-center border border-white/30 text-white font-headline font-bold uppercase text-xs tracking-widest px-6 py-3 hover:bg-white/10 transition-colors rounded-full"
+              className="block text-center text-on-primary/60 hover:text-secondary-container text-xs font-body underline-offset-4 hover:underline transition-colors"
             >
-              WhatsApp
+              ou discuter de ce projet sur WhatsApp →
             </a>
           </div>
 

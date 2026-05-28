@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { fadeUp, stagger, viewport } from '../lib/motion'
+import { fadeUp, stagger } from '../lib/motion'
 import SEO from '../components/SEO'
 import TextReveal from '../components/TextReveal'
 
@@ -27,9 +27,9 @@ export default function LevagePisciculture() {
   return (
     <main className="bg-surface text-on-surface font-body">
       <SEO
-        title="Levage, pisciculture et élevage — Génie Rural"
-        description="Fogatech BTP réalise des équipements de levage, pisciculture, aviculture et élevage pour les exploitations rurales congolaises."
-        canonical="https://fogatech.cg/genie-rural/levage-pisciculture"
+        title="Élevage & Pisciculture Congo — Bâtiments avicoles, porcins, étangs | Foga-Tech BTP"
+        description="Foga-Tech BTP construit bâtiments avicoles, porcheries, étables et étangs piscicoles au Congo-Brazzaville. Infrastructures spécialisées génie rural depuis 2012."
+        canonical="https://foga-tech.tech/genie-rural/levage-pisciculture"
       />
 
       {/* Hero — Home DNA Ken Burns multi-image */}
@@ -37,9 +37,9 @@ export default function LevagePisciculture() {
         {/* Layer 1 — Ken Burns 3 images */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           {[
-            { src: "/elevage-hero-1.webp", cls: "hb-1", eager: true },
-            { src: "/elevage-hero-2.webp", cls: "hb-2", eager: false },
-            { src: "/elevage-hero-3.webp", cls: "hb-3", eager: false },
+            { src: "/elevage-hero-1.webp", cls: "el-1", eager: true },
+            { src: "/elevage-hero-2.webp", cls: "el-2", eager: false },
+            { src: "/elevage-hero-3.webp", cls: "el-3", eager: false },
           ].map(({ src, cls, eager }) => (
             <img
               key={src}
@@ -48,7 +48,7 @@ export default function LevagePisciculture() {
               aria-hidden="true"
               loading={eager ? "eager" : "lazy"}
               fetchPriority={eager ? "high" : "auto"}
-              className={`hero-bg-img ${cls} absolute inset-0 w-full h-full object-cover opacity-0 contrast-110 saturate-110`}
+              className={`el-bg-img ${cls} absolute inset-0 w-full h-full object-cover opacity-0 contrast-110 saturate-110`}
             />
           ))}
           <div
@@ -60,14 +60,12 @@ export default function LevagePisciculture() {
           />
         </div>
 
-        {/* Layer 2 — radial glow */}
+        {/* Layer 2 — radial glow orange uniquement */}
         <div
           className="absolute inset-0 z-0 pointer-events-none"
           style={{
-            backgroundImage: `
-              radial-gradient(circle at 20% 30%, rgba(254,147,44,0.10), transparent 60%),
-              radial-gradient(circle at 80% 20%, rgba(37,99,235,0.08), transparent 60%)
-            `,
+            backgroundImage:
+              "radial-gradient(circle at 20% 30%, rgba(254,147,44,0.10), transparent 60%)",
           }}
         />
 
@@ -79,6 +77,19 @@ export default function LevagePisciculture() {
             initial="hidden"
             animate="visible"
           >
+            <motion.nav variants={fadeUp} aria-label="Fil d'Ariane" className="flex items-center gap-2 mb-6">
+              <Link to="/" className="text-white/45 text-[11px] font-headline font-black uppercase tracking-[0.2em] hover:text-white transition-colors">
+                Accueil
+              </Link>
+              <span className="text-white/55 text-[11px]" aria-hidden="true">/</span>
+              <Link to="/genie-rural" className="text-white/45 text-[11px] font-headline font-black uppercase tracking-[0.2em] hover:text-white transition-colors">
+                Génie Rural
+              </Link>
+              <span className="text-white/55 text-[11px]" aria-hidden="true">/</span>
+              <span className="text-secondary-container text-[11px] font-headline font-black uppercase tracking-[0.2em]">
+                Élevage &amp; Pisciculture
+              </span>
+            </motion.nav>
             <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
               <span className="w-4 h-px bg-secondary-container" />
               <span className="font-headline font-black text-[10px] uppercase tracking-[0.25em] text-secondary-container">
@@ -160,7 +171,7 @@ export default function LevagePisciculture() {
               <div className="w-full md:w-2/5 h-48 md:h-auto overflow-hidden shrink-0">
                 <img
                   src="/aviculture.webp"
-                  alt="Bâtiment avicole industriel — Fogatech"
+                  alt="Bâtiment avicole industriel — Foga-Tech"
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
@@ -172,7 +183,7 @@ export default function LevagePisciculture() {
               <div className="h-48 overflow-hidden shrink-0">
                 <img
                   src="/porcherie.webp"
-                  alt="Porcherie moderne — Fogatech"
+                  alt="Porcherie moderne — Foga-Tech"
                   className="w-full h-full object-cover opacity-80"
                   loading="lazy"
                 />
@@ -202,7 +213,7 @@ export default function LevagePisciculture() {
               <div className="mt-auto w-full aspect-video overflow-hidden rounded-2xl">
                 <img
                   src="/bovins.webp"
-                  alt="Bovins & laiterie — Fogatech"
+                  alt="Bovins & laiterie — Foga-Tech"
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
@@ -210,29 +221,27 @@ export default function LevagePisciculture() {
             </div>
 
             {/* Pisciculture */}
-            <div className="md:col-span-7 bg-surface-container-lowest p-10 border-l-8 border-secondary-container shadow-sm flex flex-col md:flex-row gap-8 rounded-2xl">
-              <div className="flex-1">
-                <h3 className="text-2xl font-headline font-bold text-primary mb-4">Étangs Piscicoles</h3>
-                <p className="text-on-surface-variant font-body mb-6 leading-relaxed">
-                  {"Systèmes de recirculation (RAS) hors-sol et étangs en terre avec étanchéité par"
-                    + " géomembrane HDPE. Contrôle de l'oxygénation en temps réel."}
-                </p>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 bg-surface-container-low rounded-2xl">
-                    <span className="block text-primary font-bold text-sm">Sur Terre</span>
-                    <span className="text-xs text-on-surface-variant">Bassins excavés &amp; maçonnés</span>
-                  </div>
-                  <div className="p-4 bg-surface-container-low rounded-2xl">
-                    <span className="block text-primary font-bold text-sm">Hors-Sol</span>
-                    <span className="text-xs text-on-surface-variant">Cuves circulaires &amp; rectangulaires</span>
-                  </div>
+            <div className="md:col-span-7 bg-surface-container-lowest p-10 border-l-8 border-secondary-container shadow-sm flex flex-col rounded-2xl">
+              <h3 className="text-2xl font-headline font-bold text-primary mb-4">Étangs Piscicoles</h3>
+              <p className="text-on-surface-variant font-body mb-6 leading-relaxed">
+                {"Systèmes de recirculation (RAS) hors-sol et étangs en terre avec étanchéité par"
+                  + " géomembrane HDPE. Contrôle de l'oxygénation en temps réel."}
+              </p>
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="p-4 bg-surface-container-low rounded-2xl">
+                  <span className="block text-primary font-bold text-sm">Sur Terre</span>
+                  <span className="text-xs text-on-surface-variant">Bassins excavés &amp; maçonnés</span>
+                </div>
+                <div className="p-4 bg-surface-container-low rounded-2xl">
+                  <span className="block text-primary font-bold text-sm">Hors-Sol</span>
+                  <span className="text-xs text-on-surface-variant">Cuves circulaires &amp; rectangulaires</span>
                 </div>
               </div>
-              <div className="w-full md:w-1/3 overflow-hidden rounded-2xl">
+              <div className="mt-auto w-full aspect-video overflow-hidden rounded-2xl">
                 <img
                   src="/pisciculture.webp"
-                  alt="Étangs piscicoles — Fogatech"
-                  className="w-full h-full object-cover min-h-[200px]"
+                  alt="Étangs piscicoles — Foga-Tech"
+                  className="w-full h-full object-cover"
                   loading="lazy"
                 />
               </div>
@@ -269,7 +278,7 @@ export default function LevagePisciculture() {
               <div className="w-full aspect-[3/4] overflow-hidden rounded-2xl">
                 <img
                   src="/ingenieur-site.webp"
-                  alt="Ingénieur sur site élevage — Fogatech"
+                  alt="Ingénieur sur site élevage — Foga-Tech"
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />

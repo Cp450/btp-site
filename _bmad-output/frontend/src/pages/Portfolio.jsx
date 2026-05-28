@@ -1,6 +1,6 @@
-import { useState, useMemo } from "react";
+﻿import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { fadeUp, stagger, viewport } from "../lib/motion";
+import { fadeUp, stagger } from "../lib/motion";
 import SEO from "../components/SEO";
 import TextReveal from "../components/TextReveal";
 import ExpandingCards from "../components/ExpandingCards";
@@ -294,9 +294,9 @@ export default function Portfolio() {
   return (
     <main className="bg-[#001022] text-white font-body min-h-screen">
       <SEO
-        title="Portfolio — 13 chantiers livrés | Foga-Tech BTP"
-        description="Parcours chronologique 2012 → 2024 — 13 références BTP, voirie, industrie, énergie et génie rural au Congo-Brazzaville. Plaquette Foga-Tech International."
-        canonical="https://fogatech.cg/portfolio"
+        title="Portfolio — +15 chantiers livrés | Foga-Tech BTP"
+        description="Parcours chronologique 2012 → 2024 — +15 références BTP, voirie, industrie, énergie et génie rural au Congo-Brazzaville. Plaquette Foga-Tech International."
+        canonical="https://foga-tech.tech/portfolio"
       />
 
       {/* ── HERO — Home DNA Ken Burns multi-image ─────────────── */}
@@ -369,7 +369,7 @@ export default function Portfolio() {
               variants={fadeUp}
               className="font-body text-white/70 text-lg leading-relaxed mb-10 max-w-xl"
             >
-              13 références BTP, voirie, industrie, énergie et génie rural livrées
+              +15 références BTP, voirie, industrie, énergie et génie rural livrées
               au Congo-Brazzaville. Parcours chronologique de notre savoir-faire.
             </motion.p>
           </motion.div>
@@ -410,7 +410,7 @@ export default function Portfolio() {
           <ProjetModal projet={activeProjet} onClose={() => setActiveProjet(null)} />
         )}
 
-        <p className="text-center text-white/30 font-body text-xs mt-10 px-6">
+        <p className="text-center text-white/55 font-body text-xs mt-10 px-6">
           Source · Document interne{" "}
           <span className="font-bold text-white/50">
             Nos références en République du Congo

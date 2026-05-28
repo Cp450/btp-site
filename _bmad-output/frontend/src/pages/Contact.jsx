@@ -1,7 +1,8 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
 import TextReveal from '../components/TextReveal'
+import WaveBackground from '../components/WaveBackground'
 import { supabase } from '../lib/supabase'
 
 /* ── Bureaux ──────────────────────────────────────────────────── */
@@ -9,7 +10,7 @@ const BUREAUX = [
   {
     ville: 'Brazzaville',
     tag: 'Siege social',
-    adresse: '1509 Rue Motaba, Plateaux des 15 ans',
+    adresse: '1509 Rue Motaba, Plateaux des 15 ans (réf. pressing 5 à sec)',
     quartier: 'Moungali, Brazzaville',
     horaires: 'Lun-Ven 8h-18h · Sam 8h-13h',
     maps: 'https://maps.google.com/?q=Plateau+des+15+ans+Brazzaville',
@@ -29,8 +30,8 @@ const DIRECTS = [
   {
     icon: 'chat',
     label: 'WhatsApp',
-    value: '+242 06 961 06 35',
-    href: 'https://wa.me/242069610635?text=Bonjour%20Foga-Tech',
+    value: '+242 06 990 56 40',
+    href: 'https://wa.me/242069905640?text=Bonjour%20Foga-Tech',
     note: 'Reponse < 15 min · 7j/7',
     highlight: true,
   },
@@ -72,7 +73,7 @@ export default function Contact() {
     const msg = encodeURIComponent(
       `*Contact Foga-Tech*\n\nNom: ${form.nom}\nEmail: ${form.email}\nSujet: ${form.sujet}\n\n${form.message}`
     )
-    window.open(`https://wa.me/242069610635?text=${msg}`, '_blank')
+    window.open(`https://wa.me/242069905640?text=${msg}`, '_blank')
     setSent(true)
   }
 
@@ -80,8 +81,8 @@ export default function Contact() {
     <main className="pt-16 bg-[#001022] text-white font-body">
       <SEO
         title="Contact — Foga-Tech International"
-        description="Contactez Foga-Tech International : WhatsApp, telephone, email. Bureaux a Brazzaville et Pointe-Noire. Reponse garantie sous 15 minutes."
-        canonical="https://fogatech.cg/contact"
+        description="Contactez Foga-Tech International : WhatsApp, téléphone, email. Bureaux à Brazzaville et Pointe-Noire. Réponse garantie sous 24h."
+        canonical="https://foga-tech.tech/contact"
       />
 
       {/* ── Section 1 — Hero dark ─────────────────────────────── */}
@@ -160,17 +161,19 @@ export default function Contact() {
       </section>
 
       {/* ── Sections 3+4 fusionnées — Bureaux | Formulaire ─────── */}
-      <section className="bg-[#001022] border-t border-white/[0.08] py-16 px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-10 lg:gap-16 items-start">
+      <section className="relative bg-[#001634] border-t border-white/[0.08] py-16 px-6 overflow-hidden">
+        {/* Wave animation (DNA partenaires) */}
+        <WaveBackground />
+        <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-10 lg:gap-16 items-start">
 
           {/* ── Colonne gauche : Bureaux ── */}
           <div>
-            <p className="font-label font-bold text-[10px] uppercase tracking-widest text-white/30 mb-6">
+            <p className="font-label font-bold text-[10px] uppercase tracking-widest text-white/55 mb-6">
               Nos bureaux
             </p>
             <div className="space-y-4">
               {BUREAUX.map((b) => (
-                <div key={b.ville} className="bg-white/5 border border-white/10 rounded-2xl p-5">
+                <div key={b.ville} className="bg-white/[0.06] backdrop-blur-md border border-white/15 rounded-2xl p-5">
                   <p className="font-headline font-black text-white text-base mb-0.5">{b.ville}</p>
                   <p className="font-label text-[10px] uppercase tracking-widest text-secondary-container mb-3">
                     {b.tag}
@@ -178,7 +181,7 @@ export default function Contact() {
                   <p className="text-white/45 text-sm leading-relaxed">
                     {b.adresse}<br />{b.quartier}
                   </p>
-                  <p className="text-white/30 text-xs mt-2">{b.horaires}</p>
+                  <p className="text-white/55 text-xs mt-2">{b.horaires}</p>
                   <a
                     href={b.maps}
                     target="_blank"
@@ -190,12 +193,55 @@ export default function Contact() {
                   </a>
                 </div>
               ))}
+
+              {/* ── Newsletter card intégrée ── */}
+              <div className="bg-white/[0.06] backdrop-blur-md border border-white/15 rounded-2xl p-5">
+                <p className="font-label font-bold text-[10px] uppercase tracking-[0.25em] text-secondary-container mb-2">
+                  Dispatches · 1 par mois
+                </p>
+                <p className="font-headline font-black text-white text-base mb-1 leading-tight">
+                  Le terrain en direct.
+                </p>
+                <p className="text-white/45 text-xs mb-4 leading-relaxed">
+                  Chantiers, photos exclusives, opportunités BTP Congo.
+                </p>
+                {nlStatus === 'success' ? (
+                  <p className="font-headline font-bold text-secondary-container text-xs">
+                    Inscription confirmée. Prochaine édition à la fin du mois.
+                  </p>
+                ) : (
+                  <form onSubmit={submitNl} className="flex flex-col gap-2">
+                    <input
+                      type="email"
+                      required
+                      value={nlEmail}
+                      onChange={e => setNlEmail(e.target.value)}
+                      placeholder="votre@email.com"
+                      disabled={nlStatus === 'loading'}
+                      className="w-full bg-white/[0.08] border border-white/15 text-white text-sm placeholder:text-white/25 px-3 py-2.5 rounded-xl focus:outline-none focus:border-secondary-container transition-all disabled:opacity-50"
+                    />
+                    <button
+                      type="submit"
+                      disabled={nlStatus === 'loading'}
+                      className="w-full flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-black uppercase tracking-widest text-[11px] px-4 py-2.5 rounded-xl hover:brightness-110 transition-all disabled:opacity-50"
+                    >
+                      {nlStatus === 'loading'
+                        ? <span className="w-4 h-4 border-2 border-on-secondary-container/40 border-t-on-secondary-container rounded-full animate-spin" />
+                        : <><span className="material-symbols-outlined text-sm" aria-hidden="true" style={{ fontVariationSettings: "'FILL' 1" }}>send</span>S&apos;inscrire</>
+                      }
+                    </button>
+                  </form>
+                )}
+                <p className="text-white/25 text-[10px] mt-3">
+                  220+ abonnés · zéro spam · désinscription en un clic
+                </p>
+              </div>
             </div>
           </div>
 
           {/* ── Colonne droite : Formulaire ── */}
           <div>
-            <p className="font-label font-bold text-[10px] uppercase tracking-widest text-white/30 mb-2">
+            <p className="font-label font-bold text-[10px] uppercase tracking-widest text-white/55 mb-2">
               Décrivez votre projet
             </p>
             <h2 className="font-headline font-black text-white text-2xl mb-2">
@@ -205,7 +251,7 @@ export default function Contact() {
               Votre message atterrit directement sur WhatsApp &mdash; pas de formulaire perdu.
             </p>
 
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <div className="bg-white/[0.06] backdrop-blur-md border border-white/15 rounded-2xl p-6">
               {sent ? (
                 <div className="text-center py-10">
                   <span
@@ -236,7 +282,7 @@ export default function Contact() {
                         Nom *
                       </label>
                       <input
-                        id="contact-nom" required type="text" placeholder="Votre nom"
+                        id="contact-nom" required type="text" autoComplete="name" placeholder="Votre nom"
                         value={form.nom} onChange={(e) => setForm({ ...form, nom: e.target.value })}
                         className="w-full bg-white/[0.08] border border-white/15 text-white placeholder:text-white/25 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary-container transition-all"
                       />
@@ -246,7 +292,7 @@ export default function Contact() {
                         Email <span className="normal-case text-white/25">(optionnel)</span>
                       </label>
                       <input
-                        id="contact-email" type="email" placeholder="Optionnel"
+                        id="contact-email" type="email" autoComplete="email" placeholder="Optionnel"
                         value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
                         className="w-full bg-white/[0.08] border border-white/15 text-white placeholder:text-white/25 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary-container transition-all"
                       />
@@ -257,7 +303,7 @@ export default function Contact() {
                       Sujet *
                     </label>
                     <input
-                      id="contact-sujet" required type="text" placeholder="Ex: Devis villa R+1 Brazzaville"
+                      id="contact-sujet" required type="text" autoComplete="off" placeholder="Ex: Devis villa R+1 Brazzaville"
                       value={form.sujet} onChange={(e) => setForm({ ...form, sujet: e.target.value })}
                       className="w-full bg-white/[0.08] border border-white/15 text-white placeholder:text-white/25 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary-container transition-all"
                     />
@@ -287,53 +333,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* ── Section 5 — Newsletter ────────────────────────────── */}
-      <section className="border-t border-white/[0.08] py-14 px-6 bg-[#001022]">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-          <div>
-            <p className="font-label font-bold text-[10px] uppercase tracking-[0.25em] text-secondary-container mb-2">
-              Dispatches · 1 par mois
-            </p>
-            <h3 className="font-headline font-black text-white text-xl leading-tight">
-              Le terrain en direct.
-            </h3>
-            <p className="text-white/40 text-sm mt-1">
-              Chantiers, photos exclusives, opportunités BTP Congo.
-            </p>
-          </div>
-
-          {nlStatus === 'success' ? (
-            <p className="font-headline font-bold text-secondary-container text-sm">
-              Vous êtes dans la liste. À fin du mois.
-            </p>
-          ) : (
-            <form onSubmit={submitNl} className="flex gap-2 w-full md:w-auto">
-              <input
-                type="email"
-                required
-                value={nlEmail}
-                onChange={e => setNlEmail(e.target.value)}
-                placeholder="votre@email.com"
-                disabled={nlStatus === 'loading'}
-                className="flex-1 md:w-64 bg-white/[0.06] border border-white/15 text-white text-sm placeholder:text-white/25 px-4 py-3 rounded-xl focus:outline-none focus:border-secondary-container transition-all disabled:opacity-50"
-              />
-              <button
-                type="submit"
-                disabled={nlStatus === 'loading'}
-                className="flex-shrink-0 flex items-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-black uppercase tracking-widest text-xs px-5 py-3 rounded-xl hover:brightness-110 transition-all disabled:opacity-50"
-              >
-                {nlStatus === 'loading'
-                  ? <span className="w-4 h-4 border-2 border-on-secondary-container/40 border-t-on-secondary-container rounded-full animate-spin" />
-                  : <><span className="material-symbols-outlined text-sm" aria-hidden="true" style={{ fontVariationSettings: "'FILL' 1" }}>send</span>S&apos;inscrire</>
-                }
-              </button>
-            </form>
-          )}
-        </div>
-        <p className="max-w-6xl mx-auto mt-4 text-white/20 text-xs">
-          220+ abonnés · zéro spam · désinscription en un clic
-        </p>
-      </section>
     </main>
   )
 }

@@ -1,4 +1,5 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import CalculateurBudget from '../components/CalculateurBudget'
 import SEO from '../components/SEO'
 
@@ -9,7 +10,7 @@ const PROJECT_TYPES = [
   { id: 'maison_individuelle', icon: 'home', label: 'Construction Maison', sub: 'Clé en main' },
   { id: 'terrain', icon: 'landscape', label: 'Terrain', sub: 'Achat & Aménagement' },
   { id: 'renovation', icon: 'format_paint', label: 'Rénovation', sub: 'Réhabilitation' },
-  { id: 'smart_city', icon: 'domain', label: 'Smart City', sub: 'F4 / 200m2 Standard' },
+  { id: 'immeuble', icon: 'domain', label: 'Immeuble', sub: 'R+2 à R+6' },
 ]
 
 const VILLES = ['Brazzaville', 'Pointe-Noire', 'Dolisie', 'Nkayi', 'Ouesso', 'Autre localite']
@@ -18,7 +19,7 @@ const STYLES = [
   'Moderne & Minimaliste',
   'Contemporain Colonial',
   'Villa Méditerranéenne',
-  'Standard Fogatech Smart',
+  'Standard Foga-Tech',
 ]
 
 const DELAIS = ['Dès que possible', 'Dans 3-6 mois', "Dans l'année"]
@@ -26,14 +27,14 @@ const DELAIS = ['Dès que possible', 'Dans 3-6 mois', "Dans l'année"]
 const TRUST = [
   { icon: 'verified', title: 'Expertise Locale', desc: 'Connaissance parfaite des sols du Congo.' },
   { icon: 'gavel', title: 'Garantie Décennale', desc: 'Sécurité et sérénité sur 10 ans.' },
-  { icon: 'support_agent', title: 'Accompagnement', desc: 'Un interlocuteur unique dédié.' },
+  { icon: 'headset_mic', title: 'Accompagnement', desc: 'Un interlocuteur unique dédié.' },
 ]
 
 const REALISATIONS = [
-  { city: 'Pointe-Noire', title: 'Villa Atlantique F6', wide: true, img: '/segment-particulier.webp' },
-  { city: 'Brazzaville', title: 'Résidence Plateau', wide: false, img: '/batiment-tertiaire.webp' },
-  { city: 'Kintélé', title: 'Aménagement Intérieur F4', wide: false, img: '/portfolio-mayanga.webp' },
-  { city: 'Projet Pilote', title: "Cité de l'Avenir Smart City", wide: true, img: '/portfolio-hub-agricole.webp' },
+  { city: 'Pointe-Noire & Brazzaville', title: 'Hangars métalliques PNR + BZV', wide: true,  img: '/portfolio-hangar-pn.webp' },
+  { city: 'Brazzaville',                title: 'CHU-B Brazzaville',             wide: false, img: '/portfolio-chu.webp' },
+  { city: 'Kintélé',                    title: 'Université Denis Sassou N\'Guesso', wide: false, img: '/portfolio-udn.webp' },
+  { city: 'Brazzaville',                title: 'Projet Pep\'s — Base vie Mayanga', wide: true, img: '/portfolio-mayanga.webp' },
 ]
 
 export default function DevisParticulier() {
@@ -107,7 +108,7 @@ export default function DevisParticulier() {
 
     setSubmitting(false)
     const waMsg = encodeURIComponent(
-      `*DEVIS PARTICULIER — Fogatech BTP*\n\n` +
+      `*DEVIS PARTICULIER — Foga-Tech BTP*\n\n` +
       `👤 Nom: ${form.nom}\n` +
       `📞 Tél: ${form.tel}\n` +
       `📧 Email: ${form.email}\n\n` +
@@ -118,15 +119,15 @@ export default function DevisParticulier() {
       `⏱️ Délai: ${form.delai}\n` +
       `📍 Lieu: ${form.quartier}, ${form.localisation}`
     )
-    window.open(`https://wa.me/242069610635?text=${waMsg}`, '_blank')
+    window.open(`https://wa.me/242069905640?text=${waMsg}`, '_blank')
   }
 
   return (
-    <main className="pt-[72px] bg-surface text-on-surface font-body">
+    <main className="bg-[#001022] text-white font-body">
       <SEO
         title="Devis particulier — Villa, rénovation, construction"
         description="Estimez le budget de votre projet BTP avec notre calculateur en ligne. Villa, rénovation, immeuble — réponse indicative immédiate."
-        canonical="https://fogatech.cg/devis-particulier"
+        canonical="https://foga-tech.tech/devis-particulier"
       />
 
       <CalculateurBudget />
@@ -137,14 +138,23 @@ export default function DevisParticulier() {
         <div className="absolute top-0 right-0 w-1/3 h-full bg-white/5 -skew-x-12 translate-x-1/2 pointer-events-none" />
         <div className="max-w-7xl mx-auto relative z-10 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <span className="inline-block px-4 py-1.5 bg-secondary-container text-on-secondary-container font-label text-xs font-bold tracking-widest uppercase mb-6">
+            <nav aria-label="Fil d'Ariane" className="flex items-center gap-2 mb-5">
+              <Link to="/" className="text-white/55 text-[11px] font-headline font-black uppercase tracking-[0.2em] hover:text-white transition-colors">
+                Accueil
+              </Link>
+              <span className="text-white/55 text-[11px]" aria-hidden="true">/</span>
+              <span className="text-secondary-container text-[11px] font-headline font-black uppercase tracking-[0.2em]">
+                Devis Particulier
+              </span>
+            </nav>
+            <span className="inline-block px-4 py-1.5 bg-secondary-container text-on-secondary-container font-label text-xs font-bold tracking-widest uppercase mb-6 rounded-full">
               Particuliers
             </span>
             <h1 className="text-5xl md:text-6xl font-headline font-extrabold text-white tracking-tighter leading-tight mb-6">
               Demande de Devis<br />Particulier
             </h1>
             <p className="text-on-primary-container text-xl max-w-xl font-medium leading-relaxed">
-              Configurez votre projet de vie avec Fogatech. De la fondation à la remise des clés,
+              Configurez votre projet de vie avec Foga-Tech. De la fondation à la remise des clés,
               bâtissons ensemble votre avenir au Congo.
             </p>
           </div>
@@ -152,7 +162,7 @@ export default function DevisParticulier() {
             <div className="w-full aspect-video shadow-2xl border-4 border-white/10 overflow-hidden rounded-2xl">
               <img
                 src="/segment-particulier.webp"
-                alt="Maison individuelle — Fogatech BTP"
+                alt="Maison individuelle — Foga-Tech BTP"
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
@@ -253,6 +263,7 @@ export default function DevisParticulier() {
                   <input
                     id="quartier"
                     type="text"
+                    autoComplete="address-level2"
                     value={form.quartier}
                     onChange={(e) => set('quartier', e.target.value)}
                     placeholder="Ex: Mpila, Talangai, Centre-ville..."
@@ -468,17 +479,17 @@ export default function DevisParticulier() {
         <div className="max-w-7xl mx-auto">
           <div className="mb-16 text-center">
             <h2 className="text-3xl md:text-4xl font-headline font-extrabold text-primary mb-4 tracking-tight">
-              Réalisations Fogatech
+              Réalisations Foga-Tech
             </h2>
             <p className="text-on-surface-variant max-w-2xl mx-auto font-body">
-              Inspirez-vous de nos derniers projets réalisés pour des particuliers au Congo-Brazzaville.
+              L'expertise mobilisée sur nos grands chantiers est à votre service pour votre projet personnel.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
             {REALISATIONS.map((r) => (
               <div
                 key={r.title}
-                className={`relative overflow-hidden group shadow-lg ${r.wide ? 'md:col-span-2' : ''}`}
+                className={`relative overflow-hidden group shadow-lg rounded-2xl ${r.wide ? 'md:col-span-2' : ''}`}
               >
                 <img
                   src={r.img}

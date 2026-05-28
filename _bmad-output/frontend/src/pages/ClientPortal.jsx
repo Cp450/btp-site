@@ -1,234 +1,99 @@
-import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
+﻿import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
 
-function LoginForm() {
-  const [email, setEmail] = useState('')
-  const [sent, setSent] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-
-  async function handleSubmit(e) {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
-    const { error: err } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: `${window.location.origin}/client` },
-    })
-    setLoading(false)
-    if (err) setError(err.message)
-    else setSent(true)
-  }
-
-  if (sent) {
-    return (
-      <div className="text-center py-8">
-        <span className="material-symbols-outlined text-5xl text-primary block mb-4" style={{ fontVariationSettings: "'FILL' 1" }}>mail</span>
-        <h3 className="text-on-surface font-bold text-xl mb-2">Lien envoyé !</h3>
-        <p className="text-on-surface-variant text-sm">
-          Vérifiez <span className="text-on-surface font-semibold">{email}</span>
-        </p>
-        <p className="text-xs text-on-surface-variant mt-2">
-          Cliquez le lien magic-link pour accéder à votre espace chantier.
-        </p>
-      </div>
-    )
-  }
-
-  return (
-    <div>
-      <div className="text-center mb-8">
-        <span className="material-symbols-outlined text-4xl text-primary block mb-3" style={{ fontVariationSettings: "'FILL' 1" }}>construction</span>
-        <h2 className="text-2xl font-black text-primary mb-1">Espace Client</h2>
-        <p className="text-on-surface-variant text-sm">Suivez votre chantier en temps réel</p>
-      </div>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="text-sm text-on-surface-variant block mb-1">Votre email</label>
-          <input
-            type="email" required value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="vous@exemple.com"
-            className="w-full bg-surface border border-outline-variant rounded-xl px-4 py-3 text-on-surface text-sm focus:border-primary outline-none"
-          />
-        </div>
-        {error && <p className="text-red-400 text-xs">{error}</p>}
-        <button
-          type="submit" disabled={loading}
-          className="w-full bg-primary disabled:opacity-50 hover:bg-primary-container text-on-primary font-bold py-3 rounded-xl transition-colors text-sm"
-        >
-          {loading ? 'Envoi...' : 'Recevoir mon lien de connexion →'}
-        </button>
-        <p className="text-xs text-on-surface-variant text-center">Magic link — aucun mot de passe requis</p>
-      </form>
-    </div>
-  )
-}
-
-function Dashboard({ user, onLogout }) {
-  const [updates, setUpdates] = useState([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    // Fetch initial updates
-    supabase
-      .from('chantier_updates')
-      .select('*')
-      .eq('client_email', user.email)
-      .order('created_at', { ascending: false })
-      .limit(10)
-      .then(({ data }) => {
-        if (data?.length) setUpdates(data)
-        else setUpdates(FALLBACK_FEED)
-        setLoading(false)
-      })
-      .catch(() => { setUpdates(FALLBACK_FEED); setLoading(false) })
-
-    // Realtime subscription
-    const channel = supabase
-      .channel('chantier-updates')
-      .on('postgres_changes', {
-        event: 'INSERT',
-        schema: 'public',
-        table: 'chantier_updates',
-        filter: `client_email=eq.${user.email}`,
-      }, (payload) => {
-        setUpdates((prev) => [payload.new, ...prev])
-      })
-      .subscribe()
-
-    return () => supabase.removeChannel(channel)
-  }, [user.email])
-
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h2 className="text-xl font-black text-primary">Mon Chantier</h2>
-          <p className="text-xs text-on-surface-variant">{user.email}</p>
-        </div>
-        <button onClick={onLogout} className="text-xs text-on-surface-variant hover:text-on-surface border border-outline-variant rounded-lg px-3 py-1.5 transition-colors">
-          Déconnexion
-        </button>
-      </div>
-
-      {/* Progress */}
-      <div className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-5 mb-6">
-        <div className="flex justify-between items-center mb-2">
-          <h3 className="text-on-surface font-bold text-sm">Villa Nganga — Bacongo</h3>
-          <span className="text-secondary-container font-black text-lg">72%</span>
-        </div>
-        <div className="w-full bg-surface rounded-full h-3">
-          <div className="h-3 rounded-full bg-gradient-to-r from-primary to-success transition-all" style={{ width: '72%' }} />
-        </div>
-        <div className="flex justify-between text-xs text-on-surface-variant mt-2">
-          <span>Démarré: 15 Jan 2026</span>
-          <span>Livraison: 15 Juil 2026</span>
-        </div>
-      </div>
-
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-3 mb-6">
-        {[
-          { label: 'Avancement', val: '72%', color: 'text-secondary-container' },
-          { label: 'Chef chantier', val: '⭐ 4.9', color: 'text-yellow-400' },
-          { label: 'Prochaine étape', val: 'J+8', color: 'text-blue-400' },
-        ].map((s) => (
-          <div key={s.label} className="bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-center">
-            <div className={`font-black text-lg ${s.color}`}>{s.val}</div>
-            <div className="text-xs text-on-surface-variant">{s.label}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Feed */}
-      <h3 className="text-on-surface font-bold text-sm mb-3 flex items-center gap-1.5">
-        <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 1" }}>photo_camera</span>
-        Journal de chantier
-      </h3>
-      {loading ? (
-        <div className="text-center py-8 text-on-surface-variant text-sm">Chargement…</div>
-      ) : (
-        <div className="space-y-3">
-          {updates.map((item) => (
-            <div key={item.id} className="bg-surface-container-lowest border border-outline-variant rounded-xl p-4">
-              <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-3xl text-on-surface-variant" style={{ fontVariationSettings: "'FILL' 1" }}>{item.photo ?? 'photo_camera'}</span>
-                <div className="flex-1">
-                  <div className="flex justify-between items-start">
-                    <span className="text-xs font-semibold text-blue-300">{item.author ?? item.chef_name}</span>
-                    <span className="text-xs text-on-surface-variant">{(item.created_at ?? item.date)?.slice(0, 10)}</span>
-                  </div>
-                  <p className="text-sm text-on-surface mt-1">{item.text ?? item.content}</p>
-                  {item.pct != null && (
-                    <div className="flex items-center gap-2 mt-2">
-                      <div className="flex-1 bg-surface rounded-full h-1.5">
-                        <div className="h-1.5 rounded-full bg-success" style={{ width: `${item.pct}%` }} />
-                      </div>
-                      <span className="text-xs text-success font-bold">{item.pct}%</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      <a
-        href="https://wa.me/242069610635?text=Bonjour%20Chef%20Mbemba%2C%20j'ai%20une%20question%20sur%20mon%20chantier."
-        target="_blank" rel="noopener noreferrer"
-        className="mt-6 flex items-center justify-center gap-2 w-full bg-[#25D366]/10 border border-[#25D366]/30 hover:bg-[#25D366] text-[#25D366] hover:text-white font-semibold py-3 rounded-xl text-sm transition-all"
-      >
-        <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
-        Contacter Chef Mbemba sur WhatsApp
-      </a>
-    </div>
-  )
-}
-
-const FALLBACK_FEED = [
-  { id: 1, date: '2026-04-07', pct: 72, text: 'Dalle 2ème étage coulée. Prochaine étape: maçonnerie.', photo: 'construction', author: 'Chef Mbemba' },
-  { id: 2, date: '2026-04-01', pct: 58, text: 'Colonnes RDC terminées. Photos dispo dans la galerie.', photo: 'photo_camera', author: 'Chef Mbemba' },
-  { id: 3, date: '2026-03-25', pct: 40, text: 'Fondations validées par ingénieur. Travaux en avance.', photo: 'check_circle', author: 'Équipe Fogatech' },
-]
-
 export default function ClientPortal() {
-  const [user, setUser] = useState(null)
-  const [checking, setChecking] = useState(true)
-
-  useEffect(() => {
-    // Check existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) setUser(session.user)
-      setChecking(false)
-    })
-
-    // Listen for auth state changes (magic link callback)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
-
-  if (checking) {
-    return (
-      <div className="min-h-screen pt-24 flex items-center justify-center bg-surface">
-        <div className="text-on-surface-variant text-sm">Vérification session…</div>
-      </div>
-    )
-  }
-
   return (
-    <div className="min-h-screen pt-24 pb-16 flex items-start justify-center bg-surface px-4">
-      <SEO title="Espace Client — Suivi de chantier" noindex />
-      <div className="w-full max-w-lg bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 md:p-8">
-        {user
-          ? <Dashboard user={user} onLogout={() => supabase.auth.signOut()} />
-          : <LoginForm onLogin={setUser} />}
+    <main className="min-h-screen pt-24 pb-20 bg-surface flex items-center justify-center px-6">
+      <SEO
+        title="Espace Client — Bientôt disponible"
+        description="Le portail client Foga-Tech BTP arrive prochainement. Suivez vos chantiers en temps réel."
+        canonical="https://foga-tech.tech/client"
+      />
+
+      <div className="max-w-2xl w-full">
+        <div className="bg-surface-container-lowest border border-outline-variant rounded-3xl p-10 md:p-14 text-center shadow-tectonic-lg">
+
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-secondary-container/15 border border-secondary-container/30 px-4 py-2 rounded-full mb-8">
+            <span
+              className="material-symbols-outlined text-secondary-container text-base"
+              aria-hidden="true"
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              schedule
+            </span>
+            <span className="font-label font-black text-[10px] uppercase tracking-[0.25em] text-secondary-container">
+              Bientôt disponible
+            </span>
+          </div>
+
+          {/* Icon */}
+          <span
+            className="material-symbols-outlined text-primary block mb-6"
+            aria-hidden="true"
+            style={{ fontSize: '64px', fontVariationSettings: "'FILL' 1" }}
+          >
+            construction
+          </span>
+
+          {/* Title */}
+          <h1 className="font-headline font-black text-primary text-3xl md:text-4xl leading-tight tracking-[-0.02em] mb-4">
+            Espace Client en préparation
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-on-surface-variant font-body text-base md:text-lg leading-relaxed mb-2 max-w-lg mx-auto">
+            Suivi de chantier en temps réel, accès aux documents, jalons de paiement —
+            le portail arrive très prochainement.
+          </p>
+
+          <p className="text-on-surface-variant/70 font-body text-sm mb-10">
+            En attendant, notre équipe vous accompagne directement.
+          </p>
+
+          {/* Features preview */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 text-left">
+            {[
+              { icon: 'monitoring', label: 'Suivi temps réel' },
+              { icon: 'description', label: 'Documents projet' },
+              { icon: 'payments', label: 'Jalons & paiements' },
+            ].map((f) => (
+              <div key={f.label} className="bg-surface-container-low border border-outline-variant/40 rounded-2xl p-4 flex items-center gap-3">
+                <span
+                  className="material-symbols-outlined text-secondary-container text-xl flex-shrink-0"
+                  aria-hidden="true"
+                  style={{ fontVariationSettings: "'FILL' 0" }}
+                >
+                  {f.icon}
+                </span>
+                <span className="font-headline font-bold text-primary text-sm">{f.label}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-black text-[12px] uppercase tracking-[0.2em] px-6 py-3.5 rounded-full hover:shadow-tectonic-orange hover:-translate-y-px transition-all"
+            >
+              Nous contacter
+              <span className="material-symbols-outlined text-base" aria-hidden="true">arrow_forward</span>
+            </Link>
+            <Link
+              to="/"
+              className="inline-flex items-center justify-center gap-2 bg-transparent border border-outline-variant text-primary font-headline font-black text-[12px] uppercase tracking-[0.2em] px-6 py-3.5 rounded-full hover:bg-surface-container-low transition-all"
+            >
+              Retour à l'accueil
+            </Link>
+          </div>
+
+          {/* Footer note */}
+          <p className="mt-8 pt-8 border-t border-outline-variant/30 text-on-surface-variant/60 font-body text-xs">
+            Vous êtes déjà client ? Contactez votre chef de projet par WhatsApp ou email pour un suivi direct.
+          </p>
+        </div>
       </div>
-    </div>
+    </main>
   )
 }

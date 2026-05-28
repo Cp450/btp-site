@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+﻿import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
 import StickyCTABar from "../components/StickyCTABar";
@@ -100,7 +100,7 @@ const STATS = [
   { val: "+15", suffix: "", label: "chantiers livrés" },
   { val: "98", suffix: "%", label: "dans les délais" },
   { val: "65", suffix: "", label: "engins en parc" },
-  { val: "15", suffix: "ans", label: "d'ancrage Congo" },
+  { val: "12", suffix: " ans", label: "d'ancrage au Congo" },
 ];
 
 const APPROFONDIR = [
@@ -274,9 +274,9 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="Foga-Tech BTP — Bâtisseurs du Congo, livrés à temps"
-        description="Génie civil, bâtiment, génie rural et location d'engins à Brazzaville et Pointe-Noire. +15 chantiers livrés, 98% dans les délais depuis 2009."
-        canonical="https://fogatech.cg"
+        title="Foga-Tech International — Ingénierie BTP de référence au Congo"
+        description="Génie civil, bâtiment, génie rural et location d'engins à Brazzaville et Pointe-Noire. +15 chantiers livrés, 98% de satisfaction client depuis 2012."
+        canonical="https://foga-tech.tech"
       />
 
       {/* ══════════════════════════════════════════════════════
@@ -333,8 +333,8 @@ export default function Home() {
         />
 
         {/* Layer 4 — content */}
-        <div className="relative z-10 flex-1 flex flex-col justify-center max-w-7xl mx-auto w-full px-6 lg:px-12 pt-32 pb-20">
-          <div className="max-w-[560px]">
+        <div className="relative z-10 flex-1 flex flex-col justify-between max-w-7xl mx-auto w-full px-6 lg:px-12 pt-32 pb-12">
+          <div className="max-w-[560px] flex-1 flex flex-col justify-center">
             <div className="flex items-center gap-3 mb-6">
               <span className="w-4 h-px bg-secondary-container" />
               <span className="font-headline font-black text-[10px] uppercase tracking-[0.25em] text-secondary-container">
@@ -389,22 +389,20 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </div>
 
-        {/* Stats band */}
-        <div className="relative z-10 w-full border-t border-secondary-container/15 bg-[#001634]">
-          <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-secondary-container/20">
+          {/* Stats row — overlay sur image */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-white/10 pt-8 mt-12">
             {STATS.map((s) => (
-              <div key={s.label} className="p-6 flex flex-col hover:bg-white/[0.02] transition-colors rounded-2xl">
-                <span
-                  className="font-headline font-black text-secondary-container leading-none tracking-[-0.02em] mb-1"
-                  style={{ fontSize: 28 }}
+              <div key={s.label}>
+                <p
+                  className="font-headline font-black text-white leading-none"
+                  style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.4rem)' }}
                 >
                   {s.val}{s.suffix}
-                </span>
-                <span className="font-body text-[10px] uppercase tracking-widest text-white/40">
+                </p>
+                <p className="text-white/55 font-body text-[11px] mt-2 leading-tight">
                   {s.label}
-                </span>
+                </p>
               </div>
             ))}
           </div>
@@ -415,7 +413,7 @@ export default function Home() {
           {[
             "★ Devis offert sous 48 h",
             "★ Garantie décennale incluse",
-            "★ WhatsApp +242 06 961 06 35",
+            "★ WhatsApp +242 06 990 56 40",
           ].map((item, i, arr) => (
             <span key={i} className="flex items-center gap-8 flex-shrink-0">
               {item}
@@ -550,7 +548,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-5">
+          <div className="grid sm:grid-cols-2 gap-x-5 gap-y-10">
             {SERVICES.map((s) => (
               <Link
                 key={s.num}
@@ -564,18 +562,11 @@ export default function Home() {
                   loading="lazy"
                 />
                 <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      s.kind === "navy"
-                        ? "linear-gradient(180deg,transparent 30%,rgba(0,23,49,0.95) 100%)"
-                        : "linear-gradient(180deg,transparent 30%,rgba(242,244,246,0.96) 100%)",
-                  }}
-                />
-                <div
                   className={cn(
-                    "absolute bottom-0 left-0 right-0 p-7 flex justify-between items-end",
-                    s.kind === "navy" ? "text-white" : "text-primary",
+                    "absolute bottom-0 left-0 right-0 p-7 flex justify-between items-end backdrop-blur-xl border-t shadow-tectonic-lg",
+                    s.kind === "navy"
+                      ? "text-white bg-[#002045]/55 border-white/10"
+                      : "text-primary bg-white/55 border-black/5",
                   )}
                 >
                   <div>
@@ -618,7 +609,7 @@ export default function Home() {
                 <div className="flex items-center gap-3 mb-3">
                   <span className="w-6 h-px bg-secondary-container/60" />
                   <span className="font-label font-bold text-[11px] uppercase tracking-[0.25em] text-secondary-container">
-                    Approfondir
+                    Explorer en détail
                   </span>
                 </div>
                 <h3 className="font-headline font-black text-primary text-2xl md:text-3xl leading-tight">

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
 
 export default function MentionsLegales() {
@@ -7,7 +7,7 @@ export default function MentionsLegales() {
       <SEO
         title="Mentions légales"
         description="Mentions légales de Foga-Tech International — éditeur, hébergeur, propriété intellectuelle et droit applicable."
-        canonical="https://fogatech.cg/mentions-legales"
+        canonical="https://foga-tech.tech/mentions-legales"
         noindex
       />
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
@@ -21,12 +21,12 @@ export default function MentionsLegales() {
           <h2 className="font-headline text-2xl font-bold text-primary mb-4">1. Éditeur du site</h2>
           <div className="font-body text-on-surface space-y-2">
             <p><strong>Raison sociale :</strong> Foga-Tech International</p>
-            <p><strong>Siège social :</strong> 1509 Rue Motaba, Plateaux des 15 ans — Moungali, Brazzaville, République du Congo</p>
+            <p><strong>Siège social :</strong> 1509 Rue Motaba, Plateaux des 15 ans (réf. pressing 5 à sec) — Moungali, Brazzaville, République du Congo</p>
             <p><strong>Bureau Pointe-Noire :</strong> 34 Rue Atali, Centre Ville — derrière Ex Bouda Bar, Pointe-Noire</p>
             <p><strong>RCCM :</strong> CG/BZV/17B6964</p>
             <p><strong>NIU :</strong> M2017110000375160</p>
             <p><strong>Directeur de publication :</strong> Direction générale — Foga-Tech International</p>
-            <p><strong>Contact :</strong> contact@foga-tech.com | +242 06 961 06 35 / +242 06 990 56 40</p>
+            <p><strong>Contact :</strong> contact@foga-tech.com | +242 06 990 56 40 / +242 06 990 56 40</p>
           </div>
         </section>
 
@@ -42,14 +42,14 @@ export default function MentionsLegales() {
         <section className="mb-12">
           <h2 className="font-headline text-2xl font-bold text-primary mb-4">3. Propriété intellectuelle</h2>
           <div className="font-body text-on-surface">
-            <p>L'ensemble du contenu de ce site (textes, images, logos, codes) est la propriété exclusive de Fogatech BTP. Toute reproduction, diffusion ou exploitation commerciale sans autorisation écrite préalable est interdite.</p>
+            <p>L'ensemble du contenu de ce site (textes, images, logos, codes) est la propriété exclusive de Foga-Tech BTP. Toute reproduction, diffusion ou exploitation commerciale sans autorisation écrite préalable est interdite.</p>
           </div>
         </section>
 
         <section className="mb-12">
           <h2 className="font-headline text-2xl font-bold text-primary mb-4">4. Responsabilité</h2>
           <div className="font-body text-on-surface">
-            <p>Fogatech BTP s'efforce de fournir des informations exactes mais ne peut garantir l'exactitude, l'exhaustivité ou l'actualité des contenus. L'entreprise décline toute responsabilité en cas d'erreur ou d'indisponibilité du service.</p>
+            <p>Foga-Tech BTP s'efforce de fournir des informations exactes mais ne peut garantir l'exactitude, l'exhaustivité ou l'actualité des contenus. L'entreprise décline toute responsabilité en cas d'erreur ou d'indisponibilité du service.</p>
           </div>
         </section>
 

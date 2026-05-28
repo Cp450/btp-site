@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback } from 'react'
+﻿import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import SEO from '../components/SEO'
 import TextReveal from '../components/TextReveal'
+import CategoryReveal from '../components/CategoryReveal'
 import { supabase } from '../lib/supabase'
 
 /* ── Data ─────────────────────────────────────────────────────────── */
@@ -35,7 +37,7 @@ const CATS = [
 
 /* ── Composant principal ───────────────────────────────────────────── */
 export default function Location() {
-  const [phase, setPhase] = useState('categories')
+  const [phase, setPhase] = useState('categories') // 'categories' | 'reveal' | 'showroom'
   const [activeCategory, setActiveCategory] = useState(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [selected, setSelected] = useState(new Set())
@@ -64,7 +66,7 @@ export default function Location() {
     const msg = encodeURIComponent(
       `Bonjour Foga-Tech,\n\nJe souhaite obtenir un devis pour la location des engins suivants :\n${liste}\n\nMerci de me préciser les disponibilités, la durée minimale et les modalités de livraison.`
     )
-    window.open(`https://wa.me/242069610635?text=${msg}`, '_blank')
+    window.open(`https://wa.me/242069905640?text=${msg}`, '_blank')
   }, [selected])
 
   /* ── Navigation clavier (phase showroom) ───────────────────────── */
@@ -76,7 +78,7 @@ export default function Location() {
   const goToCategory = useCallback((catId) => {
     setActiveCategory(catId)
     setActiveIndex(0)
-    setPhase('showroom')
+    setPhase('reveal')          // → CategoryReveal → showroom (auto)
   }, [])
 
   useEffect(() => {
@@ -98,14 +100,14 @@ export default function Location() {
   return (
     <div className="min-h-screen bg-[#001022]">
       <SEO
-        title="Location d'engins BTP Brazzaville — Fogatech"
-        description="65 engins BTP disponibles à Brazzaville : pelleteuses, bulldozers, grues, camions. Livraison sous 24h, opérateurs certifiés. Fogatech BTP Congo."
-        canonical="https://fogatech.cg/location"
+        title="Location d'engins BTP Brazzaville — Foga-Tech"
+        description="65 engins BTP disponibles à Brazzaville : pelleteuses, bulldozers, grues, camions. Livraison sous 24h, opérateurs certifiés. Foga-Tech BTP Congo."
+        canonical="https://foga-tech.tech/location"
       />
 
       {/* ── PHASE 1 : Sélecteur catégories ─────────────────────────── */}
       {phase === 'categories' && (
-        <section className="min-h-screen flex flex-col px-6 py-24">
+        <section className="min-h-screen flex flex-col px-6 pt-24 pb-16">
           {/* Titre */}
           <div className="text-center mb-16">
             <div style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}>
@@ -173,7 +175,7 @@ export default function Location() {
       {phase === 'showroom' && current && (
         <div className="min-h-screen flex flex-col bg-[#001022]">
           {/* ── Header showroom : retour ── */}
-          <div className="px-8 md:px-12 pt-12 pb-0 flex-shrink-0">
+          <div className="px-8 md:px-12 pt-24 pb-0 flex-shrink-0">
             {/* Retour */}
             <button
               onClick={() => setPhase('categories')}
@@ -289,7 +291,7 @@ export default function Location() {
                 <span className="material-symbols-outlined">arrow_back</span>
                 Précédent
               </button>
-              <span className="font-label font-bold text-[10px] uppercase tracking-widest text-white/30">
+              <span className="font-label font-bold text-[10px] uppercase tracking-widest text-white/55">
                 {activeIndex + 1} / {categoryEngins.length}
               </span>
               <button
@@ -405,7 +407,7 @@ export default function Location() {
         <div className="max-w-5xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             { icon:'verified',       title:'Matériel certifié',  desc:'Contrôle technique avant chaque location' },
-            { icon:'support_agent',  title:'Opérateur inclus',   desc:'Chauffeur qualifié sur demande' },
+            { icon:'engineering',  title:'Opérateur inclus',   desc:'Chauffeur qualifié sur demande' },
             { icon:'local_shipping', title:'Livraison 24h',      desc:'Acheminement sur chantier dans tout le Congo' },
           ].map((item) => (
             <div key={item.icon} className="flex flex-col items-center text-center gap-3">
@@ -418,6 +420,17 @@ export default function Location() {
           ))}
         </div>
       </section>
+
+      {/* ── CATEGORY REVEAL — transition fullscreen au clic catégorie ── */}
+      <AnimatePresence>
+        {phase === 'reveal' && activeCategory && (
+          <CategoryReveal
+            key={activeCategory}
+            cat={CATS.find(c => c.id === activeCategory)}
+            onComplete={() => setPhase('showroom')}
+          />
+        )}
+      </AnimatePresence>
 
       {/* ── BASKET FLOTTANT ────────────────────────────────────────── */}
       {selected.size > 0 && (

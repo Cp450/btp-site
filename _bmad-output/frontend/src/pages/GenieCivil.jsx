@@ -1,8 +1,6 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
 import TextReveal from "../components/TextReveal";
-import { fadeUp, fadeLeft, stagger, viewport } from "../lib/motion";
 
 const IMG_HERO_CHANTIER = "/gc-hero-1.webp";
 const IMG_DEVIS_SIDEBAR = "/bureau-etude.webp";
@@ -12,43 +10,34 @@ const DISCIPLINES = [
   {
     id: "bureau-etude",
     icon: "architecture",
-    title: "Bureau d'Étude & Ingénierie",
+    title: "BUREAU D'ÉTUDE",
     tag: "Études & Plans",
     image: IMG_DEVIS_SIDEBAR,
-    imageAlt: "Plans et études techniques Fogatech",
+    imageAlt: "Plans et études techniques Foga-Tech",
     items: [
-      "Études de faisabilité et diagnostic",
-      "Calculs de structure béton armé & charpente",
-      "Plans d'exécution DWG & BIM",
-      "Études de sol et topographie",
-      "Devis quantitatif estimatif (DQE)",
-      "Dossiers de permis de construire",
+      "Topographie",
+      "Urbanisme",
+      "Géotechnique",
+      "Architecture",
+      "Ingénierie",
     ],
   },
   {
     id: "travaux-publics",
-    icon: "bridge",
-    title: "BTP & Ouvrages d'Art",
-    tag: "BTP & Ouvrages",
+    icon: "engineering",
+    title: "BTP & OUVRAGES D'ARTS",
+    tag: "Exécution chantier",
     image: IMG_PONT_OUVRAGE,
-    imageAlt: "BTP & ouvrages d'art Fogatech Congo",
+    imageAlt: "Construction et gros œuvre Foga-Tech Congo",
     items: [
-      "Routes en terre et latérite stabilisée",
-      "Voiries urbaines, terrassements & VRD",
-      "Ponts, passerelles & dalots en béton armé",
-      "Murs de soutènement & ouvrages hydrauliques",
-      "Fondations spéciales sur terrain difficile",
-      "Inspection et diagnostic structurel",
+      "Construction de bâtiment",
+      "Construction métallique",
+      "Construction bois",
+      "VRD",
+      "Assainissement",
     ],
     cta: { label: "Demander un devis →", to: "/devis" },
   },
-];
-
-const NORMES = [
-  { code: "Eurocode 2", label: "Béton armé & précontraint" },
-  { code: "LCPC/SETRA", label: "Chaussées & ouvrages d'art" },
-  { code: "DTU Congo", label: "Normes locales applicables" },
-  { code: "BIM Level 2", label: "Maquette numérique 3D" },
 ];
 
 export default function GenieCivil() {
@@ -56,154 +45,160 @@ export default function GenieCivil() {
     <main className="bg-surface text-on-surface">
       <SEO
         title="Génie Civil & BTP — Bureau d'Étude, Construction, Travaux Publics"
-        description="Fogatech BTP Congo : bureau d'étude, ingénierie structurelle, architecture, construction bâtiment et travaux publics. Expertise locale, normes internationales."
-        canonical="https://fogatech.cg/genie-civil"
+        description="Foga-Tech BTP Congo : bureau d'étude, ingénierie structurelle, architecture, construction bâtiment et travaux publics. Expertise locale, normes internationales."
+        canonical="https://foga-tech.tech/genie-civil"
       />
 
-      {/* ── Hero split-screen ─────────────────────────────────────────────── */}
-      <section className="relative min-h-screen grid grid-cols-1 lg:grid-cols-[55%_45%] overflow-hidden bg-primary">
-        {/* Dot texture */}
-        <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{
-            backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
-            backgroundSize: "24px 24px",
-          }}
-          aria-hidden="true"
-        />
+      {/* ── Hero immersif — Ken Burns carousel ──────────────────────────── */}
+      <section className="relative min-h-screen flex flex-col overflow-hidden bg-[#002045]">
+        {/* Layer 0 — Ken Burns 4 images (cycle 16s) */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          {[
+            { src: "/gc-hero-1.webp", cls: "gc-1", eager: true  },
+            { src: "/gc-hero-2.webp", cls: "gc-2", eager: false },
+            { src: "/gc-hero-3.webp", cls: "gc-3", eager: false },
+            { src: "/gc-hero-4.webp", cls: "gc-4", eager: false },
+          ].map(({ src, cls, eager }) => (
+            <img
+              key={src}
+              src={src}
+              alt=""
+              aria-hidden="true"
+              loading={eager ? "eager" : "lazy"}
+              fetchPriority={eager ? "high" : "auto"}
+              className={`gc-bg-img ${cls} absolute inset-0 w-full h-full object-cover opacity-0 contrast-110 saturate-110`}
+            />
+          ))}
+          {/* Voile navy gradient — lisibilité texte */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to right, rgba(0,16,34,0.78) 0%, rgba(0,32,69,0.45) 50%, rgba(0,13,26,0.15) 100%)",
+            }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(0,13,26,0.55) 0%, rgba(0,32,69,0.05) 50%, rgba(0,13,26,0.15) 100%)",
+            }}
+          />
+        </div>
 
-        {/* Left — text */}
-        <motion.div
-          className="relative z-10 flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-24 lg:py-32"
-          variants={stagger}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* Breadcrumb */}
-          <motion.nav variants={fadeLeft} aria-label="Fil d'Ariane" className="flex items-center gap-2 mb-8">
-            <Link
-              to="/"
-              className="text-on-primary/50 text-xs font-label font-bold uppercase tracking-widest hover:text-on-primary transition-colors"
+        {/* Content */}
+        <div className="relative z-10 flex-1 flex flex-col justify-between max-w-7xl mx-auto w-full px-6 lg:px-12 pt-32 pb-12">
+          <div className="max-w-[640px] flex-1 flex flex-col justify-center">
+            {/* Breadcrumb */}
+            <nav aria-label="Fil d'Ariane" className="flex items-center gap-2 mb-6 animate-fade-slide-up">
+              <Link
+                to="/"
+                className="text-white/45 text-[11px] font-headline font-black uppercase tracking-[0.2em] hover:text-white transition-colors"
+              >
+                Accueil
+              </Link>
+              <span className="text-white/55 text-[11px]" aria-hidden="true">/</span>
+              <span className="text-secondary-container text-[11px] font-headline font-black uppercase tracking-[0.2em]">
+                Génie Civil
+              </span>
+            </nav>
+
+            {/* Eyebrow */}
+            <div className="flex items-center gap-3 mb-6 animate-fade-slide-up">
+              <span className="w-4 h-px bg-secondary-container" />
+              <span className="font-headline font-black text-[10px] uppercase tracking-[0.25em] text-secondary-container">
+                BTP · Études · Construction
+              </span>
+            </div>
+
+            {/* Headline */}
+            <h1
+              className="font-headline font-black text-white leading-[0.92] tracking-[-0.03em] mb-6 animate-fade-slide-up"
+              style={{ fontSize: "clamp(48px,7vw,92px)" }}
             >
-              Accueil
-            </Link>
-            <span className="text-secondary-container/60 text-xs" aria-hidden="true">/</span>
-            <span className="text-secondary-container text-xs font-label font-bold uppercase tracking-widest">
-              Génie Civil
-            </span>
-          </motion.nav>
+              Génie civil<br />
+              & BTP<br />
+              <span className="text-secondary-container">Congo.</span>
+            </h1>
 
-          {/* Tag */}
-          <motion.span
-            variants={fadeUp}
-            className="inline-block self-start px-3 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-label font-bold tracking-[0.2em] uppercase mb-6"
-          >
-            BTP · Études · Construction
-          </motion.span>
+            {/* Body */}
+            <p
+              className="font-body text-white/70 text-lg leading-relaxed mb-10 max-w-[540px] animate-fade-slide-up"
+              style={{ animationDelay: "150ms" }}
+            >
+              De l&apos;étude de sol au bâtiment livré — ingénierie structurelle,
+              architecture, construction et travaux publics aux normes
+              internationales.
+            </p>
 
-          {/* Headline — text reveal */}
-          <TextReveal
-            text="GÉNIE CIVIL"
-            as="div"
-            className="font-headline text-5xl md:text-6xl lg:text-7xl text-white font-black tracking-tighter leading-none mb-2"
-            animate
-            delay={0.15}
-          />
-          <TextReveal
-            text="& BTP CONGO."
-            as="div"
-            className="font-headline text-5xl md:text-6xl lg:text-7xl text-secondary-container font-black tracking-tighter leading-none mb-6"
-            animate
-            delay={0.3}
-          />
-
-          <motion.p
-            variants={fadeUp}
-            className="text-on-primary/70 font-body text-base mb-10 max-w-sm leading-relaxed"
-          >
-            De l&apos;étude de sol au bâtiment livré — ingénierie structurelle,
-            architecture, construction bâtiment et travaux publics aux normes
-            internationales.
-          </motion.p>
-
-          {/* Stats row */}
-          <div className="flex flex-wrap gap-8 mb-12">
-            {[
-              { val: "150+", label: "Projets construits" },
-              { val: "12 ans", label: "Expérience terrain" },
-              { val: "BIM", label: "Modélisation 3D" },
-            ].map((s) => (
-              <div key={s.label} className="border-l-2 border-secondary-container/40 pl-4">
-                <span className="font-headline font-black text-2xl text-white">{s.val}</span>
-                <p className="text-on-primary/50 font-body text-xs mt-0.5">{s.label}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* CTA buttons */}
-          <motion.div variants={stagger} className="flex flex-wrap gap-4">
-            <motion.div variants={fadeUp}>
+            {/* CTAs */}
+            <div
+              className="flex flex-col sm:flex-row gap-4 mb-10 animate-fade-slide-up"
+              style={{ animationDelay: "300ms" }}
+            >
               <Link
                 to="/devis"
-                className="inline-flex items-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-bold px-8 py-4 uppercase tracking-widest text-xs shadow-tectonic-orange hover:brightness-105 active:scale-95 transition-all rounded-full"
+                className="flex items-center justify-center text-center bg-secondary-container text-on-secondary-container font-headline font-black text-[13px] uppercase tracking-[0.18em] px-8 py-4 rounded-full hover:shadow-tectonic-orange hover:-translate-y-px transition-all"
               >
-                <span className="material-symbols-outlined text-sm" aria-hidden="true">description</span>
                 Demander un devis
               </Link>
-            </motion.div>
-            <motion.div variants={fadeUp}>
               <a
                 href="#bureau-etude"
-                className="inline-flex items-center gap-2 border border-white/30 text-white font-headline font-bold px-8 py-4 uppercase tracking-widest text-xs hover:bg-white/10 transition-colors rounded-full"
+                className="flex items-center justify-center gap-2 text-center border border-secondary-container/30 text-white font-headline font-black text-[13px] uppercase tracking-[0.18em] px-8 py-4 rounded-full hover:bg-secondary-container/10 transition-all"
               >
                 Nos disciplines
-                <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_downward</span>
+                <span className="material-symbols-outlined text-base" aria-hidden="true">arrow_downward</span>
               </a>
-            </motion.div>
-          </motion.div>
-        </motion.div>
+            </div>
 
-        {/* Right — image */}
-        <div className="relative hidden lg:block">
-          {/* Vertical orange accent bar */}
-          <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container z-10" aria-hidden="true" />
-          <img
-            src={IMG_HERO_CHANTIER}
-            alt="Chantier de construction Fogatech BTP Congo"
-            className="w-full h-full object-cover"
-            loading="eager"
-            fetchPriority="high"
-            style={{ clipPath: "polygon(6% 0%, 100% 0%, 100% 100%, 0% 100%)" }}
-          />
-          <div className="absolute inset-0 bg-primary/20" />
-
-          {/* Floating badge */}
-          <div className="absolute bottom-12 right-10 bg-primary-container border border-secondary-container/30 px-5 py-4 shadow-tectonic-lg z-10 max-w-[200px]">
-            <p className="text-secondary-container font-headline font-black text-2xl leading-none">98%</p>
-            <p className="text-on-primary-container font-body text-xs mt-1">
-              Projets livrés dans les délais au Congo
-            </p>
+            {/* Chips — credentials + normes */}
+            <div
+              className="flex flex-wrap gap-2 animate-fade-slide-up"
+              style={{ animationDelay: "450ms" }}
+            >
+              {[
+                { label: "Agrément Ministère BTP" },
+                { label: "Garantie décennale" },
+                { label: "Eurocode 2", title: "Béton armé & précontraint" },
+                { label: "LCPC/SETRA", title: "Chaussées & ouvrages d'art" },
+                { label: "DTU Congo", title: "Normes locales applicables" },
+                { label: "BIM Level 2", title: "Maquette numérique 3D" },
+              ].map((b) => (
+                <span
+                  key={b.label}
+                  title={b.title}
+                  className="font-headline font-black text-[10px] uppercase tracking-[0.18em] text-white/60 border border-white/20 px-3 py-1.5 rounded-full hover:border-secondary-container/60 hover:text-white transition-colors"
+                >
+                  {b.label}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* ── Normes & référentiels ─────────────────────────────────────────── */}
-      <section className="bg-primary-container border-b border-secondary-container/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-secondary-container/20">
-            {NORMES.map((n) => (
-              <div key={n.code} className="px-6 py-4 first:pl-0 last:pr-0">
-                <span className="font-headline font-black text-secondary-container text-lg block">
-                  {n.code}
-                </span>
-                <span className="text-on-primary-container font-body text-xs mt-0.5 block">
-                  {n.label}
-                </span>
+          {/* Stats row — overlay sur image */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-white/10 pt-8 mt-12">
+            {[
+              { val: "+15",   label: "Projets construits" },
+              { val: "12 ans", label: "Expérience terrain" },
+              { val: "98%",   label: "Livrés dans les délais" },
+              { val: "BIM",   label: "Modélisation 3D" },
+            ].map((s) => (
+              <div key={s.label}>
+                <p
+                  className="font-headline font-black text-white leading-none"
+                  style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.4rem)' }}
+                >
+                  {s.val}
+                </p>
+                <p className="text-white/55 font-body text-[11px] mt-2 leading-tight">
+                  {s.label}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* ── 4 Disciplines ─────────────────────────────────────────────────── */}
       <section className="py-24 bg-surface">
@@ -219,16 +214,12 @@ export default function GenieCivil() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-outline-variant">
-            {DISCIPLINES.map((d, idx) => (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {DISCIPLINES.map((d) => (
               <div
                 key={d.id}
                 id={d.id}
-                className={[
-                  "group flex flex-col border-outline-variant scroll-mt-20",
-                  idx % 2 === 0 ? "border-r" : "",
-                  idx < 2 ? "border-b" : "",
-                ].join(" ")}
+                className="group flex flex-col border border-outline-variant rounded-2xl overflow-hidden scroll-mt-20 bg-white hover:shadow-tectonic-lg transition-shadow"
               >
                 {/* Image */}
                 <div className="relative h-52 overflow-hidden bg-primary">
@@ -240,7 +231,7 @@ export default function GenieCivil() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
                   {/* Tag */}
-                  <span className="absolute top-4 left-4 px-2.5 py-1 bg-secondary-container text-on-secondary-container text-[9px] font-label font-bold uppercase tracking-widest">
+                  <span className="absolute top-4 left-4 px-2.5 py-1 bg-secondary-container text-on-secondary-container text-[9px] font-label font-bold uppercase tracking-widest rounded-full">
                     {d.tag}
                   </span>
                   {/* Icon */}
@@ -289,49 +280,6 @@ export default function GenieCivil() {
         </div>
       </section>
 
-      {/* ── Routes & Ponts cross-link ─────────────────────────────────────── */}
-      <section className="bg-primary-container py-20 border-t border-secondary-container/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
-            <div>
-              <span className="text-[10px] font-label font-bold uppercase tracking-[0.25em] text-secondary-container">
-                Page dédiée
-              </span>
-              <h2 className="font-headline text-3xl md:text-4xl font-black text-on-primary-container tracking-tighter mt-2 mb-4">
-                ROUTES, PONTS &amp; OUVRAGES D&apos;ART
-              </h2>
-              <p className="text-on-primary-container/70 font-body text-sm leading-relaxed max-w-lg mb-6">
-                Notre pôle Travaux Publics dispose d&apos;une page complète détaillant
-                nos prestations routes &amp; ponts : normes Eurocode, références
-                chantiers, processus de construction et devis.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                {[
-                  "200+ km construits",
-                  "15+ ouvrages d'art",
-                  "Charge P400 certifiée",
-                  "Crue Q100 ans",
-                ].map((badge) => (
-                  <span
-                    key={badge}
-                    className="px-3 py-1.5 border border-secondary-container/30 text-secondary-container text-xs font-label font-bold uppercase tracking-wider"
-                  >
-                    {badge}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <Link
-              to="/devis"
-              className="inline-flex items-center gap-3 bg-secondary-container text-on-secondary-container font-headline font-bold px-10 py-5 uppercase tracking-widest text-xs shadow-tectonic-orange hover:brightness-105 active:scale-95 transition-all shrink-0 rounded-full"
-            >
-              <span className="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
-              Demander un devis
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* ── Process simplifié ─────────────────────────────────────────────── */}
       <section className="py-24 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -344,17 +292,17 @@ export default function GenieCivil() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-0 border border-outline-variant">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             {[
-              { num: "01", title: "Étude & Devis", desc: "Analyse du site, étude de faisabilité, devis quantitatif estimatif sous 24–48h." },
-              { num: "02", title: "Conception", desc: "Plans architecturaux, calculs structures, BIM, dossier permis de construire." },
+              { num: "01", title: "Conception & Études", desc: "Analyse du site, étude de faisabilité, relevé topo, études géotechniques, plans architecturaux, calculs de structure, avant-métré." },
+              { num: "02", title: "Préparation du chantier", desc: "Dossier permis de construire, planning d'exécution des travaux, organisation du chantier et affectation des tâches." },
               { num: "03", title: "Terrassement", desc: "Préparation terrain, fondations, réseaux enterrés (VRD)." },
               { num: "04", title: "Construction", desc: "Gros œuvre, second œuvre, suivi de chantier hebdomadaire client." },
-              { num: "05", title: "Livraison", desc: "Réception contradictoire, DOE, garantie décennale Fogatech." },
-            ].map((step, i) => (
+              { num: "05", title: "Livraison", desc: "Réception contradictoire, DOE, garantie décennale Foga-Tech." },
+            ].map((step) => (
               <div
                 key={step.num}
-                className={["p-6 border-outline-variant", i < 4 ? "border-r" : ""].join(" ")}
+                className="p-6 border border-outline-variant rounded-2xl bg-white hover:border-secondary-container/60 transition-colors"
               >
                 <span className="font-headline font-black text-4xl text-secondary-container/20 block mb-3 leading-none">
                   {step.num}
@@ -371,53 +319,31 @@ export default function GenieCivil() {
         </div>
       </section>
 
-      {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section className="relative bg-primary py-24 overflow-hidden">
-        {/* Dot texture */}
-        <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{
-            backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
-            backgroundSize: "24px 24px",
-          }}
-          aria-hidden="true"
-        />
-        {/* GC watermark */}
-        <span
-          className="absolute right-8 top-1/2 -translate-y-1/2 font-headline font-black text-[140px] text-white/[0.03] leading-none select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          GC
-        </span>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <span className="inline-block px-3 py-1 bg-secondary-container/20 text-secondary-container text-[10px] font-label font-bold tracking-[0.2em] uppercase mb-6">
-            Réponse sous 24h
-          </span>
-          <h2 className="font-headline text-4xl md:text-5xl font-black text-white tracking-tighter mb-4">
-            VOTRE PROJET BTP,
-            <br />
-            <span className="text-secondary-container">NOTRE EXPERTISE.</span>
-          </h2>
-          <p className="text-on-primary/70 font-body mb-10 max-w-md mx-auto text-sm leading-relaxed">
-            Devis gratuit et sans engagement. Notre ingénieur terrain vous
-            répond sous 24h pour tout projet au Congo-Brazzaville.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Link
-              to="/devis"
-              className="inline-flex items-center gap-2 bg-secondary-container text-on-secondary-container font-headline font-bold px-10 py-5 uppercase tracking-widest text-xs shadow-tectonic-orange hover:brightness-105 active:scale-95 transition-all rounded-full"
-            >
-              <span className="material-symbols-outlined text-sm" aria-hidden="true" style={{ fontVariationSettings: "'FILL' 1" }}>description</span>
-              Demander un devis gratuit
-            </Link>
-            <a
-              href="https://wa.me/242069610635?text=Bonjour%20Fogatech%2C%20j%27ai%20un%20projet%20de%20g%C3%A9nie%20civil."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-white/30 text-white font-headline font-bold px-10 py-5 uppercase tracking-widest text-xs hover:bg-white/10 transition-colors rounded-full"
-            >
-              WhatsApp direct
-            </a>
+      {/* ── CTA final ───────────────────────────────────────────────────── */}
+      <section className="py-20 bg-surface relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-10 items-center">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-6 h-px bg-secondary-container flex-shrink-0" />
+                <p className="font-label text-xs uppercase tracking-widest text-on-surface-variant">Passer à l'action</p>
+              </div>
+              <h2 className="font-headline text-3xl md:text-4xl font-black text-primary leading-tight mb-4">
+                Votre projet BTP, <span className="text-secondary-container">notre expertise.</span>
+              </h2>
+              <p className="text-on-surface-variant font-body text-base max-w-2xl">
+                Devis offert sous 48 h, sans engagement — ingénieur terrain dédié à votre projet.
+              </p>
+            </div>
+            <div className="md:min-w-[260px]">
+              <Link
+                to="/devis"
+                className="inline-flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container px-8 py-4 font-headline font-bold uppercase tracking-widest text-xs hover:opacity-90 transition-all rounded-full w-full"
+              >
+                Demander un devis
+                <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
